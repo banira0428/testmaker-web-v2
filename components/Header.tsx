@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <div>
       <header>
-        <AppBar position="sticky">
+        <AppBar position="sticky" elevation={0}>
           <Toolbar className="bg-primary">
             <Link href="/">
               <a>
