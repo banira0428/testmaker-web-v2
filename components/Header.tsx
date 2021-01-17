@@ -1,7 +1,6 @@
 import AppBar from "@material-ui/core/AppBar/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Link from "next/link";
-import Typography from "@material-ui/core/Typography";
 
 export default function Header() {
   return (
@@ -11,9 +10,7 @@ export default function Header() {
           <Toolbar className="bg-primary">
             <Link href="/">
               <a>
-                <Typography>
-                  TestMaker
-                </Typography>
+                <img src="/img/logo_text.png" className="h-12"/>
               </a>
             </Link>
           </Toolbar>
