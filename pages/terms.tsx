@@ -1,4 +1,5 @@
 import Layout from "../components/Layout";
+import H1 from "../components/H1";
 
 export default function Privacy() {
 
@@ -29,9 +30,7 @@ export default function Privacy() {
     <div>
       <Layout>
         <div className="m-3">
-          <h1 className="text-2xl py-2 mb-3 border-b-4 border-primary">
-            利用規約
-          </h1>
+          <H1 title={"利用規約"}/>
 
           <p className="text-right mb-3">最終更新日 2019年7月1日</p>
 
