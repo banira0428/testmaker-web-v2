@@ -9,7 +9,7 @@ export default class Layout extends Component {
     return (
       <div className="flex flex-col min-h-screen">
         <Head>
-          <title>TestMaker</title>
+          <title>暗記メーカー</title>
           <link rel="icon" href="/favicon.ico"/>
         </Head>
         <Header/>
