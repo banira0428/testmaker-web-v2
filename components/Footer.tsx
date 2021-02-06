@@ -13,7 +13,7 @@ export default function Footer() {
       link: "/"
     },
     {
-      title: "使い方",
+      title: "よくある質問",
       link: "/guide"
     },
     {
