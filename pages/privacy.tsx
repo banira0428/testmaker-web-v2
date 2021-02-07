@@ -5,7 +5,7 @@ export default function Privacy() {
   return (
     <div>
       <Layout>
-        <div className="m-3">
+        <div className="mx-auto max-w-5xl p-3">
           <H1 title={"プライバシーポリシー"}/>
 
           <p className="text-right mb-3">最終更新日 2021年1月17日</p>

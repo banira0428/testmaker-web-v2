@@ -29,7 +29,7 @@ export default function Privacy() {
   return (
     <div>
       <Layout>
-        <div className="m-3">
+        <div className="mx-auto max-w-5xl p-3">
           <H1 title={"利用規約"}/>
 
           <p className="text-right mb-3">最終更新日 2019年7月1日</p>
