@@ -2,18 +2,19 @@ import Layout from "../components/Layout";
 import Stripe from "../components/Stripe";
 import Heading from "../components/index/Heading";
 import Content from "../components/index/Content";
+import Image from 'next/image';
 
 export default function Home() {
   return (
     <div>
       <Layout>
         <main>
-          <div className="bg-primary">
+          <div className="bg-primary min-h-screen md:min-h-0">
             <div className="relative max-w-5xl mx-auto">
               <Stripe/>
               <div className="z-10 relative grid grid-cols-1 md:grid-cols-2 py-3">
-                <div>
-                  <img src="/img/sc1.webp" className="max-w-xs mx-auto px-5"/>
+                <div className="max-w-xs mx-auto px-5">
+                  <Image src="/img/sc1.webp" width={280} height={540}/>
                 </div>
                 <div className="">
                   <div className="mt-3 md:mt-64 w-7/12 mx-auto">

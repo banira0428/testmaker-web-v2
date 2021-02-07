@@ -1,11 +1,6 @@
 import Link from "next/link";
 import {menuItems} from "../lib/menuItems";
 
-interface FooterMenu {
-  title: string
-  link: string
-}
-
 export default function Footer() {
 
   return (
