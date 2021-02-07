@@ -4,7 +4,7 @@ export default function Content({title, content, img}) {
       <h2 className="text-2xl mb-3 font-bold text-white">{title}</h2>
       <p className="text-white">{content}</p>
       <div className="max-w-xs mx-auto">
-        <img src={img} className="p-12 "/>
+        <img src={img} className="p-12" alt={"紹介画像"}/>
       </div>
     </div>
   )

@@ -14,7 +14,7 @@ export default function Home() {
               <Stripe/>
               <div className="z-10 relative grid grid-cols-1 md:grid-cols-2 py-3">
                 <div className="max-w-xs mx-auto px-5">
-                  <Image src="/img/sc1.webp" width={280} height={540}/>
+                  <Image src="/img/sc1.webp" width={280} height={540} alt={'暗記メーカーのスクリーンショット'}/>
                 </div>
                 <div className="">
                   <div className="mt-3 md:mt-64 w-7/12 mx-auto">
