@@ -2,8 +2,6 @@ import Layout from "../components/Layout";
 import Stripe from "../components/Stripe";
 import Heading from "../components/index/Heading";
 import Content from "../components/index/Content";
-import PhotoContent from "../components/index/PhotoContent";
-
 
 export default function Home() {
   return (
@@ -13,11 +11,11 @@ export default function Home() {
           <div className="bg-primary">
             <div className="relative max-w-5xl mx-auto">
               <Stripe/>
-              <div className="z-10 relative grid grid-cols-1 md:grid-cols-2">
+              <div className="z-10 relative grid grid-cols-1 md:grid-cols-2 py-3">
                 <div>
                   <img src="/img/sc1.webp" className="max-w-xs mx-auto px-5"/>
                 </div>
-                <div className="py-3">
+                <div className="">
                   <div className="mt-3 md:mt-64 w-7/12 mx-auto">
                     <p className="text-white text-2xl md:text-4xl font-bold">自分だけの</p>
                     <p className="text-white text-2xl md:text-4xl font-bold">問題集を作ろう！</p>
