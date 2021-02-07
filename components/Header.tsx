@@ -10,7 +10,7 @@ interface HeaderState {
   isShowMenu: boolean
 }
 
-export default class Header extends Component<null,HeaderState> {
+export default class Header extends Component<any,HeaderState> {
 
   constructor(props) {
     super(props);

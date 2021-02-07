@@ -13,7 +13,7 @@ export default class Layout extends Component {
           <link rel="icon" href="/favicon.ico"/>
         </Head>
         <Header/>
-        <div className="flex-grow w-full max-w-5xl mx-auto">
+        <div className="flex-grow w-full">
           {this.props.children}
         </div>
         <Footer/>
