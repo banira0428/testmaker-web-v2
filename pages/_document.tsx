@@ -20,6 +20,7 @@ export default class MyDocument extends Document {
                         `,
           }}
         />
+        <meta name="description" content="テスト勉強用アプリ「暗記メーカー」は、自学自習の効率化を目的とした問題集作成用のアプリです。資格習得のための勉強や、複数人への問題集の配布のために利用することが可能です"/>
         <meta property="og:site_name" content="暗記メーカー" />
         <meta property="og:type" content="website"/>
         <meta name="twitter:title" content="テスト勉強用アプリ「暗記メーカー」" />
