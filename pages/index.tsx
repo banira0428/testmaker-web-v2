@@ -9,28 +9,34 @@ export default function Home() {
     <div>
       <Layout>
         <main>
-          <div className="bg-primary py-3">
-            <div className="relative">
+          <div className="bg-primary">
+            <div className="relative max-w-5xl mx-auto">
               <Stripe/>
-              <img src="/img/sc1.png" className="w-2/3 mx-auto z-10 relative"/>
-            </div>
-            <div className="w-full mt-5">
-              <p className="text-white text-center text-2xl font-mono">自分だけの </p>
-              <p className="text-white text-center text-2xl font-mono"> 問題集を作ろう！</p>
-            </div>
-            <h1 className="text-white text-center text-sm font-mono mt-4">テスト勉強用アプリ「暗記メーカー」</h1>
-            <div className="flex w-3/4 m-auto mt-6">
-              <a
-                href="https://play.google.com/store/apps/details?id=jp.gr.java_conf.foobar.testmaker.service&hl=ja&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
-                <img
-                  src="img/googleplay.png"
-                  alt="Google Play で手に入れよう"/>
-              </a>
-              <a
-                href="https://apps.apple.com/jp/app/%E3%83%86%E3%82%B9%E3%83%88%E5%8B%89%E5%BC%B7%E7%94%A8%E3%82%A2%E3%83%97%E3%83%AA-%E6%9A%97%E8%A8%98%E3%83%A1%E3%83%BC%E3%82%AB%E3%83%BC/id1201200202?mt=8"><img
-                src="img/appstore.png"
-                alt="App Store"/>
-              </a>
+              <div className="z-10 relative grid grid-cols-1 md:grid-cols-2">
+                <div>
+                  <img src="/img/sc1.png" className="max-w-xs mx-auto px-5"/>
+                </div>
+                <div className="py-3">
+                  <div className="mt-3 md:mt-64 w-7/12 mx-auto">
+                    <p className="text-white text-2xl md:text-4xl font-bold">自分だけの</p>
+                    <p className="text-white text-2xl md:text-4xl font-bold">問題集を作ろう！</p>
+                  </div>
+                  <h1 className="text-white text-center text-sm md:text-xl mt-4">テスト勉強用アプリ「暗記メーカー」</h1>
+                  <div className="flex w-3/4 m-auto mt-6">
+                    <a
+                      href="https://play.google.com/store/apps/details?id=jp.gr.java_conf.foobar.testmaker.service&hl=ja&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
+                      <img
+                        src="img/googleplay.png"
+                        alt="Google Play で手に入れよう"/>
+                    </a>
+                    <a
+                      href="https://apps.apple.com/jp/app/%E3%83%86%E3%82%B9%E3%83%88%E5%8B%89%E5%BC%B7%E7%94%A8%E3%82%A2%E3%83%97%E3%83%AA-%E6%9A%97%E8%A8%98%E3%83%A1%E3%83%BC%E3%82%AB%E3%83%BC/id1201200202?mt=8"><img
+                      src="img/appstore.png"
+                      alt="App Store"/>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className="p-3 bg-gray-100">
