@@ -8,10 +8,6 @@ export default class Layout extends Component {
   render() {
     return (
       <div className="flex flex-col min-h-screen">
-        <Head>
-          <title>暗記メーカー</title>
-          <link rel="icon" href="/favicon.ico"/>
-        </Head>
         <Header/>
         <div className="flex-grow w-full">
           {this.props.children}
