@@ -12,6 +12,9 @@ module.exports = {
         white: colors.white,
       }
     },
+    fontFamily: {
+      'sans': ['"ヒラギノ角ゴ ProN"', 'sans-serif']
+    }
   },
   variants: {
     extend: {},
