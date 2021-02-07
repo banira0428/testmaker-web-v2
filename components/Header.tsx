@@ -26,7 +26,7 @@ export default class Header extends Component<any,HeaderState> {
               <img src="/img/logo_text.webp" className="h-12" alt={"暗記メーカー"}/>
             </a>
           </Link>
-          <button className="focus:outline-none lg:hidden ml-auto mr-0" onClick={() => {
+          <button className="focus:outline-none lg:hidden ml-auto mr-0" aria-label={'メニューボタン'} onClick={() => {
             this.setState({
               isShowMenu: !this.state.isShowMenu
             })

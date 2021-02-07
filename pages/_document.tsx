@@ -3,7 +3,7 @@ import Document, {Head, Main, NextScript} from 'next/document'
 export default class MyDocument extends Document {
   render() {
     return (
-      <html>
+      <html lang={"ja"}>
       <Head>
         <title>暗記メーカー</title>
         <link rel="icon" href="/favicon.ico"/>
