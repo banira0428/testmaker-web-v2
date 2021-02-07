@@ -13,7 +13,7 @@ export default function Guide() {
       <Layout>
         <div className="max-w-5xl mx-auto">
           <div className="mt-3">
-            <Heading text={"よくある質問"}/>
+            <Heading title={'FAQ'} subTitle={'よくある質問'}/>
           </div>
           <div className="m-1">
 

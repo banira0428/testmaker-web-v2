@@ -1,14 +1,8 @@
-import Typography from "@material-ui/core/Typography";
-
-export default function Heading({text}) {
+export default function Heading({title, subTitle}) {
   return (
-    <div className="relative mb-6">
-        <div className="absolute w-3/4 bg-primary h-full rounded-r"/>
-        <div className="z-10 relative content-center pl-6 pt-3 pb-3 ml-auto mr-auto">
-          <Typography className="text-white">
-            {text}
-          </Typography>
-        </div>
+    <div className="py-3 mt-5">
+      <p className="text-5xl md:text-6xl font-bold  mr-auto ml-0">{ title }</p>
+      <h2 className="mr-auto md:text-xl mt-2 ml-0 rounded-b">{ subTitle }</h2>
     </div>
   )
 }

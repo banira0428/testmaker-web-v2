@@ -1,6 +1,6 @@
 import Layout from "../components/Layout";
 import Stripe from "../components/Stripe";
-import Heading from "../components/index/Heading";
+import Heading from "../components/Heading";
 import Content from "../components/index/Content";
 import Image from 'next/image';
 
@@ -14,7 +14,7 @@ export default function Home() {
               <Stripe/>
               <div className="z-10 relative grid grid-cols-1 md:grid-cols-2 py-3">
                 <div className="max-w-xs mx-auto px-5">
-                  <Image src="/img/sc1.webp" width={280} height={540} alt={'暗記メーカーのスクリーンショット'}/>
+                  <Image src="/img/sc1.webp" width={280} height={550} alt={'暗記メーカーのスクリーンショット'}/>
                 </div>
                 <div className="">
                   <div className="mt-3 md:mt-64 w-7/12 mx-auto">
@@ -44,7 +44,7 @@ export default function Home() {
               <Heading title={'About'} subTitle={'このアプリについて'}/>
 
               <Content title={'アプリ × 自学自習'}
-                       content={'暗記メーカーは「自学自習の効率化」を目的とした問題集作成アプリです。'}
+                       content={'暗記メーカーは「自学自習の効率化」を目的とした問題集作成アプリです。資格習得のための勉強や、複数人への問題集の配布のために利用することが可能です'}
                        img={'/img/undraw_modern_design_v3wv.svg'}/>
 
               <Heading title={'Features'} subTitle={'このアプリの特徴'}/>
