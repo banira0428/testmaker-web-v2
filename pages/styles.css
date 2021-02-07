@@ -1,0 +1,23 @@
+@tailwind base;
+
+.fade-entering {
+    opacity: .0;
+}
+
+.fade-entered {
+    opacity: .95;
+    transition: 150ms;
+}
+
+.fade-exiting {
+    opacity: .0;
+    transition: 150ms;
+}
+
+.fade-exited {
+    opacity: 0;
+    display: none;
+}
+
+@tailwind components;
+@tailwind utilities;
