@@ -86,6 +86,7 @@ export default function Guide() {
               </AccordionDetails>
             </Accordion>
           </div>
+          <p className="mt-5 p-3">このページの内容を見ても疑問点が解決しない場合は、<a href="https://forms.gle/MW6JMFmKRUop2enx8" className="text-primary">お問い合わせフォーム</a>をご利用ください</p>
         </div>
       </Layout>
     </div>

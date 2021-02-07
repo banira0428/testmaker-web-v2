@@ -2,6 +2,7 @@ import Layout from "../components/Layout";
 import Stripe from "../components/Stripe";
 import Heading from "../components/index/Heading";
 import Content from "../components/index/Content";
+import PhotoContent from "../components/index/PhotoContent";
 
 
 export default function Home() {
@@ -52,17 +53,16 @@ export default function Home() {
               <div className="grid grid-cols-1 md:grid-cols-3">
 
                 <Content title={'多彩な問題形式'}
-                         content={'単純な一問一答問題だけでなく、選択問題や完答問題など、あなたの学習したい科目に最適な形式の問題を作成することができます。'}
+                         content={'単純な一問一答問題だけでなく、選択問題や完答問題など、学習したい科目に最適な形式の問題を作成することができます。'}
                          img={'/img/undraw_quiz_nlyh.svg'}/>
 
                 <Content title={'問題集を手軽に共有'}
-                         content={'問題集をアップロードすることで、リンク一つで友人と問題集を手軽に共有することができます。'}
+                         content={'問題集をアップロードすることで、リンク一つで問題集を手軽に共有することができます。'}
                          img={'/img/undraw_share_link_qtxe.svg'}/>
 
                 <Content title={'PCからまとめて編集'}
                          content={'エクセルなどの表計算ソフトを用いることで、問題集をまとめて編集することができます。'}
                          img={'/img/undraw_Spreadsheet_re_cn18.svg'}/>
-
               </div>
 
             </div>

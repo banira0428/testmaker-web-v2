@@ -13,6 +13,10 @@ export const menuItems: MenuItem[] = [
     link: "/guide"
   },
   {
+    title: "お問い合わせ",
+    link: "https://forms.gle/MW6JMFmKRUop2enx8"
+  },
+  {
     title: "プライバシーポリシー",
     link: "/privacy"
   },
