@@ -1,5 +1,6 @@
 import Layout from "../components/Layout";
 import H1 from "../components/H1";
+import Head from "next/dist/next-server/lib/head";
 
 export default function Privacy() {
 
@@ -28,6 +29,9 @@ export default function Privacy() {
 
   return (
     <div>
+      <Head>
+        <title>暗記メーカー | 利用規約</title>
+      </Head>
       <Layout>
         <div className="mx-auto max-w-5xl p-3">
           <H1 title={"利用規約"}/>

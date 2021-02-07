@@ -2,10 +2,14 @@ import Layout from "../components/Layout";
 import Heading from "../components/Heading";
 import {Accordion, AccordionDetails} from "@material-ui/core";
 import ContentQuestion from "../components/guide/ContentQuestion";
+import Head from "next/head";
 
 export default function Guide() {
   return (
     <div>
+      <Head>
+        <title>暗記メーカー | よくある質問</title>
+      </Head>
       <Layout>
         <div className="max-w-5xl mx-auto">
           <div className="mt-3">
