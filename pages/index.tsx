@@ -15,8 +15,8 @@ export default function Home() {
               <img src="/img/sc1.png" className="w-2/3 mx-auto z-10 relative"/>
             </div>
             <div className="w-full mt-5">
-              <p className="text-white text-center text-2xl font-mono">自分だけの　　　　　　</p>
-              <p className="text-white text-center text-2xl font-mono">　　　問題集を作ろう！</p>
+              <p className="text-white text-center text-2xl font-mono">自分だけの </p>
+              <p className="text-white text-center text-2xl font-mono"> 問題集を作ろう！</p>
             </div>
             <h1 className="text-white text-center text-sm font-mono mt-4">テスト勉強用アプリ「暗記メーカー」</h1>
             <div className="flex w-3/4 m-auto mt-6">
@@ -34,25 +34,32 @@ export default function Home() {
             </div>
           </div>
           <div className="p-3 bg-gray-100">
-            <Heading title={'About'} subTitle={'このアプリについて'}/>
-            <Content title={'アプリ × 自学自習'}
-                     content={'暗記メーカーは「自学自習の効率化」を目的とした問題集作成アプリです。'}
-                     img={'/img/undraw_modern_design_v3wv.svg'}/>
+            <div className="max-w-5xl mx-auto">
+              <Heading title={'About'} subTitle={'このアプリについて'}/>
 
-            <Heading title={'Features'} subTitle={'このアプリの特徴'}/>
+              <Content title={'アプリ × 自学自習'}
+                       content={'暗記メーカーは「自学自習の効率化」を目的とした問題集作成アプリです。'}
+                       img={'/img/undraw_modern_design_v3wv.svg'}/>
 
-            <Content title={'多彩な問題形式'}
-                     content={'単純な一問一答問題だけでなく、選択問題や完答問題など、あなたの学習したい科目に最適な形式の問題を作成することができます。'}
-                     img={'/img/undraw_quiz_nlyh.svg'}/>
+              <Heading title={'Features'} subTitle={'このアプリの特徴'}/>
 
-            <Content title={'問題集を手軽に共有'}
-                     content={'問題集をアップロードすることで、リンク一つで友人と問題集を手軽に共有することができます。'}
-                     img={'/img/undraw_share_link_qtxe.svg'}/>
+              <div className="grid grid-cols-1 md:grid-cols-3">
 
-            <Content title={'PCからまとめて編集'}
-                     content={'エクセルなどの表計算ソフトを用いることで、問題集をまとめて編集することができます。'}
-                     img={'/img/undraw_Spreadsheet_re_cn18.svg'}/>
+                <Content title={'多彩な問題形式'}
+                         content={'単純な一問一答問題だけでなく、選択問題や完答問題など、あなたの学習したい科目に最適な形式の問題を作成することができます。'}
+                         img={'/img/undraw_quiz_nlyh.svg'}/>
 
+                <Content title={'問題集を手軽に共有'}
+                         content={'問題集をアップロードすることで、リンク一つで友人と問題集を手軽に共有することができます。'}
+                         img={'/img/undraw_share_link_qtxe.svg'}/>
+
+                <Content title={'PCからまとめて編集'}
+                         content={'エクセルなどの表計算ソフトを用いることで、問題集をまとめて編集することができます。'}
+                         img={'/img/undraw_Spreadsheet_re_cn18.svg'}/>
+
+              </div>
+
+            </div>
           </div>
         </main>
       </Layout>
