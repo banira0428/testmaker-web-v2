@@ -15,7 +15,7 @@ export default function Home() {
               <Stripe/>
               <div className="z-10 relative grid grid-cols-1 md:grid-cols-2">
                 <div>
-                  <img src="/img/sc1.png" className="max-w-xs mx-auto px-5"/>
+                  <img src="/img/sc1.webp" className="max-w-xs mx-auto px-5"/>
                 </div>
                 <div className="py-3">
                   <div className="mt-3 md:mt-64 w-7/12 mx-auto">

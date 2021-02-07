@@ -11,7 +11,7 @@ export default function Footer() {
   return (
     <footer className="bg-primary p-2">
       <div className="max-w-5xl mx-auto">
-        <img src="img/logo_text.png" className="w-1/2 max-w-xs"/>
+        <img src="img/logo_text.webp" className="w-1/2 max-w-xs"/>
         <ul>
           {
             menuItems.map((it) =>
