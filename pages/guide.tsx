@@ -1,9 +1,8 @@
 import Layout from "../components/Layout";
 import Heading from "../components/Heading";
-import {Accordion, AccordionDetails, AccordionSummary} from "@material-ui/core";
+import {Accordion, AccordionDetails} from "@material-ui/core";
 import ContentQuestion from "../components/guide/ContentQuestion";
 import Head from "next/head";
-import ExpandMoreIcon from "@material-ui/core/SvgIcon/SvgIcon";
 
 export default function Guide() {
   return (
@@ -19,12 +18,7 @@ export default function Guide() {
           <div className="m-1">
 
             <Accordion elevation={0}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon/>}
-              >
-                <p className="rounded bg-primary text-white px-1 pb-1 max-h-6">Q</p>
-                <p className="ml-3">{'問題集を他の端末で利用することは可能ですか？'}</p>
-              </AccordionSummary>
+              <ContentQuestion title={'問題集を他の端末で利用することは可能ですか？'}/>
               <AccordionDetails>
                 <p>はい、可能です。問題集を他の端末で使用したい場合は、トップページで該当の問題集をタップした後に、「共有する」を選択してください。</p>
               </AccordionDetails>
