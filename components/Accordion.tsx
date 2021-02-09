@@ -4,7 +4,7 @@ interface AccordionState {
   isOpen: boolean
 }
 
-export default class MyAccordion extends Component<any, AccordionState> {
+export default class Accordion extends Component<any, AccordionState> {
 
   constructor(props) {
     super(props)
