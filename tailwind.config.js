@@ -22,7 +22,7 @@ module.exports = {
       }
     },
     fontFamily: {
-      'sans': ['"ヒラギノ角ゴ ProN"', 'sans-serif']
+      'sans': ['"ヒラギノ角ゴ ProN"', '"Roboto"', 'sans-serif']
     }
   },
   variants: {
