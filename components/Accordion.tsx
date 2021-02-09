@@ -1,11 +1,10 @@
-import {Component} from "react";
+import {Component, createRef, RefObject, useRef} from "react";
 
 interface AccordionState {
   isOpen: boolean
 }
 
 export default class Accordion extends Component<any, AccordionState> {
-
   constructor(props) {
     super(props)
     this.state = {
@@ -16,7 +15,7 @@ export default class Accordion extends Component<any, AccordionState> {
   render() {
     return (
       <div className="m-3">
-        <a href="#" onClick={() => {
+        <a className="cursor-pointer" onClick={() => {
           this.setState({
             isOpen: !this.state.isOpen
           })
