@@ -19,5 +19,8 @@
     display: none;
 }
 
+.accordion-content-open {
+}
+
 @tailwind components;
 @tailwind utilities;

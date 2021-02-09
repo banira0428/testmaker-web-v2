@@ -9,7 +9,16 @@ module.exports = {
         primary: {
           DEFAULT: "#33b5e5"
         },
+        accent: {
+          DEFAULT: "#ffa144"
+        },
         white: colors.white,
+      },
+      lineHeight: {
+        '0': '0',
+      },
+      transitionProperty: {
+        'accordion': 'line-height opacity padding-top',
       }
     },
     fontFamily: {
