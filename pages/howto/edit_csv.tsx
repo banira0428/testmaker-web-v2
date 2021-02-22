@@ -12,7 +12,7 @@ export default function EditCSV() {
         <div className="mx-auto max-w-5xl p-3">
           {/* p タグで段落を表示 */}
           <p>
-            文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章
+            文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章文章
           </p>
 
           {/* img タグで画像を表示。 src 属性でファイルの場所を指定する（つまり、撮影したスクショは自分で testmaker_web_v2/public/img 内に配置しておく必要がある） */}
