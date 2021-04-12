@@ -16,7 +16,8 @@ export default function ShareTests() {
 
           <h3 className="text-3xl md:text-3xl font-bold mr-auto ml-0 mt-6">1. アプリへのログイン</h3>
           <p className="mt-6">アプリを起動後「問題集（共有）」をタップした後、「ログイン」ボタンをタップし、アプリへのログインを行ってください。</p>
-          {/* ログインボタンの映っているスクショ */}
+
+          <img src="/img/share_tests/sc1.jpeg" className="mt-6 w-2/3 max-w-md mx-auto"/>
 
           <h3 className="text-3xl md:text-3xl font-bold mr-auto ml-0 mt-6">2. 問題集のアップロード</h3>
           <p className="mt-6">画面右下のボタンをクリックし、「問題集のアップロード」画面に移動してください。その後、アップロードしたい問題集を選択し、「アップロード」ボタンをタップすることで、問題集をサーバ上にアップロードします。</p>
