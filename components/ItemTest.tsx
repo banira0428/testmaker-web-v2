@@ -1,4 +1,10 @@
-export default function ItemTest({ title }) {
+import { Test } from "../lib/resources/test";
+
+type Props = {
+  test: Test
+}
+
+export default function ItemTest(props: Props) {
   return (
     <a href="#">
       <div className="flex py-6">
@@ -17,8 +23,8 @@ export default function ItemTest({ title }) {
           />
         </svg>
         <div>
-          <p className="pl-3 pb-3 font-bold text-xl">{title}</p>
-          <p className="pl-3 text-md">限定公開</p>
+          <p className="pl-3 pb-3 font-bold text-xl">{props.test.name}</p>
+          <p className="pl-3 text-md">{ props.test.isPublic ? "全体公開" : "限定公開"}</p>
         </div>
       </div>
     </a>
