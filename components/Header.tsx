@@ -2,6 +2,7 @@ import Link from "next/link";
 import {Component} from "react";
 import Transition from "react-transition-group/cjs/Transition";
 import {menuItems} from "../lib/menuItems";
+import { login, logout, auth } from "../lib/firebase_auth";
 
 interface HeaderState {
   isShowMenu: boolean
@@ -24,6 +25,11 @@ export default class Header extends Component<any, HeaderState> {
             </a>
           </Link>
           <div className="flex-grow"/>
+          {
+            auth.currentUser 
+            ? <a href="#" className="my-auto text-white" onClick={() => logout()} >ログアウト</a>
+            : <a href="#" className="my-auto text-white" onClick={() => login()} >ログイン</a>
+          }
           <button className="focus:outline-none lg:hidden" aria-label={'メニューボタン'} onClick={() => {
             this.setState({
               isShowMenu: !this.state.isShowMenu
