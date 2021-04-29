@@ -95,13 +95,15 @@ export default class Header extends Component<any, HeaderState> {
                 }}
               >
                 <ul className="flex flex-col justify-center ml-auto mr-auto text-left w-2/3 my-12">
-                  {menuItems.map((nav) => (
-                    <li key={nav.title} className="p-4 text-xl">
-                      <Link href={nav.link}>
-                        <a>{nav.title}</a>
-                      </Link>
-                    </li>
-                  ))}
+                  {menuItems
+                    .filter((nav) => nav.isShow(auth.currentUser))
+                    .map((nav) => (
+                      <li key={nav.title} className="p-4 text-xl">
+                        <Link href={nav.link}>
+                          <a onClick={nav.action}>{nav.title}</a>
+                        </Link>
+                      </li>
+                    ))}
                 </ul>
               </div>
             );
