@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import firebase from "./init"
+import firebase from "../lib/init"
 import { User } from "@firebase/auth-types"
 
 type Props = {

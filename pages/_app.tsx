@@ -1,6 +1,6 @@
 import "./styles.css";
 import Head from "next/head";
-import { AuthProvider } from "../lib/authContext";
+import { AuthProvider } from "../components/authContext";
 
 export default function _app({ Component, pageProps }) {
   

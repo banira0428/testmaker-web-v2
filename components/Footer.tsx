@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useContext } from "react";
-import { AuthContext } from "../lib/authContext";
+import { AuthContext } from "./authContext";
 import { menuItems } from "../lib/menuItems";
 
 export default function Footer() {

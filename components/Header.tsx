@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useContext, useState } from "react";
 import Transition from "react-transition-group/cjs/Transition";
 import { menuItems } from "../lib/menuItems";
-import { AuthContext } from "../lib/authContext";
+import { AuthContext } from "./authContext";
 
 export default function Header() {
   const { currentUser } = useContext(AuthContext)
