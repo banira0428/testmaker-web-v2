@@ -20,7 +20,7 @@ export const login = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
   firebase
     .auth()
-    .signInWithPopup(provider)
+    .signInWithRedirect(provider)
     .then(function (result: any) {
       return result;
     })
@@ -62,5 +62,4 @@ export const logout = () => {
     window.location.reload();
   });
 };
-
 

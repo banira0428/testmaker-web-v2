@@ -1,4 +1,4 @@
-import { login, logout, auth } from "../lib/firebase_auth";
+import { logout } from "../lib/firebase_auth";
 interface MenuItem {
   title: string;
   link: string;
@@ -39,18 +39,16 @@ export const menuItems: MenuItem[] = [
   },
   {
     title: "ログイン",
-    link: "/",
+    link: "/login",
     isShow: (user: any) => user == null,
-    action: () => {
-      login();
-    },
+    action: () => {},
   },
   {
     title: "ログアウト",
     link: "/",
     isShow: (user: any) => user != null,
     action: () => {
-      logout();
+      if (window.confirm('ログアウトしますか？')) logout();
     },
   },
 ];
