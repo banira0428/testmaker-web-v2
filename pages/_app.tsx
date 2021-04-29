@@ -1,14 +1,17 @@
 import "./styles.css";
 import Head from "next/head";
+import { AuthProvider } from "../lib/authContext";
 
-export default function _app({Component, pageProps}) {
-
+export default function _app({ Component, pageProps }) {
+  
   return (
     <>
       <Head>
-          <title>暗記メーカー</title>
+        <title>暗記メーカー</title>
       </Head>
-      <Component {...pageProps} />
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
     </>
-  )
+  );
 }

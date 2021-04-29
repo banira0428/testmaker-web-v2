@@ -1,8 +1,9 @@
-import { logout } from "../lib/firebase_auth";
+import { User } from "@firebase/auth-types"
+import firebase from "./init"
 interface MenuItem {
   title: string;
   link: string;
-  isShow(user: any): boolean;
+  isShow(user: User): boolean;
   action(): void;
 }
 
@@ -10,45 +11,48 @@ export const menuItems: MenuItem[] = [
   {
     title: "トップページ",
     link: "/",
-    isShow: (user: any) => true,
+    isShow: (user: User) => true,
     action: () => {},
   },
   {
     title: "よくある質問",
     link: "/guide",
-    isShow: (user: any) => true,
+    isShow: (user: User) => true,
     action: () => {},
   },
   {
     title: "お問い合わせ",
     link: "https://forms.gle/MW6JMFmKRUop2enx8",
-    isShow: (user: any) => true,
+    isShow: (user: User) => true,
     action: () => {},
   },
   {
     title: "プライバシーポリシー",
     link: "/privacy",
-    isShow: (user: any) => true,
+    isShow: (user: User) => true,
     action: () => {},
   },
   {
     title: "利用規約",
     link: "/terms",
-    isShow: (user: any) => true,
+    isShow: (user: User) => true,
     action: () => {},
   },
   {
     title: "ログイン",
     link: "/login",
-    isShow: (user: any) => user == null,
+    isShow: (user: User) => user == null || user == undefined,
     action: () => {},
   },
   {
     title: "ログアウト",
     link: "/",
-    isShow: (user: any) => user != null,
+    isShow: (user: User) => user != null,
     action: () => {
-      if (window.confirm('ログアウトしますか？')) logout();
+      if (window.confirm('ログアウトしますか？')){
+        firebase.auth().signOut()
+        window.location.reload()
+      }
     },
   },
 ];

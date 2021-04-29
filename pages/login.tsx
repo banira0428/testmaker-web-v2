@@ -5,13 +5,16 @@ import firebase from "firebase/app";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 export default function Login() {
-  const uiConfig = {
+
+  const uiConfig: firebaseui.auth.Config = {
     signInFlow: "redirect",
     signInSuccessUrl: "/dashboard",
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
+    tosUrl: "https://ankimaker.com/terms",
+    privacyPolicyUrl: "https://ankimaker.com/privacy"
   };
 
   return (

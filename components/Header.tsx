@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Transition from "react-transition-group/cjs/Transition";
 import { menuItems } from "../lib/menuItems";
-import { auth } from "../lib/firebase_auth";
+import { AuthContext } from "../lib/authContext";
 
 export default function Header() {
+  const { currentUser } = useContext(AuthContext)
   const [isShowMenu, setIsShowMenu] = useState(false);
 
   return (
@@ -23,7 +24,7 @@ export default function Header() {
         <div className="hidden lg:block my-auto">
           <ul className="text-white">
             {menuItems
-              .filter((nav) => nav.isShow(auth.currentUser))
+              .filter((nav) => nav.isShow(currentUser))
               .map((nav) => (
                 <li key={nav.title} className="px-3 text-sm inline">
                   <Link href={nav.link}>
@@ -74,7 +75,7 @@ export default function Header() {
             >
               <ul className="flex flex-col justify-center ml-auto mr-auto text-left w-2/3 my-12">
                 {menuItems
-                  .filter((nav) => nav.isShow(auth.currentUser))
+                  .filter((nav) => nav.isShow(currentUser))
                   .map((nav) => (
                     <li key={nav.title} className="p-4 text-xl">
                       <Link href={nav.link}>

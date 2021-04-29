@@ -1,8 +1,11 @@
 import Link from "next/link";
+import { useContext } from "react";
+import { AuthContext } from "../lib/authContext";
 import { menuItems } from "../lib/menuItems";
-import { auth } from "../lib/firebase_auth";
 
 export default function Footer() {
+  const { currentUser } = useContext(AuthContext)
+
   return (
     <footer className="bg-primary p-2">
       <div className="max-w-5xl mx-auto">
@@ -13,7 +16,7 @@ export default function Footer() {
         />
         <ul>
           {menuItems
-            .filter((nav) => nav.isShow(auth.currentUser))
+            .filter((nav) => nav.isShow(currentUser))
             .map((it) => (
               <li key={it.title} className="mb-1 ml-2">
                 <Link href={it.link}>
