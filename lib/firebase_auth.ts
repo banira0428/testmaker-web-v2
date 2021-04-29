@@ -16,23 +16,6 @@ export const config = {
 export const auth = firebase.auth();
 export const Firebase = firebase;
 
-export const login = () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  firebase
-    .auth()
-    .signInWithRedirect(provider)
-    .then(function (result: any) {
-      return result;
-    })
-    .catch(function (error) {
-      console.log(error);
-      const errorCode = error.code;
-      console.log(errorCode);
-      const errorMessage = error.message;
-      console.log(errorMessage);
-    });
-};
-
 export const authStateChanged = (dispatch: any) => {
   return firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
