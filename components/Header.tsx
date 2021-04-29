@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Component } from "react";
 import Transition from "react-transition-group/cjs/Transition";
 import { menuItems } from "../lib/menuItems";
-import { login, logout, auth } from "../lib/firebase_auth";
+import { auth } from "../lib/firebase_auth";
 
 interface HeaderState {
   isShowMenu: boolean;
@@ -29,23 +29,17 @@ export default class Header extends Component<any, HeaderState> {
           </Link>
           <div className="flex-grow" />
           <div className="hidden lg:block my-auto">
-            {auth.currentUser ? (
-              <a
-                href="#"
-                className="my-auto text-white"
-                onClick={() => logout()}
-              >
-                ログアウト
-              </a>
-            ) : (
-              <a
-                href="#"
-                className="my-auto text-white"
-                onClick={() => login()}
-              >
-                ログイン
-              </a>
-            )}
+            <ul className="text-white">
+              {menuItems
+                .filter((nav) => nav.isShow(auth.currentUser))
+                .map((nav) => (
+                  <li key={nav.title} className="px-3 text-sm inline">
+                    <Link href={nav.link}>
+                      <a onClick={nav.action}>{nav.title}</a>
+                    </Link>
+                  </li>
+                ))}
+            </ul>
           </div>
           <button
             className="focus:outline-none lg:hidden"

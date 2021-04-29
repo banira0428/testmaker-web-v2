@@ -8,22 +8,6 @@ interface MenuItem {
 
 export const menuItems: MenuItem[] = [
   {
-    title: "ログイン",
-    link: "/",
-    isShow: (user: any) => user == null,
-    action: () => {
-      login();
-    },
-  },
-  {
-    title: "ログアウト",
-    link: "/",
-    isShow: (user: any) => user != null,
-    action: () => {
-      logout();
-    },
-  },
-  {
     title: "トップページ",
     link: "/",
     isShow: (user: any) => true,
@@ -52,5 +36,21 @@ export const menuItems: MenuItem[] = [
     link: "/terms",
     isShow: (user: any) => true,
     action: () => {},
+  },
+  {
+    title: "ログイン",
+    link: "/",
+    isShow: (user: any) => user == null,
+    action: () => {
+      login();
+    },
+  },
+  {
+    title: "ログアウト",
+    link: "/",
+    isShow: (user: any) => user != null,
+    action: () => {
+      logout();
+    },
   },
 ];
