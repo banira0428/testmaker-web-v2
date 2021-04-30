@@ -3,11 +3,10 @@ import { useContext, useState } from "react";
 import Transition from "react-transition-group/cjs/Transition";
 import { menuItems } from "../lib/menuItems";
 import { AuthContext } from "./authContext";
-import { ToastContext } from "./ToastContext";
+import Toast from "./Toast";
 
 export default function Header() {
   const { currentUser } = useContext(AuthContext);
-  const { message, setMessage } = useContext(ToastContext);
   const [isShowMenu, setIsShowMenu] = useState(false);
 
   return (
@@ -92,31 +91,7 @@ export default function Header() {
           }}
         </Transition>
       </header>
-      <Transition
-        in={message !== ""}
-        timeout={200}
-        onEntered={() => {
-          setTimeout(() => setMessage(""), 2000);
-        }}
-      >
-        {(status) => {
-          console.log(status);
-          return (
-            <div
-              className={[
-                "z-50",
-                "mt-3",
-                "w-full",
-                "fixed",
-                "top",
-                `fade-${status}`,
-              ].join(" ")}
-            >
-              <p className="max-w-7xl mx-auto text-center bg-primary py-2 text-white rounded font-semibold">{message}</p>
-            </div>
-          );
-        }}
-      </Transition>
+      <Toast/>
     </div>
   );
 }
