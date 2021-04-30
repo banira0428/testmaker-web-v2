@@ -1,12 +1,13 @@
 import { Test } from "../lib/resources/test";
 
 type Props = {
-  test: Test
-}
+  test: Test;
+  onClick(): void;
+};
 
 export default function ItemTest(props: Props) {
   return (
-    <a href="#">
+    <a className="cursor-pointer" onClick={() => props.onClick()}>
       <div className="flex py-6">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +25,9 @@ export default function ItemTest(props: Props) {
         </svg>
         <div>
           <p className="pl-3 pb-3 font-bold text-xl">{props.test.name}</p>
-          <p className="pl-3 text-md">{ props.test.isPublic ? "全体公開" : "限定公開"}</p>
+          <p className="pl-3 text-md">
+            {props.test.isPublic ? "全体公開" : "限定公開"}
+          </p>
         </div>
       </div>
     </a>

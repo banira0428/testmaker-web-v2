@@ -7,13 +7,16 @@ import { fetchPagedTests, PagedTests } from "../lib/services/firestore";
 import { AuthContext } from "../components/authContext";
 import { Test } from "../lib/resources/test";
 import { QueryDocumentSnapshot } from "@firebase/firestore-types";
+import ButtonPrimary from "../components/ButtonPrimary";
+import { testMenuItems } from "../lib/testMenuItems";
 
 export default function DashBoard() {
   const { currentUser } = useContext(AuthContext);
 
-  const [tests, setTests] = useState([]);
+  const [tests, setTests] = useState<Test[]>([]);
+  const [selectedTest, setSelectedTest] = useState<Test>(undefined);
   const [cursor, setCursor] = useState<QueryDocumentSnapshot>();
-  const [isLastPage, setIsLastpage] = useState(false);
+  const [isLastPage, setIsLastpage] = useState<boolean>(false);
 
   const buildItemModels = () => {
     if (currentUser == null || currentUser == undefined) return;
@@ -38,28 +41,58 @@ export default function DashBoard() {
       <Layout>
         <div className="mx-auto max-w-5xl p-3">
           <Heading title={"Dashboard"} subTitle={"ダッシュボード"} />
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-4 divide-x mb-6">
             <div className="col-span-2">
-              <h3 className="text-3xl md:text-4xl font-bold  mr-auto ml-0 mt-5 mb-3">
-                問題集
-              </h3>
+              <div className="flex justify-items-center">
+                <h3 className="text-3xl md:text-4xl font-bold  mr-auto ml-0 mt-5 mb-3">
+                  問題集
+                </h3>
+                <div className="flex-glow-1" />
+                <div className="my-auto">
+                  <ButtonPrimary title={"+ 新規作成"} onClick={() => {}} />
+                </div>
+              </div>
               {tests.map((test: Test) => (
                 <div key={test.documentId}>
-                  <ItemTest test={test} />
+                  <ItemTest
+                    test={test}
+                    onClick={() => {
+                      setSelectedTest(test);
+                    }}
+                  />
                 </div>
               ))}
-              <div className="w-full text-center mb-6">
+              <div className="w-full text-center">
                 {tests.length > 0 && !isLastPage && (
-                  <button
-                    className="w-full focus:outline-none bg-transparent hover:bg-primary text-primary font-semibold hover:text-white py-2 px-4 border border-primary hover:border-transparent rounded"
-                    onClick={() => buildItemModels()}
-                  >
-                    もっと見る
-                  </button>
+                  <ButtonPrimary
+                    title={"もっと見る"}
+                    onClick={() => {
+                      buildItemModels();
+                    }}
+                  />
                 )}
               </div>
             </div>
-            <div className="col-span-1"></div>
+            <div className="col-span-1 pl-5">
+              {selectedTest && (
+                <div>
+                  <h4 className="text-xl md:text-2xl font-bold  mr-auto ml-0 mt-5 mb-3">
+                    {selectedTest.name}
+                  </h4>
+
+                  <div className="flex gap-4">
+                    {testMenuItems.map((it) => (
+                      <div className="mt-4">
+                        <ButtonPrimary
+                          title={it.title}
+                          onClick={() => it.action()}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </Layout>
