@@ -6,15 +6,17 @@ type Props = {
 };
 
 export default function ItemTest(props: Props) {
+  const COLOR_MAX = 8;
+
   return (
     <a className="cursor-pointer" onClick={() => props.onClick()}>
       <div className="flex py-6">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-12 w-12 mr-3"
+          className="h-12 w-12 mr-6 flex-none"
           fill="none"
           viewBox="0 0 24 24"
-          stroke="currentColor"
+          stroke={`hsl(${(props.test.color / COLOR_MAX) * 360},50%,50%)`}
         >
           <path
             strokeLinecap="round"
@@ -24,8 +26,8 @@ export default function ItemTest(props: Props) {
           />
         </svg>
         <div>
-          <p className="pl-3 pb-3 font-bold text-xl">{props.test.name}</p>
-          <p className="pl-3 text-md">
+          <p className="pb-3 font-bold text-xl">{props.test.name}</p>
+          <p className="text-md">
             {props.test.isPublic ? "全体公開" : "限定公開"}
           </p>
         </div>

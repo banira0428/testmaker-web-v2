@@ -34,7 +34,15 @@ export const fetchPagedTests = async (
   return {
     tests: docs.map(
       (it) =>
-        new Test(it.id, it.data().name, it.data().userId, [], it.data().public)
+        new Test(
+          it.id,
+          it.data().name,
+          it.data().userId,
+          [],
+          it.data().public,
+          it.data().created_at.toDate(),
+          it.data().color
+        )
     ),
     cursor: docs.length >= 1 ? docs[docs.length - 1] : startAfter,
   };

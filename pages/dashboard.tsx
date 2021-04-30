@@ -69,7 +69,7 @@ export default function DashBoard() {
         <title>暗記メーカー | ダッシュボード</title>
       </Head>
       <Layout>
-        <div className="mx-auto max-w-5xl p-3">
+        <div className="mx-auto max-w-7xl p-3">
           <Heading title={"Dashboard"} subTitle={"ダッシュボード"} />
           <div className="grid grid-cols-3 gap-4 divide-x mb-6">
             <div className="col-span-2">
@@ -109,10 +109,12 @@ export default function DashBoard() {
                   <h4 className="text-xl md:text-2xl font-bold  mr-auto ml-0 mt-5 mb-3">
                     {selectedTest.name}
                   </h4>
+                  <p>{`作成日：　　${selectedTest.created_at.toLocaleDateString()}`}</p>
+                  <p>{`公開設定：　${selectedTest.isPublic ? "全体公開" : "限定公開"}`}</p>
 
                   <div className="flex gap-4">
                     {testMenuItems.map((it) => (
-                      <div className="mt-4">
+                      <div className="mt-4" key={it.title}>
                         <ButtonPrimary
                           title={it.title}
                           onClick={() => it.action(selectedTest)}
