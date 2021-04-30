@@ -3,12 +3,20 @@ import Head from "next/dist/next-server/lib/head";
 import Heading from "../components/Heading";
 import ItemTest from "../components/ItemTest";
 import { useEffect, useContext, useState } from "react";
-import { fetchPagedTests, PagedTests } from "../lib/services/firestore";
+import {
+  deleteTest,
+  fetchPagedTests,
+  PagedTests,
+} from "../lib/services/firestore";
 import { AuthContext } from "../components/authContext";
 import { Test } from "../lib/resources/test";
 import { QueryDocumentSnapshot } from "@firebase/firestore-types";
 import ButtonPrimary from "../components/ButtonPrimary";
-import { testMenuItems } from "../lib/testMenuItems";
+
+interface TestMenuItem {
+  title: string;
+  action(test: Test): void;
+}
 
 export default function DashBoard() {
   const { currentUser } = useContext(AuthContext);
@@ -28,6 +36,28 @@ export default function DashBoard() {
       }
     });
   };
+
+  const testMenuItems: TestMenuItem[] = [
+    {
+      title: "編集",
+      action: () => {},
+    },
+    {
+      title: "共有",
+      action: () => {},
+    },
+    {
+      title: "削除",
+      action: (test: Test) => {
+        if (!confirm(`「${test.name}」を削除しますか？`)) return;
+
+        deleteTest(test.documentId).then((documentId) => {
+          setSelectedTest(undefined);
+          setTests(tests.filter((it) => it.documentId != documentId));
+        });
+      },
+    },
+  ];
 
   useEffect(() => {
     buildItemModels();
@@ -85,7 +115,7 @@ export default function DashBoard() {
                       <div className="mt-4">
                         <ButtonPrimary
                           title={it.title}
-                          onClick={() => it.action()}
+                          onClick={() => it.action(selectedTest)}
                         />
                       </div>
                     ))}

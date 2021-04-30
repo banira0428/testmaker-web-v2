@@ -39,3 +39,9 @@ export const fetchPagedTests = async (
     cursor: docs.length >= 1 ? docs[docs.length - 1] : startAfter,
   };
 };
+
+export const deleteTest = async (documentId: string) => {
+  const db = firebase.firestore();
+  await db.collection("tests").doc(documentId).delete();
+  return documentId;
+};
