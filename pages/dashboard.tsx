@@ -13,6 +13,7 @@ import { Test } from "../lib/resources/test";
 import { QueryDocumentSnapshot } from "@firebase/firestore-types";
 import ButtonPrimary from "../components/Button";
 import { createDynamicLinks } from "../lib/services/dynamicLinks";
+import { ToastContext } from "../components/ToastContext";
 
 export type TestMenuItem = {
   title: string;
@@ -22,6 +23,7 @@ export type TestMenuItem = {
 
 export default function DashBoard() {
   const { currentUser } = useContext(AuthContext);
+  const { message, setMessage } = useContext(ToastContext);
 
   const [tests, setTests] = useState<Test[]>([]);
   const [selectedTest, setSelectedTest] = useState<Test>(undefined);
@@ -42,15 +44,18 @@ export default function DashBoard() {
   const testMenuItems: TestMenuItem[] = [
     {
       title: "編集",
-      action: () => {},
+      action: () => {
+        setMessage("テストメッセージ");
+      },
       theme: "primary",
     },
     {
       title: "共有",
       action: (test: Test) => {
         createDynamicLinks(test.documentId).then((link) => {
-          navigator.clipboard.writeText(link)
-        })
+          navigator.clipboard.writeText(link);
+          setMessage("共有用のリンクをクリップボードにコピーしました");
+        });
       },
       theme: "primary",
     },
@@ -62,6 +67,7 @@ export default function DashBoard() {
         deleteTest(test.documentId).then((documentId) => {
           setSelectedTest(undefined);
           setTests(tests.filter((it) => it.documentId != documentId));
+          setMessage("問題集を削除しました");
         });
       },
       theme: "danger",
@@ -88,7 +94,11 @@ export default function DashBoard() {
                 </h3>
                 <div className="flex-glow-1" />
                 <div className="my-auto">
-                  <ButtonPrimary title={"+ 新規作成"} onClick={() => {}} theme={'accent'} />
+                  <ButtonPrimary
+                    title={"+ 新規作成"}
+                    onClick={() => {}}
+                    theme={"accent"}
+                  />
                 </div>
               </div>
               {tests.map((test: Test) => (
@@ -108,7 +118,7 @@ export default function DashBoard() {
                     onClick={() => {
                       buildItemModels();
                     }}
-                    theme={'primary'}
+                    theme={"primary"}
                   />
                 )}
               </div>
