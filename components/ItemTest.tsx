@@ -10,7 +10,7 @@ export default function ItemTest(props: Props) {
 
   return (
     <a className="cursor-pointer" onClick={() => props.onClick()}>
-      <div className="flex py-6">
+      <div className="flex py-6 pr-3 hover:bg-gray-100 rounded">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-12 w-12 mr-6 flex-none"
