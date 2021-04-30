@@ -11,7 +11,7 @@ import {
 import { AuthContext } from "../components/authContext";
 import { Test } from "../lib/resources/test";
 import { QueryDocumentSnapshot } from "@firebase/firestore-types";
-import ButtonPrimary from "../components/ButtonPrimary";
+import ButtonPrimary from "../components/Button";
 import { createDynamicLinks } from "../lib/services/dynamicLinks";
 
 export type TestMenuItem = {
