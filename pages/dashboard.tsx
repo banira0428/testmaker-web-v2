@@ -14,6 +14,7 @@ import { QueryDocumentSnapshot } from "@firebase/firestore-types";
 import ButtonPrimary from "../components/Button";
 import { createDynamicLinks } from "../lib/services/dynamicLinks";
 import { ToastContext } from "../components/ToastContext";
+import CreateTestDialog from "../components/CreateTestDialog";
 
 export type TestMenuItem = {
   title: string;
@@ -29,6 +30,9 @@ export default function DashBoard() {
   const [selectedTest, setSelectedTest] = useState<Test>(undefined);
   const [cursor, setCursor] = useState<QueryDocumentSnapshot>();
   const [isLastPage, setIsLastpage] = useState<boolean>(false);
+  const [isShowCreateTestDialog, setIsShowCreateTestDialog] = useState<boolean>(
+    false
+  );
 
   const buildItemModels = () => {
     if (currentUser == null || currentUser == undefined) return;
@@ -96,7 +100,9 @@ export default function DashBoard() {
                 <div className="my-auto">
                   <ButtonPrimary
                     title={"+ 新規作成"}
-                    onClick={() => {}}
+                    onClick={() => {
+                      setIsShowCreateTestDialog(true);
+                    }}
                     theme={"accent"}
                   />
                 </div>
@@ -125,13 +131,13 @@ export default function DashBoard() {
             </div>
             <div className="col-span-1 pl-5">
               {selectedTest && (
-                <div>
+                <div className="pb-5 border-b">
                   <h4 className="text-xl md:text-2xl font-bold  mr-auto ml-0 mt-5 mb-3">
                     {selectedTest.name}
                   </h4>
                   <p>{`作成日：　　${selectedTest.created_at.toLocaleDateString()}`}</p>
                   <p>{`公開設定：　${
-                    selectedTest.isPublic ? "全体公開" : "限定公開"
+                    selectedTest.public ? "全体公開" : "限定公開"
                   }`}</p>
 
                   <div className="flex gap-4">
@@ -151,6 +157,15 @@ export default function DashBoard() {
           </div>
         </div>
       </Layout>
+      {isShowCreateTestDialog && (
+        <CreateTestDialog
+          dismiss={() => setIsShowCreateTestDialog(false)}
+          onCreateTest={(test) => {
+            setMessage("問題集を追加しました")
+            setTests([test].concat(tests))
+          }}
+        />
+      )}
     </div>
   );
 }

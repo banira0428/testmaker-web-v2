@@ -28,7 +28,7 @@ export default function ItemTest(props: Props) {
         <div>
           <p className="pb-3 font-bold text-xl">{props.test.name}</p>
           <p className="text-md">
-            {props.test.isPublic ? "全体公開" : "限定公開"}
+            {props.test.public ? "全体公開" : "限定公開"}
           </p>
         </div>
       </div>

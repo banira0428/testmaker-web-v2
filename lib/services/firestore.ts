@@ -1,6 +1,7 @@
 import firebase from "../init";
 import { Test } from "../resources/test";
 import { QueryDocumentSnapshot } from "@firebase/firestore-types";
+import { User } from "@firebase/auth-types";
 
 export type PagedTests = {
   tests: Test[];
@@ -38,6 +39,7 @@ export const fetchPagedTests = async (
           it.id,
           it.data().name,
           it.data().userId,
+          it.data().userName,
           [],
           it.data().public,
           it.data().created_at.toDate(),
@@ -46,6 +48,28 @@ export const fetchPagedTests = async (
     ),
     cursor: docs.length >= 1 ? docs[docs.length - 1] : startAfter,
   };
+};
+
+export const createTest = async (
+  name: string,
+  isPublic: boolean,
+  user: User
+) => {
+  const db = firebase.firestore();
+  const ref = db.collection("tests").doc();
+
+  const test = new Test(
+    ref.id,
+    name,
+    user.uid,
+    user.displayName,
+    [],
+    isPublic,
+    new Date(),
+    0
+  );
+  await ref.set(test.getData());
+  return test;
 };
 
 export const deleteTest = async (documentId: string) => {

@@ -2,8 +2,9 @@ export class Test {
   documentId: string;
   name: string;
   userId: string;
+  userName: string;
   questions: any;
-  isPublic: boolean;
+  public: boolean;
   created_at: Date;
   color: number;
 
@@ -11,6 +12,7 @@ export class Test {
     documentId: string,
     name: string,
     userId: string,
+    userName: string,
     questions: any,
     isPublic: boolean,
     created_at: Date,
@@ -19,9 +21,16 @@ export class Test {
     this.documentId = documentId;
     this.name = name;
     this.userId = userId;
+    this.userName = userName;
     this.questions = questions;
-    this.isPublic = isPublic;
+    this.public = isPublic;
     this.created_at = created_at;
     this.color = color;
+  }
+
+  getData(): object {
+    const result = {};
+    Object.keys(this).map(key => result[key] = this[key]);
+    return result;
   }
 }
