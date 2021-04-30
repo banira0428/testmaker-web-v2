@@ -12,11 +12,13 @@ import { AuthContext } from "../components/authContext";
 import { Test } from "../lib/resources/test";
 import { QueryDocumentSnapshot } from "@firebase/firestore-types";
 import ButtonPrimary from "../components/ButtonPrimary";
+import { createDynamicLinks } from "../lib/services/dynamicLinks";
 
-interface TestMenuItem {
+export type TestMenuItem = {
   title: string;
+  theme: "primary" | "accent" | "danger";
   action(test: Test): void;
-}
+};
 
 export default function DashBoard() {
   const { currentUser } = useContext(AuthContext);
@@ -41,10 +43,16 @@ export default function DashBoard() {
     {
       title: "編集",
       action: () => {},
+      theme: "primary",
     },
     {
       title: "共有",
-      action: () => {},
+      action: (test: Test) => {
+        createDynamicLinks(test.documentId).then((link) => {
+          navigator.clipboard.writeText(link)
+        })
+      },
+      theme: "primary",
     },
     {
       title: "削除",
@@ -56,6 +64,7 @@ export default function DashBoard() {
           setTests(tests.filter((it) => it.documentId != documentId));
         });
       },
+      theme: "danger",
     },
   ];
 
@@ -79,7 +88,7 @@ export default function DashBoard() {
                 </h3>
                 <div className="flex-glow-1" />
                 <div className="my-auto">
-                  <ButtonPrimary title={"+ 新規作成"} onClick={() => {}} />
+                  <ButtonPrimary title={"+ 新規作成"} onClick={() => {}} theme={'accent'} />
                 </div>
               </div>
               {tests.map((test: Test) => (
@@ -99,6 +108,7 @@ export default function DashBoard() {
                     onClick={() => {
                       buildItemModels();
                     }}
+                    theme={'primary'}
                   />
                 )}
               </div>
@@ -110,7 +120,9 @@ export default function DashBoard() {
                     {selectedTest.name}
                   </h4>
                   <p>{`作成日：　　${selectedTest.created_at.toLocaleDateString()}`}</p>
-                  <p>{`公開設定：　${selectedTest.isPublic ? "全体公開" : "限定公開"}`}</p>
+                  <p>{`公開設定：　${
+                    selectedTest.isPublic ? "全体公開" : "限定公開"
+                  }`}</p>
 
                   <div className="flex gap-4">
                     {testMenuItems.map((it) => (
@@ -118,6 +130,7 @@ export default function DashBoard() {
                         <ButtonPrimary
                           title={it.title}
                           onClick={() => it.action(selectedTest)}
+                          theme={it.theme}
                         />
                       </div>
                     ))}
