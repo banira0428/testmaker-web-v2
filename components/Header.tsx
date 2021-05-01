@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <div>
-      <header className="bg-primary z-50">
+      <header className="bg-primary">
         <div className="flex mx-3">
           <Link href="/">
             <a>
@@ -62,7 +62,7 @@ export default function Header() {
             return (
               <div
                 className={[
-                  "z-50",
+                  "z-10",
                   "w-full",
                   "h-full",
                   "fixed",
