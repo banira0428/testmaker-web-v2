@@ -15,7 +15,6 @@ export default function Toast() {
         }}
       >
         {(status) => {
-          console.log(status);
           return (
             <div
               className={[
