@@ -38,10 +38,10 @@ export default function Questions(props: Props) {
       </h4>
       {pagedQuestions.questions.map((question) => (
         <div key={question.id} className="cursor-pointer hover:bg-gray-100 p-3">
-          <p className="overflow-ellipsis overflow-hidden">
+          <p className="overflow-ellipsis overflow-hidden max-h-12 leading-6">
             {question.question}
           </p>
-          <p className="overflow-ellipsis overflow-hidden">{question.answer}</p>
+          <p className="overflow-ellipsis overflow-hidden max-h-12 leading-6 mt-3">{question.answer}</p>
         </div>
       ))}
       {!pagedQuestions.isLastPage && (
