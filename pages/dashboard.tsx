@@ -1,6 +1,5 @@
 import Layout from "../components/Layout";
 import Head from "next/dist/next-server/lib/head";
-import Heading from "../components/Heading";
 import ItemTest from "../components/ItemTest";
 import { useEffect, useContext, useState } from "react";
 import {

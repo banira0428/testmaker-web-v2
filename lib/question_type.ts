@@ -1,3 +1,6 @@
+import { Question } from "./resources/question";
+import { createQuestion } from "./services/firestore";
+
 export type QuestionType = {
   name: string;
   isShowSingleAnswer(): boolean;
@@ -5,10 +8,11 @@ export type QuestionType = {
   isShowOthers(): boolean;
   isShowAuto(): boolean;
   isShowCheckOrder(): boolean;
-  validate(values: QuestionFormValues): boolean;
+  validate(values: QuestionFormValuesForValidate): boolean;
+  createQuestion(values: QuestionFormValues): Promise<Question>;
 };
 
-export type QuestionFormValues = {
+export type QuestionFormValuesForValidate = {
   question: string;
   answer: string;
   answers: string[];
@@ -18,6 +22,19 @@ export type QuestionFormValues = {
   auto: boolean;
 };
 
+export type QuestionFormValues = {
+  testDocumentId: string;
+  question: string;
+  answer: string;
+  answers: string[];
+  others: string[];
+  auto: boolean;
+  checkOrder: boolean;
+  explanation: string;
+  order: number;
+  imageRef: string;
+};
+
 const QUESTION_WRITE: QuestionType = {
   name: "記述",
   isShowSingleAnswer: () => true,
@@ -25,8 +42,24 @@ const QUESTION_WRITE: QuestionType = {
   isShowOthers: () => false,
   isShowAuto: () => false,
   isShowCheckOrder: () => false,
-  validate: (values: QuestionFormValues) =>
+  validate: (values: QuestionFormValuesForValidate) =>
     values.question !== "" && values.answer !== "",
+  createQuestion: async (values: QuestionFormValues) => {
+    const question = await createQuestion({
+      testDocumentId: values.testDocumentId,
+      question: values.question,
+      answer: values.answer,
+      answers: [],
+      others: [],
+      auto: false,
+      checkOrder: false,
+      explanation: values.explanation,
+      order: values.order,
+      type: 0,
+      imageRef: values.imageRef,
+    });
+    return question;
+  },
 };
 
 const QUESTION_SELECT: QuestionType = {
@@ -36,10 +69,26 @@ const QUESTION_SELECT: QuestionType = {
   isShowOthers: () => true,
   isShowAuto: () => true,
   isShowCheckOrder: () => false,
-  validate: (values: QuestionFormValues) =>
+  validate: (values: QuestionFormValuesForValidate) =>
     values.question !== "" &&
     (Array(values.sizeOfOthers).every((_, i) => values.others[i] !== "") ||
       values.auto),
+  createQuestion: async (values: QuestionFormValues) => {
+    const question = await createQuestion({
+      testDocumentId: values.testDocumentId,
+      question: values.question,
+      answer: values.answer,
+      answers: [],
+      others: values.others,
+      auto: values.auto,
+      checkOrder: false,
+      explanation: values.explanation,
+      order: values.order,
+      type: 1,
+      imageRef: values.imageRef,
+    });
+    return question;
+  },
 };
 
 const QUESTION_MULTIPLE: QuestionType = {
@@ -49,9 +98,25 @@ const QUESTION_MULTIPLE: QuestionType = {
   isShowOthers: () => false,
   isShowAuto: () => false,
   isShowCheckOrder: () => true,
-  validate: (values: QuestionFormValues) =>
+  validate: (values: QuestionFormValuesForValidate) =>
     values.question !== "" &&
     Array(values.sizeOfAnswers).every((_, i) => values.answers[i] !== ""),
+  createQuestion: async (values: QuestionFormValues) => {
+    const question = await createQuestion({
+      testDocumentId: values.testDocumentId,
+      question: values.question,
+      answer: "",
+      answers: values.answers,
+      others: [],
+      auto: false,
+      checkOrder: values.checkOrder,
+      explanation: values.explanation,
+      order: values.order,
+      type: 2,
+      imageRef: values.imageRef,
+    });
+    return question;
+  },
 };
 
 const QUESTION_MULTIPLE_SELECT: QuestionType = {
@@ -61,11 +126,27 @@ const QUESTION_MULTIPLE_SELECT: QuestionType = {
   isShowOthers: () => true,
   isShowAuto: () => true,
   isShowCheckOrder: () => true,
-  validate: (values: QuestionFormValues) =>
+  validate: (values: QuestionFormValuesForValidate) =>
     values.question !== "" &&
     Array(values.sizeOfAnswers).every((_, i) => values.answers[i] !== "") &&
     (Array(values.sizeOfOthers).every((_, i) => values.others[i] !== "") ||
       values.auto),
+  createQuestion: async (values: QuestionFormValues) => {
+    const question = await createQuestion({
+      testDocumentId: values.testDocumentId,
+      question: values.question,
+      answer: "",
+      answers: values.answers,
+      others: values.others,
+      auto: values.auto,
+      checkOrder: values.checkOrder,
+      explanation: values.explanation,
+      order: values.order,
+      type: 3,
+      imageRef: values.imageRef,
+    });
+    return question;
+  },
 };
 
 export const QUESTION_TYPES = {

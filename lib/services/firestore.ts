@@ -111,7 +111,7 @@ export const fetchQuestions = async (documentId: string, limit: number) => {
   };
 };
 
-export const createQuestion = async (
+export type CreateQuestionRequest = {
   testDocumentId: string,
   question: string,
   answer: string,
@@ -123,27 +123,31 @@ export const createQuestion = async (
   order: number,
   type: number,
   imageRef: string
+}
+
+export const createQuestion = async (
+  request: CreateQuestionRequest
 ) => {
   const db = firebase.firestore();
   const ref = db
     .collection("tests")
-    .doc(testDocumentId)
+    .doc(request.testDocumentId)
     .collection("questions")
     .doc();
 
   const q = new Question(
     ref.id,
-    question,
-    answer,
-    answers,
-    others,
-    auto,
-    checkOrder,
+    request.question,
+    request.answer,
+    request.answers,
+    request.others,
+    request.auto,
+    request.checkOrder,
     new Date(),
-    explanation,
-    order,
-    type,
-    imageRef
+    request.explanation,
+    request.order,
+    request.type,
+    request.imageRef
   );
   await ref.set(q.getData());
   return q;

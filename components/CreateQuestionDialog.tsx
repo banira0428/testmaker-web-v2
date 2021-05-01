@@ -30,8 +30,10 @@ export default function CreateQuestionDialog(props: Props) {
   const [others, setOthers] = useState<string[]>(Array(OTHERS_MAX).fill(""));
   const [sizeOfOthers, setSizeOfOthers] = useState<number>(2);
   const [explanation, setExplanation] = useState<string>("");
+  const [imageRef, setImageRef] = useState<string>("");
   const [validate, setValidate] = useState<boolean>(false);
   const [type, setType] = useState<QuestionType>(QUESTION_TYPES.WRITE);
+
   useEffect(() => {
     setOrder(props.order);
   }, [props.order]);
@@ -231,27 +233,29 @@ export default function CreateQuestionDialog(props: Props) {
                     if (!validate) {
                       return;
                     }
-                    createQuestion(
-                      props.documentId,
-                      question,
-                      answer,
-                      [],
-                      [],
-                      false,
-                      false,
-                      explanation,
-                      order + 1,
-                      0,
-                      ""
-                    ).then((question) => {
-                      setOrder(order + 1);
-                      setMessage("問題を保存しました");
-                      props.onCreateQuestion(question);
-                      resetForm();
-                      if (!isContinuous) {
-                        props.setIsShow(false);
-                      }
-                    });
+
+                    type
+                      .createQuestion({
+                        testDocumentId: props.documentId,
+                        question: question,
+                        answer: answer,
+                        answers: answers,
+                        others: others,
+                        auto: isAuto,
+                        checkOrder: isCheckOrder,
+                        explanation: explanation,
+                        order: order,
+                        imageRef: imageRef,
+                      })
+                      .then((question) => {
+                        setOrder(order + 1);
+                        setMessage("問題を保存しました");
+                        props.onCreateQuestion(question);
+                        resetForm();
+                        if (!isContinuous) {
+                          props.setIsShow(false);
+                        }
+                      });
                   }}
                 >
                   追加して保存
