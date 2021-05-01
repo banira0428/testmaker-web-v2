@@ -9,12 +9,6 @@ export type PagedTests = {
   cursor: QueryDocumentSnapshot;
 };
 
-export type PagedQuestions = {
-  questions: Question[];
-  cursor: QueryDocumentSnapshot;
-  isLastPage: boolean;
-};
-
 export const fetchPagedTests = async (
   userId: string,
   startAfter: QueryDocumentSnapshot
@@ -85,32 +79,17 @@ export const deleteTest = async (documentId: string) => {
   return documentId;
 };
 
-export const fetchQuestions = async (
-  documentId: string,
-  startAfter: QueryDocumentSnapshot
-) => {
+export const fetchQuestions = async (documentId: string) => {
   const db = firebase.firestore();
-  const docs =
-    startAfter != null
-      ? (
-          await db
-            .collection("tests")
-            .doc(documentId)
-            .collection("questions")
-            .orderBy("order")
-            .startAfter(startAfter)
-            .limit(30)
-            .get()
-        ).docs
-      : (
-          await db
-            .collection("tests")
-            .doc(documentId)
-            .collection("questions")
-            .orderBy("order")
-            .limit(30)
-            .get()
-        ).docs;
+  const docs = (
+    await db
+      .collection("tests")
+      .doc(documentId)
+      .collection("questions")
+      .orderBy("order")
+      .limit(500)
+      .get()
+  ).docs;
   return {
     questions: docs.map(
       (it) =>
@@ -128,7 +107,41 @@ export const fetchQuestions = async (
           it.data().type
         )
     ),
-    cursor: docs.length >= 1 ? docs[docs.length - 1] : startAfter,
-    isLastPage: docs.length >= 1 ? (startAfter && startAfter.id == docs[docs.length - 1].id) : true
   };
+};
+
+export const createQuestion = async (
+  testDocumentId: string,
+  question: string,
+  answer: string,
+  answers: string[],
+  others: string[],
+  auto: boolean,
+  checkOrder: boolean,
+  explanation: string,
+  order: number,
+  type: number
+) => {
+  const db = firebase.firestore();
+  const ref = db
+    .collection("tests")
+    .doc(testDocumentId)
+    .collection("questions")
+    .doc();
+
+  const q = new Question(
+    ref.id,
+    question,
+    answer,
+    answers,
+    others,
+    auto,
+    checkOrder,
+    new Date(),
+    explanation,
+    order,
+    type
+  );
+  await ref.set(q.getData());
+  return q;
 };

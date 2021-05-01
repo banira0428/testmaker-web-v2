@@ -4,17 +4,19 @@ import { createTest } from "../lib/services/firestore";
 import { AuthContext } from "../components/authContext";
 import Button from "./Button";
 import Transition from "react-transition-group/cjs/Transition";
+import { Question } from "../lib/resources/question";
 
 type Props = {
   isShow: boolean;
   setIsShow(isShow: boolean): void;
-  onCreateTest(test: Test): void;
+  documentId: string;
+  onCreateQuestion(question: Question): void;
 };
 
-export default function CreateTestDialog(props: Props) {
+export default function CreateQuestionDialog(props: Props) {
   const { currentUser } = useContext(AuthContext);
   const [isPublic, setIsPublic] = useState<boolean>(true);
-  const [title, setTitle] = useState<string>("");
+  const [question, setQuestion] = useState<string>("");
 
   return (
     <Transition in={props.isShow} timeout={300}>
@@ -26,10 +28,11 @@ export default function CreateTestDialog(props: Props) {
               "w-full",
               "h-full",
               "fixed",
-              "bg-opacity-30",
+              "bg-opacity-40",
               "bg-primary",
               "p-3",
               "top-0",
+              "left-0",
               `fade-${status}`,
             ].join(" ")}
             onClick={() => props.setIsShow(false)}
@@ -41,14 +44,25 @@ export default function CreateTestDialog(props: Props) {
               }}
             >
               <h3 className="text-xl md:text-2xl font-bold  mr-auto ml-0">
-                問題集の新規作成
+                問題の新規作成
               </h3>
-              <input
-                type="text"
+              <textarea
                 className="w-full mt-5 p-3 border"
-                placeholder="問題集のタイトル"
+                placeholder="問題文（必須）"
                 autoFocus
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => setQuestion(e.target.value)}
+              />
+              <textarea
+                className="w-full mt-5 p-3 border"
+                placeholder="解答（必須）"
+                autoFocus
+                onChange={(e) => setQuestion(e.target.value)}
+              />
+              <textarea
+                className="w-full mt-5 p-3 border"
+                placeholder="解説（任意）"
+                autoFocus
+                onChange={(e) => setQuestion(e.target.value)}
               />
               <div className="mt-5">
                 <input
@@ -59,18 +73,13 @@ export default function CreateTestDialog(props: Props) {
                   }}
                 />
                 <label htmlFor="isPrivate" className="ml-3">
-                  限定公開（リンクを知っている人のみ利用可能）
+                  問題を続けて追加する（保存後もダイアログを表示したままにする）
                 </label>
               </div>
               <div className="text-center mt-5">
                 <Button
                   title={"追加して保存"}
-                  onClick={() => {
-                    createTest(title, isPublic, currentUser).then((test) => {
-                      props.onCreateTest(test);
-                      props.setIsShow(false);
-                    });
-                  }}
+                  onClick={() => {}}
                   theme={"accent"}
                 />
               </div>

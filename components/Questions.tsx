@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Question } from "../lib/resources/question";
-import { fetchQuestions, PagedQuestions } from "../lib/services/firestore";
+import { fetchQuestions } from "../lib/services/firestore";
 import Button from "./Button";
+import CreateQuestionDialog from "./CreateQuestionDialog";
 
 type Props = {
   documentId: string;
@@ -9,48 +10,51 @@ type Props = {
 };
 
 export default function Questions(props: Props) {
-  const [pagedQuestions, setPagedQuestions] = useState<PagedQuestions>({
-    questions: [],
-    cursor: null,
-    isLastPage: false,
-  });
-
-  const buildItemModels = (documentId, cursor) => {
-    fetchQuestions(documentId, cursor).then((result: PagedQuestions) => {
-      setPagedQuestions({
-        questions: pagedQuestions.questions.concat(result.questions),
-        cursor: result.cursor,
-        isLastPage: result.isLastPage
-      });
-    });
-  };
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [
+    isShowCreateQuestionDialog,
+    setIsShowCreateQuestionDialog,
+  ] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchQuestions(props.documentId, null).then((result: PagedQuestions) => {
-      setPagedQuestions(result);
+    fetchQuestions(props.documentId).then((result) => {
+      setQuestions(result.questions);
     });
   }, [props.documentId]);
 
   return (
     <div>
-      <h4 className="text-xl md:text-2xl font-bold  mr-auto ml-0 mt-5 mb-3">
-        問題一覧
-      </h4>
-      {pagedQuestions.questions.map((question) => (
+      <div className="flex justify-items-center">
+        <h4 className="text-xl md:text-2xl font-bold  mr-auto ml-0 mt-5 mb-3">
+          問題一覧
+        </h4>
+        <div className="flex-glow-1" />
+        <div className="my-auto">
+          <Button
+            title={"+ 新規作成"}
+            onClick={() => {
+              setIsShowCreateQuestionDialog(true);
+            }}
+            theme={"accent"}
+          />
+        </div>
+      </div>
+      {questions.map((question) => (
         <div key={question.id} className="cursor-pointer hover:bg-gray-100 p-3">
           <p className="overflow-ellipsis overflow-hidden max-h-12 leading-6">
             {question.question}
           </p>
-          <p className="overflow-ellipsis overflow-hidden max-h-12 leading-6 mt-3">{question.answer}</p>
+          <p className="overflow-ellipsis overflow-hidden max-h-12 leading-6 mt-3">
+            {question.answer}
+          </p>
         </div>
       ))}
-      {!pagedQuestions.isLastPage && (
-        <div className="w-full text-center mt-5">
-          <Button title={"もっと見る"} onClick={() => {
-            buildItemModels(props.documentId, pagedQuestions.cursor)
-          }} theme={"primary"} />
-        </div>
-      )}
+      <CreateQuestionDialog
+        documentId={props.documentId}
+        isShow={isShowCreateQuestionDialog}
+        setIsShow={setIsShowCreateQuestionDialog}
+        onCreateQuestion={(question) => {}}
+      />
     </div>
   );
 }

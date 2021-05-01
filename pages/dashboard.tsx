@@ -90,7 +90,6 @@ export default function DashBoard() {
       </Head>
       <Layout>
         <div className="mx-auto max-w-7xl p-3">
-          <Heading title={"Dashboard"} subTitle={"ダッシュボード"} />
           <div className="grid grid-cols-3 gap-4 divide-x mb-6">
             <div className="col-span-2">
               <div className="flex justify-items-center">
