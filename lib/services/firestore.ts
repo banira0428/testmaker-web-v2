@@ -79,7 +79,7 @@ export const deleteTest = async (documentId: string) => {
   return documentId;
 };
 
-export const fetchQuestions = async (documentId: string) => {
+export const fetchQuestions = async (documentId: string, limit: number) => {
   const db = firebase.firestore();
   const docs = (
     await db
@@ -87,7 +87,7 @@ export const fetchQuestions = async (documentId: string) => {
       .doc(documentId)
       .collection("questions")
       .orderBy("order")
-      .limit(500)
+      .limit(limit)
       .get()
   ).docs;
   return {

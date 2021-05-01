@@ -10,6 +10,7 @@ type Props = {
 };
 
 export default function Questions(props: Props) {
+  const QUESTIONS_MAX = 500;
   const [questions, setQuestions] = useState<Question[]>([]);
   const [
     isShowCreateQuestionDialog,
@@ -17,7 +18,7 @@ export default function Questions(props: Props) {
   ] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchQuestions(props.documentId).then((result) => {
+    fetchQuestions(props.documentId, QUESTIONS_MAX).then((result) => {
       setQuestions(result.questions);
     });
   }, [props.documentId]);
@@ -33,6 +34,12 @@ export default function Questions(props: Props) {
           <Button
             title={"+ 新規作成"}
             onClick={() => {
+              if (questions.length >= QUESTIONS_MAX) {
+                alert(
+                  `1つの問題集に保存できる問題数は${QUESTIONS_MAX}問までです`
+                );
+                return;
+              }
               setIsShowCreateQuestionDialog(true);
             }}
             theme={"accent"}
