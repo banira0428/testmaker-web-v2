@@ -61,7 +61,9 @@ export default function Questions(props: Props) {
         documentId={props.documentId}
         isShow={isShowCreateQuestionDialog}
         setIsShow={setIsShowCreateQuestionDialog}
-        onCreateQuestion={(question) => {}}
+        onCreateQuestion={(question) => {
+          setQuestions(questions.concat([question]))
+        }}
       />
     </div>
   );

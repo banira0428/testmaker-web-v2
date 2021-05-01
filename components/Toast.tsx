@@ -18,7 +18,7 @@ export default function Toast() {
           return (
             <div
               className={[
-                "z-50",
+                "z-100",
                 "w-full",
                 "fixed",
                 "bottom-5",

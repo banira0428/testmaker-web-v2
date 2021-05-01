@@ -1,9 +1,9 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { createQuestion } from "../lib/services/firestore";
-import { AuthContext } from "../components/authContext";
 import Button from "./Button";
 import Transition from "react-transition-group/cjs/Transition";
 import { Question } from "../lib/resources/question";
+import { ToastContext } from "./ToastContext";
 
 type Props = {
   isShow: boolean;
@@ -14,16 +14,27 @@ type Props = {
 };
 
 export default function CreateQuestionDialog(props: Props) {
-  const { currentUser } = useContext(AuthContext);
-  const [isPublic, setIsPublic] = useState<boolean>(true);
+  const { message, setMessage } = useContext(ToastContext);
+  const [isContinuous, setIsContinuous] = useState<boolean>(true);
   const [order, setOrder] = useState<number>(props.order);
   const [question, setQuestion] = useState<string>("");
   const [answer, setAnswer] = useState<string>("");
   const [explanation, setExplanation] = useState<string>("");
+  const [validate, setValidate] = useState<boolean>(false);
 
-  useEffect(() =>{
-    setOrder(props.order)
-  },[props.order])
+  useEffect(() => {
+    setOrder(props.order);
+  }, [props.order]);
+
+  const resetForm = () => {
+    setQuestion("");
+    setAnswer("");
+    setExplanation("");
+  };
+
+  useEffect(() => {
+    setValidate(question !== "" && answer !== "");
+  }, [question, answer]);
 
   return (
     <Transition in={props.isShow} timeout={300}>
@@ -58,35 +69,46 @@ export default function CreateQuestionDialog(props: Props) {
                 placeholder="問題文（必須）"
                 autoFocus
                 onChange={(e) => setQuestion(e.target.value)}
+                value={question}
+                required
               />
               <textarea
                 className="w-full mt-5 p-3 border"
                 placeholder="解答（必須）"
                 autoFocus
                 onChange={(e) => setAnswer(e.target.value)}
+                value={answer}
+                required
               />
               <textarea
                 className="w-full mt-5 p-3 border"
                 placeholder="解説（任意）"
                 autoFocus
                 onChange={(e) => setExplanation(e.target.value)}
+                value={explanation}
               />
               <div className="mt-5">
                 <input
                   type="checkbox"
-                  id="isPrivate"
+                  id="isContinuous"
                   onChange={(e) => {
-                    setIsPublic(!e.target.checked);
+                    setIsContinuous(e.target.checked);
                   }}
+                  checked={isContinuous}
                 />
-                <label htmlFor="isPrivate" className="ml-3">
+                <label htmlFor="isContinuous" className="ml-3">
                   問題を続けて追加する（保存後もダイアログを表示したままにする）
                 </label>
               </div>
               <div className="text-center mt-5">
-                <Button
-                  title={"追加して保存"}
+                <button
+                  className={`${
+                    !validate && "cursor-not-allowed"
+                  } focus:outline-none bg-transparent hover:bg-accent text-accent font-semibold hover:text-white py-2 px-4 border border-accent hover:border-transparent rounded`}
                   onClick={() => {
+                    if (!validate) {
+                      return;
+                    }
                     createQuestion(
                       props.documentId,
                       question,
@@ -99,11 +121,19 @@ export default function CreateQuestionDialog(props: Props) {
                       order + 1,
                       0,
                       ""
-                    );
-                    setOrder(order+1)
+                    ).then((question) => {
+                      setOrder(order + 1);
+                      setMessage("問題を保存しました");
+                      props.onCreateQuestion(question);
+                      resetForm();
+                      if (!isContinuous) {
+                        props.setIsShow(false);
+                      }
+                    });
                   }}
-                  theme={"accent"}
-                />
+                >
+                  追加して保存
+                </button>
               </div>
             </div>
           </div>
