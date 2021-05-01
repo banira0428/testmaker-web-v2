@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import { createQuestion } from "../lib/services/firestore";
-import Button from "./Button";
 import Transition from "react-transition-group/cjs/Transition";
 import { Question } from "../lib/resources/question";
 import { ToastContext } from "./ToastContext";
@@ -14,14 +13,18 @@ type Props = {
 };
 
 export default function CreateQuestionDialog(props: Props) {
+  const ANSWERS_MAX = 6;
+  const OTHERS_MAX = 6;
+
   const { message, setMessage } = useContext(ToastContext);
   const [isContinuous, setIsContinuous] = useState<boolean>(true);
   const [order, setOrder] = useState<number>(props.order);
   const [question, setQuestion] = useState<string>("");
   const [answer, setAnswer] = useState<string>("");
+  const [answers, setAnswers] = useState<string[]>(Array(ANSWERS_MAX).fill(""));
+  const [others, setOthers] = useState<string[]>(Array(OTHERS_MAX).fill(""));
   const [explanation, setExplanation] = useState<string>("");
   const [validate, setValidate] = useState<boolean>(false);
-
   useEffect(() => {
     setOrder(props.order);
   }, [props.order]);
@@ -46,8 +49,7 @@ export default function CreateQuestionDialog(props: Props) {
               "w-full",
               "h-full",
               "fixed",
-              "bg-opacity-40",
-              "bg-primary",
+              "bg-gray-400",
               "p-3",
               "top-0",
               "left-0",
@@ -56,7 +58,7 @@ export default function CreateQuestionDialog(props: Props) {
             onClick={() => props.setIsShow(false)}
           >
             <div
-              className="bg-white w-3/6 mx-auto mt-12 p-3 rounded-md"
+              className="bg-white w-3/6 h-5/6 mx-auto mt-12 mb-12 p-3 rounded-md overflow-scroll"
               onClick={(e) => {
                 e.stopPropagation();
               }}
@@ -69,25 +71,83 @@ export default function CreateQuestionDialog(props: Props) {
                 placeholder="問題文（必須）"
                 autoFocus
                 onChange={(e) => setQuestion(e.target.value)}
-                value={question}
                 required
               />
               <textarea
                 className="w-full mt-5 p-3 border"
                 placeholder="解答（必須）"
-                autoFocus
                 onChange={(e) => setAnswer(e.target.value)}
-                value={answer}
                 required
               />
+              {answers.map((_, i) => (
+                <textarea
+                  className="w-full mt-5 p-3 border"
+                  placeholder="解答（必須）"
+                  onChange={(e) => {
+                    setAnswers(
+                      [...answers].map((it, index) =>
+                        index === i ? e.target.value : it
+                      )
+                    );
+                  }}
+                  key={i}
+                  required
+                />
+              ))}
+              {others.map((_, i) => (
+                <textarea
+                  className="w-full mt-5 p-3 border"
+                  placeholder="他の選択肢（必須）"
+                  onChange={(e) => {
+                    setOthers(
+                      [...others].map((it, index) =>
+                        index === i ? e.target.value : it
+                      )
+                    );
+                  }}
+                  key={i}
+                  required
+                />
+              ))}
               <textarea
                 className="w-full mt-5 p-3 border"
                 placeholder="解説（任意）"
-                autoFocus
                 onChange={(e) => setExplanation(e.target.value)}
                 value={explanation}
               />
+              <div className="relative mt-5">
+                <div className="absolute w-full border p-2 rounded">
+                  <p>画像ファイルを選択</p>
+                </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="opacity-0 w-full h-full"
+                />
+              </div>
               <div className="mt-5">
+              <input
+                  type="checkbox"
+                  id="isContinuous"
+                  onChange={(e) => {
+                    setIsContinuous(e.target.checked);
+                  }}
+                  checked={isContinuous}
+                />
+                <label htmlFor="isContinuous" className="ml-3">
+                  他の選択肢の自動生成
+                </label>
+              <input
+                  type="checkbox"
+                  id="isContinuous"
+                  onChange={(e) => {
+                    setIsContinuous(e.target.checked);
+                  }}
+                  checked={isContinuous}
+                />
+                <label htmlFor="isContinuous" className="ml-3">
+                  選択順序も生後判定に含める
+                </label>
                 <input
                   type="checkbox"
                   id="isContinuous"
@@ -104,7 +164,7 @@ export default function CreateQuestionDialog(props: Props) {
                 <button
                   className={`${
                     !validate && "cursor-not-allowed"
-                  } focus:outline-none bg-transparent hover:bg-accent text-accent font-semibold hover:text-white py-2 px-4 border border-accent hover:border-transparent rounded`}
+                  } w-full bg-transparent hover:bg-accent text-accent font-semibold hover:text-white py-2 px-4 border border-accent hover:border-transparent rounded`}
                   onClick={() => {
                     if (!validate) {
                       return;
