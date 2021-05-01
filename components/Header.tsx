@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <div>
-      <header className="sticky bg-primary z-50">
+      <header className="bg-primary z-50">
         <div className="flex mx-3">
           <Link href="/">
             <a>

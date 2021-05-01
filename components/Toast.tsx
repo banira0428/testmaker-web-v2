@@ -20,14 +20,13 @@ export default function Toast() {
             <div
               className={[
                 "z-50",
-                "mt-3",
                 "w-full",
                 "fixed",
-                "top",
+                "bottom-5",
                 `fade-${status}`,
               ].join(" ")}
             >
-              <p className="max-w-7xl mx-auto text-center bg-primary py-2 text-white rounded font-semibold">{message}</p>
+              <p className="max-w-7xl mx-auto text-center bg-opacity-80 bg-gray-400 py-3 text-white rounded font-semibold text-md">{message}</p>
             </div>
           );
         }}
