@@ -90,8 +90,8 @@ export default function DashBoard() {
       </Head>
       <Layout>
         <div className="mx-auto max-w-7xl p-3">
-          <div className="grid grid-cols-3 gap-4 divide-x mb-6">
-            <div className="col-span-2">
+          <div className="grid grid-cols-2 gap-4 divide-x mb-6">
+            <div className="col-span-1">
               <div className="flex justify-items-center">
                 <h3 className="text-3xl md:text-4xl font-bold  mr-auto ml-0 mt-5 mb-3">
                   問題集一覧

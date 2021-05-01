@@ -22,12 +22,11 @@ export default function CreateTestDialog(props: Props) {
         return (
           <div
             className={[
-              "z-50",
+              "z-10",
               "w-full",
               "h-full",
               "fixed",
-              "bg-opacity-30",
-              "bg-primary",
+              "bg-gray-700",
               "p-3",
               "top-0",
               `fade-${status}`,
