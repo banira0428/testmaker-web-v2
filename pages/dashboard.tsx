@@ -15,6 +15,7 @@ import ButtonPrimary from "../components/Button";
 import { createDynamicLinks } from "../lib/services/dynamicLinks";
 import { ToastContext } from "../components/ToastContext";
 import CreateTestDialog from "../components/CreateTestDialog";
+import Questions from "../components/Questions";
 
 export type TestMenuItem = {
   title: string;
@@ -94,7 +95,7 @@ export default function DashBoard() {
             <div className="col-span-2">
               <div className="flex justify-items-center">
                 <h3 className="text-3xl md:text-4xl font-bold  mr-auto ml-0 mt-5 mb-3">
-                  問題集
+                  問題集一覧
                 </h3>
                 <div className="flex-glow-1" />
                 <div className="my-auto">
@@ -131,25 +132,32 @@ export default function DashBoard() {
             </div>
             <div className="col-span-1 pl-5">
               {selectedTest && (
-                <div className="pb-5 border-b">
-                  <h4 className="text-xl md:text-2xl font-bold  mr-auto ml-0 mt-5 mb-3">
-                    {selectedTest.name}
-                  </h4>
-                  <p>{`作成日：　　${selectedTest.created_at.toLocaleDateString()}`}</p>
-                  <p>{`公開設定：　${
-                    selectedTest.public ? "全体公開" : "限定公開"
-                  }`}</p>
-
-                  <div className="flex gap-4">
-                    {testMenuItems.map((it) => (
-                      <div className="mt-4" key={it.title}>
-                        <ButtonPrimary
-                          title={it.title}
-                          onClick={() => it.action(selectedTest)}
-                          theme={it.theme}
-                        />
-                      </div>
-                    ))}
+                <div>
+                  <div className="pb-5 border-b">
+                    <h4 className="text-xl md:text-2xl font-bold  mr-auto ml-0 mt-5 mb-3">
+                      {selectedTest.name}
+                    </h4>
+                    <p>{`作成日：　　${selectedTest.created_at.toLocaleDateString()}`}</p>
+                    <p>{`公開設定：　${
+                      selectedTest.public ? "全体公開" : "限定公開"
+                    }`}</p>
+                    <div className="flex gap-4">
+                      {testMenuItems.map((it) => (
+                        <div className="mt-4" key={it.title}>
+                          <ButtonPrimary
+                            title={it.title}
+                            onClick={() => it.action(selectedTest)}
+                            theme={it.theme}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="mt-5">
+                    <Questions
+                      documentId={selectedTest.documentId}
+                      onClick={() => {}}
+                    />
                   </div>
                 </div>
               )}
