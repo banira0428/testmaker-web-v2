@@ -10,6 +10,7 @@ export class Question {
   explanation: string;
   order: number;
   type: number;
+  imageRef: string;
 
   constructor(
     id: string,
@@ -22,7 +23,8 @@ export class Question {
     created_at: Date,
     explanation: string,
     order: number,
-    type: number
+    type: number,
+    imageRef: string
   ) {
     this.id = id;
     this.question = question;
@@ -35,6 +37,7 @@ export class Question {
     this.explanation = explanation;
     this.order = order;
     this.type = type;
+    this.imageRef = imageRef;
   }
 
   getData(): object {

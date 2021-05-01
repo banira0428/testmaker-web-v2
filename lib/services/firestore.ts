@@ -104,7 +104,8 @@ export const fetchQuestions = async (documentId: string, limit: number) => {
           it.data().created_at,
           it.data().explanation,
           it.data().order,
-          it.data().type
+          it.data().type,
+          it.data().imageRef
         )
     ),
   };
@@ -120,7 +121,8 @@ export const createQuestion = async (
   checkOrder: boolean,
   explanation: string,
   order: number,
-  type: number
+  type: number,
+  imageRef: string
 ) => {
   const db = firebase.firestore();
   const ref = db
@@ -140,7 +142,8 @@ export const createQuestion = async (
     new Date(),
     explanation,
     order,
-    type
+    type,
+    imageRef
   );
   await ref.set(q.getData());
   return q;
