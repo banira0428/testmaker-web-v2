@@ -15,7 +15,6 @@ import ButtonPrimary from "../components/Button";
 import { createDynamicLinks } from "../lib/services/dynamicLinks";
 import { ToastContext } from "../components/ToastContext";
 import CreateTestDialog from "../components/CreateTestDialog";
-import Transition from "react-transition-group/cjs/Transition";
 
 export type TestMenuItem = {
   title: string;
@@ -158,34 +157,15 @@ export default function DashBoard() {
           </div>
         </div>
       </Layout>
-      <Transition in={isShowCreateTestDialog} timeout={300}>
-        {(status) => {
-          return (
-            <div
-              className={[
-                "z-50",
-                "w-full",
-                "h-full",
-                "fixed",
-                "bg-opacity-30",
-                "bg-primary",
-                "p-3",
-                "top-0",
-                `fade-${status}`,
-              ].join(" ")}
-              onClick={() => setIsShowCreateTestDialog(false)}
-            >
-              <CreateTestDialog
-                dismiss={() => setIsShowCreateTestDialog(false)}
-                onCreateTest={(test) => {
-                  setMessage("問題集を追加しました");
-                  setTests([test].concat(tests));
-                }}
-              />
-            </div>
-          );
+
+      <CreateTestDialog
+        isShow={isShowCreateTestDialog}
+        setIsShow={setIsShowCreateTestDialog}
+        onCreateTest={(test) => {
+          setMessage("問題集を追加しました");
+          setTests([test].concat(tests));
         }}
-      </Transition>
+      />
     </div>
   );
 }
