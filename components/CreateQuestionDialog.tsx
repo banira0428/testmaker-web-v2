@@ -38,6 +38,7 @@ export default function CreateQuestionDialog(props: Props) {
   const [image, setImage] = useState<File>(null);
   const [validate, setValidate] = useState<boolean>(false);
   const [type, setType] = useState<QuestionType>(QUESTION_TYPES.WRITE);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [order, setOrder] = useState<number>(props.order);
   const [isContinuous, setIsContinuous] = useState<boolean>(true);
@@ -251,8 +252,10 @@ export default function CreateQuestionDialog(props: Props) {
               <div className="text-center mt-5">
                 <ValidatableButton
                   title="追加して保存"
+                  isLoading={isLoading}
                   isValid={validate}
                   onClick={() => {
+                    setIsLoading(true)
                     type
                       .createQuestion({
                         testDocumentId: props.documentId,
@@ -268,6 +271,7 @@ export default function CreateQuestionDialog(props: Props) {
                         image: image,
                       })
                       .then((question) => {
+                        setIsLoading(false)
                         setOrder(order + 1);
                         setMessage("問題を保存しました");
                         props.onCreateQuestion(question);

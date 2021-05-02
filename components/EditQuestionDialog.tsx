@@ -38,7 +38,10 @@ export default function EditQuestionDialog(props: Props) {
   const [image, setImage] = useState<File>(null);
   const [imageRef, setImageRef] = useState<string>("");
   const [validate, setValidate] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [editType, setEditType] = useState<QuestionType>(QUESTION_TYPES.WRITE);
+
 
   useEffect(() => {
     setValidate(
@@ -264,8 +267,10 @@ export default function EditQuestionDialog(props: Props) {
               <div className="text-center mt-5">
                 <ValidatableButton
                   title="変更を保存"
+                  isLoading={isLoading}
                   isValid={validate}
                   onClick={() => {
+                    setIsLoading(true)
                     editType
                       .updateQuestion({
                         testDocumentId: props.documentId,
@@ -282,6 +287,7 @@ export default function EditQuestionDialog(props: Props) {
                         image: image,
                       })
                       .then((question) => {
+                        setIsLoading(false)
                         resetForm();
                         setMessage("問題を保存しました");
                         props.onEditQuestion(question);

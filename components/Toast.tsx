@@ -24,7 +24,7 @@ export default function Toast() {
               `fade-${status}`,
             ].join(" ")}
           >
-            <p className="max-w-7xl mx-auto text-center bg-opacity-80 bg-gray-400 py-3 text-white rounded font-semibold text-md border border-white">
+            <p className="max-w-7xl mx-auto text-center bg-opacity-80 bg-gray-400 py-3 text-white rounded font-semibold text-md">
               {message}
             </p>
           </div>
