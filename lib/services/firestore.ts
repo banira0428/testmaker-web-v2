@@ -3,6 +3,7 @@ import { Test } from "../resources/test";
 import { QueryDocumentSnapshot } from "@firebase/firestore-types";
 import { User } from "@firebase/auth-types";
 import { Question } from "../resources/question";
+import { postImage } from "./storage";
 
 export type PagedTests = {
   tests: Test[];
@@ -112,22 +113,27 @@ export const fetchQuestions = async (documentId: string, limit: number) => {
 };
 
 export type CreateQuestionRequest = {
-  testDocumentId: string,
-  question: string,
-  answer: string,
-  answers: string[],
-  others: string[],
-  auto: boolean,
-  checkOrder: boolean,
-  explanation: string,
-  order: number,
-  type: number,
-  imageRef: string
-}
+  testDocumentId: string;
+  userId: string;
+  question: string;
+  answer: string;
+  answers: string[];
+  others: string[];
+  auto: boolean;
+  checkOrder: boolean;
+  explanation: string;
+  order: number;
+  type: number;
+  image: File;
+};
 
-export const createQuestion = async (
-  request: CreateQuestionRequest
-) => {
+export const createQuestion = async (request: CreateQuestionRequest) => {
+  console.log(request.image)
+  const imageurl: string =
+    request.image !== null
+      ? await postImage(request.image, request.userId)
+      : "";
+
   const db = firebase.firestore();
   const ref = db
     .collection("tests")
@@ -147,7 +153,7 @@ export const createQuestion = async (
     request.explanation,
     request.order,
     request.type,
-    request.imageRef
+    imageurl
   );
   await ref.set(q.getData());
   return q;

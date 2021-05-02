@@ -3,6 +3,7 @@ import Transition from "react-transition-group/cjs/Transition";
 import { Question } from "../lib/resources/question";
 import { ToastContext } from "./ToastContext";
 import { QuestionType, QUESTION_TYPES } from "../lib/question_type";
+import { AuthContext } from "./authContext";
 
 type Props = {
   isShow: boolean;
@@ -16,6 +17,7 @@ export default function CreateQuestionDialog(props: Props) {
   const ANSWERS_MAX = 6;
   const OTHERS_MAX = 6;
 
+  const { currentUser } = useContext(AuthContext);
   const { _, setMessage } = useContext(ToastContext);
   const [isContinuous, setIsContinuous] = useState<boolean>(true);
   const [isAuto, setIsAuto] = useState<boolean>(false);
@@ -31,6 +33,7 @@ export default function CreateQuestionDialog(props: Props) {
   const [explanation, setExplanation] = useState<string>("");
   const [imageRef, setImageRef] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [image, setImage] = useState<File>(null);
   const [validate, setValidate] = useState<boolean>(false);
   const [type, setType] = useState<QuestionType>(QUESTION_TYPES.WRITE);
 
@@ -44,6 +47,7 @@ export default function CreateQuestionDialog(props: Props) {
     setAnswers(Array(ANSWERS_MAX).fill(""));
     setOthers(Array(OTHERS_MAX).fill(""));
     setExplanation("");
+    setImage(null);
   };
 
   useEffect(() => {
@@ -72,6 +76,16 @@ export default function CreateQuestionDialog(props: Props) {
   useEffect(() => {
     setOthers(Array(OTHERS_MAX).fill(isAuto ? "自動生成" : ""));
   }, [isAuto]);
+
+  useEffect(() => {
+    if (image == null) {
+      setImageUrl("");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => setImageUrl(reader.result as string);
+    reader.readAsDataURL(image);
+  }, [image]);
 
   return (
     <Transition in={props.isShow} timeout={300}>
@@ -321,15 +335,14 @@ export default function CreateQuestionDialog(props: Props) {
                   accept="image/*"
                   className="opacity-0 w-full h-full p-2"
                   onChange={(e) => {
-                    if (e.target.files.length == 0) return;
-                    const reader = new FileReader();
-                    reader.onload = () => setImageUrl(reader.result as string);
-                    reader.readAsDataURL(e.target.files[0]);
+                    setImage(
+                      e.target.files.length !== 0 ? e.target.files[0] : null
+                    );
                   }}
                 />
               </div>
               {imageUrl !== "" && (
-                <img src={imageUrl} className="mx-auto m-3 max-w-xs border"/>
+                <img src={imageUrl} className="mx-auto m-3 max-w-xs border" />
               )}
 
               <div className="mt-5">
@@ -392,6 +405,7 @@ export default function CreateQuestionDialog(props: Props) {
                     type
                       .createQuestion({
                         testDocumentId: props.documentId,
+                        userId: currentUser.uid,
                         question: question,
                         answer: answer,
                         answers: answers,
@@ -400,7 +414,7 @@ export default function CreateQuestionDialog(props: Props) {
                         checkOrder: isCheckOrder,
                         explanation: explanation,
                         order: order,
-                        imageRef: imageRef,
+                        image: image,
                       })
                       .then((question) => {
                         setOrder(order + 1);

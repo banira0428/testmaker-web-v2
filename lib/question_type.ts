@@ -28,6 +28,7 @@ export type QuestionFormValuesForValidate = {
 
 export type QuestionFormValues = {
   testDocumentId: string;
+  userId: string;
   question: string;
   answer: string;
   answers: string[];
@@ -36,7 +37,7 @@ export type QuestionFormValues = {
   checkOrder: boolean;
   explanation: string;
   order: number;
-  imageRef: string;
+  image: File;
 };
 
 const QUESTION_WRITE: QuestionType = {
@@ -55,6 +56,7 @@ const QUESTION_WRITE: QuestionType = {
   createQuestion: async (values: QuestionFormValues) => {
     const question = await createQuestion({
       testDocumentId: values.testDocumentId,
+      userId: values.userId,
       question: values.question,
       answer: values.answer,
       answers: [],
@@ -64,7 +66,7 @@ const QUESTION_WRITE: QuestionType = {
       explanation: values.explanation,
       order: values.order,
       type: 0,
-      imageRef: values.imageRef,
+      image: values.image,
     });
     return question;
   },
@@ -88,6 +90,7 @@ const QUESTION_SELECT: QuestionType = {
   createQuestion: async (values: QuestionFormValues) => {
     const question = await createQuestion({
       testDocumentId: values.testDocumentId,
+      userId: values.userId,
       question: values.question,
       answer: values.answer,
       answers: [],
@@ -97,7 +100,7 @@ const QUESTION_SELECT: QuestionType = {
       explanation: values.explanation,
       order: values.order,
       type: 1,
-      imageRef: values.imageRef,
+      image: values.image,
     });
     return question;
   },
@@ -120,6 +123,7 @@ const QUESTION_MULTIPLE: QuestionType = {
   createQuestion: async (values: QuestionFormValues) => {
     const question = await createQuestion({
       testDocumentId: values.testDocumentId,
+      userId: values.userId,
       question: values.question,
       answer: "",
       answers: values.answers,
@@ -129,7 +133,7 @@ const QUESTION_MULTIPLE: QuestionType = {
       explanation: values.explanation,
       order: values.order,
       type: 2,
-      imageRef: values.imageRef,
+      image: values.image,
     });
     return question;
   },
@@ -158,6 +162,7 @@ const QUESTION_MULTIPLE_SELECT: QuestionType = {
   createQuestion: async (values: QuestionFormValues) => {
     const question = await createQuestion({
       testDocumentId: values.testDocumentId,
+      userId: values.userId,
       question: values.question,
       answer: "",
       answers: values.answers,
@@ -167,7 +172,7 @@ const QUESTION_MULTIPLE_SELECT: QuestionType = {
       explanation: values.explanation,
       order: values.order,
       type: 3,
-      imageRef: values.imageRef,
+      image: values.image,
     });
     return question;
   },
