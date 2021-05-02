@@ -2,7 +2,7 @@ import { QuestionType, QUESTION_TYPES } from "../../lib/question_type";
 
 type Props = {
   type: QuestionType;
-  setType(type: QuestionType): void;
+  onChange(type: QuestionType): void;
 };
 
 export default function QuestionTypeSelector(props: Props) {
@@ -20,7 +20,9 @@ export default function QuestionTypeSelector(props: Props) {
             id={`type-${i}`}
             name="type"
             className="hidden"
-            onChange={() => props.setType(it)}
+            onChange={() => {
+              props.onChange(it)
+            }}
           />
           <label
             htmlFor={`type-${i}`}

@@ -3,19 +3,19 @@ import { useEffect, useState } from "react";
 type Props = {
   image: File;
   setImage(file: File): void;
+  imageUrl?: string;
 };
 
 export default function ImageEditor(props: Props) {
-
-  const [imageUrl, setImageUrl] = useState<string>("");
+  const [data, setData] = useState<string>("");
 
   useEffect(() => {
     if (props.image == null) {
-      setImageUrl("");
+      setData("");
       return;
     }
     const reader = new FileReader();
-    reader.onload = () => setImageUrl(reader.result as string);
+    reader.onload = () => setData(reader.result as string);
     reader.readAsDataURL(props.image);
   }, [props.image]);
 
@@ -30,12 +30,17 @@ export default function ImageEditor(props: Props) {
           accept="image/*"
           className="opacity-0 w-full h-full p-2"
           onChange={(e) => {
-            props.setImage(e.target.files.length !== 0 ? e.target.files[0] : null);
+            props.setImage(
+              e.target.files.length !== 0 ? e.target.files[0] : null
+            );
           }}
         />
       </div>
-      {imageUrl !== "" && (
-        <img src={imageUrl} className="mx-auto m-3 max-w-xs border" />
+      {data !== "" && (
+        <img src={data} className="mx-auto m-3 max-w-xs border" />
+      )}
+      {data === "" && props.imageUrl != "" && (
+        <img src={props.imageUrl} className="mx-auto m-3 max-w-xs border" />
       )}
     </div>
   );

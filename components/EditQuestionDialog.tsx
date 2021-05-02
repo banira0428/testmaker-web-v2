@@ -16,11 +16,11 @@ type Props = {
   isShow: boolean;
   setIsShow(isShow: boolean): void;
   documentId: string;
-  order: number;
-  onCreateQuestion(question: Question): void;
+  onEditQuestion(question: Question): void;
+  question: Question;
 };
 
-export default function CreateQuestionDialog(props: Props) {
+export default function EditQuestionDialog(props: Props) {
   const ANSWERS_MAX = 6;
   const OTHERS_MAX = 6;
 
@@ -30,34 +30,19 @@ export default function CreateQuestionDialog(props: Props) {
   const [isCheckOrder, setIsCheckOrder] = useState<boolean>(false);
   const [question, setQuestion] = useState<string>("");
   const [answer, setAnswer] = useState<string>("");
-  const [answers, setAnswers] = useState<string[]>(Array(ANSWERS_MAX).fill(""));
+  const [answers, setAnswers] = useState<string[]>();
   const [sizeOfAnswers, setSizeOfAnswers] = useState<number>(2);
-  const [others, setOthers] = useState<string[]>(Array(OTHERS_MAX).fill(""));
+  const [others, setOthers] = useState<string[]>([]);
   const [sizeOfOthers, setSizeOfOthers] = useState<number>(2);
   const [explanation, setExplanation] = useState<string>("");
   const [image, setImage] = useState<File>(null);
+  const [imageRef, setImageRef] = useState<string>("");
   const [validate, setValidate] = useState<boolean>(false);
-  const [type, setType] = useState<QuestionType>(QUESTION_TYPES.WRITE);
-
-  const [order, setOrder] = useState<number>(props.order);
-  const [isContinuous, setIsContinuous] = useState<boolean>(true);
-
-  useEffect(() => {
-    setOrder(props.order);
-  }, [props.order]);
-
-  const resetForm = () => {
-    setQuestion("");
-    setAnswer("");
-    setAnswers(Array(ANSWERS_MAX).fill(""));
-    setOthers(Array(OTHERS_MAX).fill(""));
-    setExplanation("");
-    setImage(null);
-  };
+  const [editType, setEditType] = useState<QuestionType>(QUESTION_TYPES.WRITE);
 
   useEffect(() => {
     setValidate(
-      type.validate({
+      editType.validate({
         question: question,
         answer: answer,
         answers: answers,
@@ -74,13 +59,37 @@ export default function CreateQuestionDialog(props: Props) {
     sizeOfAnswers,
     others,
     sizeOfOthers,
-    type,
+    editType,
     isAuto,
   ]);
 
   useEffect(() => {
     setOthers(Array(OTHERS_MAX).fill(isAuto ? "自動生成" : ""));
   }, [isAuto]);
+
+  useEffect(() => {
+    if (props.question === null) return;
+
+    setQuestion(props.question.question);
+    setAnswer(props.question.answer);
+    setExplanation(props.question.explanation);
+    setSizeOfAnswers(props.question.question.length);
+    setAnswers(
+      props.question.answers.concat(
+        Array(ANSWERS_MAX - props.question.answers.length).fill("")
+      )
+    );
+    setSizeOfOthers(props.question.others.length);
+    setOthers(
+      props.question.others.concat(
+        Array(OTHERS_MAX - props.question.others.length).fill("")
+      )
+    );
+    setIsAuto(props.question.auto);
+    setIsCheckOrder(props.question.checkOrder);
+    setImageRef(props.question.imageRef);
+    setEditType(Object.values<QuestionType>(QUESTION_TYPES)[props.question.type]);
+  }, [props.question]);
 
   return (
     <Transition in={props.isShow} timeout={300}>
@@ -97,11 +106,11 @@ export default function CreateQuestionDialog(props: Props) {
               }}
             >
               <h3 className="text-xl md:text-2xl font-bold mr-auto ml-0 sticky">
-                問題の新規作成
+                問題の編集
               </h3>
               <QuestionTypeSelector
-                type={type}
-                onChange={(it) => setType(it)}
+                type={editType}
+                onChange={(it) => setEditType(it)}
               />
               <div className="mt-3">
                 <label htmlFor="question" className="font-semibold ">
@@ -114,7 +123,7 @@ export default function CreateQuestionDialog(props: Props) {
                   id="question"
                 />
               </div>
-              {type.isShowSingleAnswer() && (
+              {editType.isShowSingleAnswer() && (
                 <div className="mt-3">
                   <label htmlFor="answer" className="font-semibold">
                     解答
@@ -127,7 +136,7 @@ export default function CreateQuestionDialog(props: Props) {
                   />
                 </div>
               )}
-              {type.isShowAnswers() && (
+              {editType.isShowAnswers() && (
                 <div className="mt-3">
                   <div className="flex flex-row items-center gap-2">
                     <label className="font-semibold">解答</label>
@@ -137,7 +146,7 @@ export default function CreateQuestionDialog(props: Props) {
                         setSizeOfAnswers(
                           Math.max(
                             sizeOfAnswers - 1,
-                            type.minSizeOfAnswers(sizeOfAnswers, sizeOfOthers)
+                            editType.minSizeOfAnswers(sizeOfAnswers, sizeOfOthers)
                           )
                         );
                       }}
@@ -147,7 +156,7 @@ export default function CreateQuestionDialog(props: Props) {
                         setSizeOfAnswers(
                           Math.min(
                             sizeOfAnswers + 1,
-                            type.maxSizeOfAnswers(sizeOfAnswers, sizeOfOthers)
+                            editType.maxSizeOfAnswers(sizeOfAnswers, sizeOfOthers)
                           )
                         );
                       }}
@@ -169,7 +178,7 @@ export default function CreateQuestionDialog(props: Props) {
                   ))}
                 </div>
               )}
-              {type.isShowOthers() && (
+              {editType.isShowOthers() && (
                 <div className="mt-3">
                   <div className="flex flex-row items-center gap-2">
                     <label className="font-semibold">他の選択肢</label>
@@ -179,7 +188,7 @@ export default function CreateQuestionDialog(props: Props) {
                         setSizeOfOthers(
                           Math.max(
                             sizeOfOthers - 1,
-                            type.minSizeOfOthers(sizeOfAnswers, sizeOfOthers)
+                            editType.minSizeOfOthers(sizeOfAnswers, sizeOfOthers)
                           )
                         );
                       }}
@@ -189,7 +198,7 @@ export default function CreateQuestionDialog(props: Props) {
                         setSizeOfOthers(
                           Math.min(
                             sizeOfOthers + 1,
-                            type.maxSizeOfOthers(sizeOfAnswers, sizeOfOthers)
+                            editType.maxSizeOfOthers(sizeOfAnswers, sizeOfOthers)
                           )
                         )
                       }
@@ -223,9 +232,9 @@ export default function CreateQuestionDialog(props: Props) {
                   id="explanation"
                 />
               </div>
-              <ImageEditor setImage={setImage} image={image} />
+              <ImageEditor setImage={setImage} image={image} imageUrl={imageRef} />
               <div className="mt-5">
-                {type.isShowAuto() && (
+                {editType.isShowAuto() && (
                   <CheckBox
                     id="isAuto"
                     label="他の選択肢の自動生成"
@@ -233,7 +242,7 @@ export default function CreateQuestionDialog(props: Props) {
                     onChange={(checked) => setIsAuto(checked)}
                   />
                 )}
-                {type.isShowCheckOrder() && (
+                {editType.isShowCheckOrder() && (
                   <CheckBox
                     id="isCheckOrder"
                     label="選択順序も正誤判定に含める"
@@ -241,41 +250,31 @@ export default function CreateQuestionDialog(props: Props) {
                     onChange={(checked) => setIsCheckOrder(checked)}
                   />
                 )}
-                <CheckBox
-                  id="isContinuous"
-                  label="問題を続けて追加する（保存後もダイアログを表示したままにする）"
-                  isChecked={isContinuous}
-                  onChange={(checked) => setIsContinuous(checked)}
-                />
               </div>
               <div className="text-center mt-5">
                 <ValidatableButton
                   title="追加して保存"
                   isValid={validate}
                   onClick={() => {
-                    type
-                      .createQuestion({
-                        testDocumentId: props.documentId,
-                        userId: currentUser.uid,
-                        question: question,
-                        answer: answer,
-                        answers: answers.slice(0, sizeOfAnswers),
-                        others: others.slice(0, sizeOfOthers),
-                        auto: isAuto,
-                        checkOrder: isCheckOrder,
-                        explanation: explanation,
-                        order: order,
-                        image: image,
-                      })
-                      .then((question) => {
-                        setOrder(order + 1);
-                        setMessage("問題を保存しました");
-                        props.onCreateQuestion(question);
-                        resetForm();
-                        if (!isContinuous) {
-                          props.setIsShow(false);
-                        }
-                      });
+                    // editType
+                    //   .updateQuestion({
+                    //     testDocumentId: props.documentId,
+                    //     userId: currentUser.uid,
+                    //     question: question,
+                    //     answer: answer,
+                    //     answers: answers,
+                    //     others: others,
+                    //     auto: isAuto,
+                    //     checkOrder: isCheckOrder,
+                    //     explanation: explanation,
+                    //     order: props.question.order,
+                    //     image: image,
+                    //   })
+                    //   .then((question) => {
+                    //     setMessage("問題を保存しました");
+                    //     //props.onUpdateQuestion(question);
+                    //     props.setIsShow(false);
+                    //   });
                   }}
                 />
               </div>

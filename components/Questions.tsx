@@ -3,6 +3,7 @@ import { Question } from "../lib/resources/question";
 import { fetchQuestions } from "../lib/services/firestore";
 import Button from "./Button";
 import CreateQuestionDialog from "./CreateQuestionDialog";
+import EditQuestionDialog from "./EditQuestionDialog";
 
 type Props = {
   documentId: string;
@@ -16,6 +17,13 @@ export default function Questions(props: Props) {
     isShowCreateQuestionDialog,
     setIsShowCreateQuestionDialog,
   ] = useState<boolean>(false);
+
+  const [
+    isShowEditQuestionDialog,
+    setIsShowEditQuestionDialog,
+  ] = useState<boolean>(false);
+
+  const [selectedQuestion, setSelectedQuestion] = useState<Question>(null);
 
   useEffect(() => {
     fetchQuestions(props.documentId, QUESTIONS_MAX).then((result) => {
@@ -47,7 +55,14 @@ export default function Questions(props: Props) {
         </div>
       </div>
       {questions.map((question) => (
-        <div key={question.id} className="cursor-pointer hover:bg-gray-100 p-3">
+        <div
+          key={question.id}
+          className="cursor-pointer hover:bg-gray-100 p-3"
+          onClick={() => {
+            setIsShowEditQuestionDialog(true);
+            setSelectedQuestion(question);
+          }}
+        >
           <p className="overflow-ellipsis overflow-hidden max-h-12 leading-6">
             {question.question}
           </p>
@@ -56,15 +71,28 @@ export default function Questions(props: Props) {
           </p>
         </div>
       ))}
-      <CreateQuestionDialog
-        order={questions.length > 1 ? questions[questions.length -1].order : -1}
-        documentId={props.documentId}
-        isShow={isShowCreateQuestionDialog}
-        setIsShow={setIsShowCreateQuestionDialog}
-        onCreateQuestion={(question) => {
-          setQuestions(questions.concat([question]))
-        }}
-      />
+      {!isShowCreateQuestionDialog && (
+        <EditQuestionDialog
+          documentId={props.documentId}
+          isShow={isShowEditQuestionDialog}
+          setIsShow={setIsShowEditQuestionDialog}
+          onEditQuestion={(question) => {}}
+          question={selectedQuestion}
+        />
+      )}
+      {!isShowEditQuestionDialog && (
+        <CreateQuestionDialog
+          order={
+            questions.length > 1 ? questions[questions.length - 1].order : -1
+          }
+          documentId={props.documentId}
+          isShow={isShowCreateQuestionDialog}
+          setIsShow={setIsShowCreateQuestionDialog}
+          onCreateQuestion={(question) => {
+            setQuestions(questions.concat([question]));
+          }}
+        />
+      )}
     </div>
   );
 }
