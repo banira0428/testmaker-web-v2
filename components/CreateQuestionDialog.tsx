@@ -31,7 +31,6 @@ export default function CreateQuestionDialog(props: Props) {
   const [others, setOthers] = useState<string[]>(Array(OTHERS_MAX).fill(""));
   const [sizeOfOthers, setSizeOfOthers] = useState<number>(2);
   const [explanation, setExplanation] = useState<string>("");
-  const [imageUrl, setImageUrl] = useState<string>("");
   const [image, setImage] = useState<File>(null);
   const [validate, setValidate] = useState<boolean>(false);
   const [type, setType] = useState<QuestionType>(QUESTION_TYPES.WRITE);
@@ -78,16 +77,6 @@ export default function CreateQuestionDialog(props: Props) {
   useEffect(() => {
     setOthers(Array(OTHERS_MAX).fill(isAuto ? "自動生成" : ""));
   }, [isAuto]);
-
-  useEffect(() => {
-    if (image == null) {
-      setImageUrl("");
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => setImageUrl(reader.result as string);
-    reader.readAsDataURL(image);
-  }, [image]);
 
   return (
     <Transition in={props.isShow} timeout={300}>
@@ -268,7 +257,7 @@ export default function CreateQuestionDialog(props: Props) {
                   id="explanation"
                 />
               </div>
-              <ImageEditor setImage={setImage} imageUrl={imageUrl} />
+              <ImageEditor setImage={setImage} image={image} />
               <div className="mt-5">
                 {type.isShowAuto() && (
                   <div className="p-2">

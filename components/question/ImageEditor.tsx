@@ -1,9 +1,24 @@
+import { useEffect, useState } from "react";
+
 type Props = {
-  imageUrl: string;
+  image: File;
   setImage(file: File): void;
 };
 
 export default function ImageEditor(props: Props) {
+
+  const [imageUrl, setImageUrl] = useState<string>("");
+
+  useEffect(() => {
+    if (props.image == null) {
+      setImageUrl("");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => setImageUrl(reader.result as string);
+    reader.readAsDataURL(props.image);
+  }, [props.image]);
+
   return (
     <div>
       <div className="relative mt-5">
@@ -19,8 +34,8 @@ export default function ImageEditor(props: Props) {
           }}
         />
       </div>
-      {props.imageUrl !== "" && (
-        <img src={props.imageUrl} className="mx-auto m-3 max-w-xs border" />
+      {imageUrl !== "" && (
+        <img src={imageUrl} className="mx-auto m-3 max-w-xs border" />
       )}
     </div>
   );
