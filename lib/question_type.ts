@@ -71,7 +71,7 @@ const QUESTION_SELECT: QuestionType = {
   isShowCheckOrder: () => false,
   validate: (values: QuestionFormValuesForValidate) =>
     values.question !== "" &&
-    (Array(values.sizeOfOthers).every((_, i) => values.others[i] !== "") ||
+    (values.others.slice(0, values.sizeOfOthers).every((it) => it !== "") ||
       values.auto),
   createQuestion: async (values: QuestionFormValues) => {
     const question = await createQuestion({
