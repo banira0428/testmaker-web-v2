@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-import { createQuestion } from "../lib/services/firestore";
 import Transition from "react-transition-group/cjs/Transition";
 import { Question } from "../lib/resources/question";
 import { ToastContext } from "./ToastContext";
@@ -68,6 +67,10 @@ export default function CreateQuestionDialog(props: Props) {
     type,
     isAuto,
   ]);
+
+  useEffect(() => {
+    setOthers(Array(OTHERS_MAX).fill(isAuto ? "自動生成" : ""));
+  }, [isAuto]);
 
   return (
     <Transition in={props.isShow} timeout={300}>
@@ -290,6 +293,7 @@ export default function CreateQuestionDialog(props: Props) {
                       }}
                       key={i}
                       value={it}
+                      disabled={isAuto}
                       required
                     />
                   ))}
