@@ -30,6 +30,7 @@ export default function CreateQuestionDialog(props: Props) {
   const [sizeOfOthers, setSizeOfOthers] = useState<number>(2);
   const [explanation, setExplanation] = useState<string>("");
   const [imageRef, setImageRef] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string>("");
   const [validate, setValidate] = useState<boolean>(false);
   const [type, setType] = useState<QuestionType>(QUESTION_TYPES.WRITE);
 
@@ -96,7 +97,7 @@ export default function CreateQuestionDialog(props: Props) {
                 e.stopPropagation();
               }}
             >
-              <h3 className="text-xl md:text-2xl font-bold mr-auto ml-0">
+              <h3 className="text-xl md:text-2xl font-bold mr-auto ml-0 sticky">
                 問題の新規作成
               </h3>
 
@@ -318,9 +319,19 @@ export default function CreateQuestionDialog(props: Props) {
                 <input
                   type="file"
                   accept="image/*"
-                  className="opacity-0 w-full h-full"
+                  className="opacity-0 w-full h-full p-2"
+                  onChange={(e) => {
+                    if (e.target.files.length == 0) return;
+                    const reader = new FileReader();
+                    reader.onload = () => setImageUrl(reader.result as string);
+                    reader.readAsDataURL(e.target.files[0]);
+                  }}
                 />
               </div>
+              {imageUrl !== "" && (
+                <img src={imageUrl} className="mx-auto m-3 max-w-xs border"/>
+              )}
+
               <div className="mt-5">
                 {type.isShowAuto() && (
                   <div className="p-2">
