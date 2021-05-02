@@ -47,7 +47,7 @@ export default function CreateQuestionDialog(props: Props) {
   };
 
   useEffect(() => {
-    console.log(type)
+    console.log(type);
     setValidate(
       type.validate({
         question: question,
@@ -94,7 +94,7 @@ export default function CreateQuestionDialog(props: Props) {
                 e.stopPropagation();
               }}
             >
-              <h3 className="text-xl md:text-2xl font-bold  mr-auto ml-0">
+              <h3 className="text-xl md:text-2xl font-bold mr-auto ml-0">
                 問題の新規作成
               </h3>
 
@@ -123,65 +123,89 @@ export default function CreateQuestionDialog(props: Props) {
                 ))}
               </div>
 
-              <textarea
-                className="w-full mt-5 p-3 border"
-                placeholder="問題文（必須）"
-                autoFocus
-                onChange={(e) => setQuestion(e.target.value)}
-                required
-                value={question}
-              />
-              {type.isShowSingleAnswer() && (
+              <div className="mt-3">
+                <label htmlFor="question" className="font-semibold ">
+                  問題文
+                </label>
                 <textarea
-                  className="w-full mt-5 p-3 border"
-                  placeholder="解答（必須）"
-                  onChange={(e) => setAnswer(e.target.value)}
+                  className="w-full p-1 border-2 mt-2"
+                  placeholder="問題文（必須）"
+                  autoFocus
+                  onChange={(e) => setQuestion(e.target.value)}
                   required
-                  value={answer}
+                  value={question}
+                  id="question"
                 />
-              )}
-              {type.isShowAnswers() &&
-                answers.slice(0, sizeOfAnswers).map((it, i) => (
+              </div>
+              {type.isShowSingleAnswer() && (
+                <div className="mt-3">
+                  <label htmlFor="answer" className="font-semibold">
+                    解答
+                  </label>
                   <textarea
-                    className="w-full mt-5 p-3 border"
+                    className="w-full mt-2 p-1 border-2"
                     placeholder="解答（必須）"
-                    onChange={(e) => {
-                      setAnswers(
-                        [...answers].map((it, index) =>
-                          index === i ? e.target.value : it
-                        )
-                      );
-                    }}
-                    key={i}
-                    value={it}
+                    onChange={(e) => setAnswer(e.target.value)}
                     required
+                    value={answer}
+                    id="answer"
                   />
-                ))}
-              {type.isShowOthers() &&
-                others.slice(0, sizeOfOthers).map((it, i) => (
-                  <textarea
-                    className="w-full mt-5 p-3 border"
-                    placeholder="他の選択肢（必須）"
-                    onChange={(e) => {
-                      setOthers(
-                        [...others].map((it, index) =>
-                          index === i ? e.target.value : it
-                        )
-                      );
-                    }}
-                    key={i}
-                    value={it}
-                    required
-                  />
-                ))}
-              <textarea
-                className="w-full mt-5 p-3 border"
-                placeholder="解説（任意）"
-                onChange={(e) => setExplanation(e.target.value)}
-                value={explanation}
-              />
+                </div>
+              )}
+              {type.isShowAnswers() && (
+                <div className="mt-3">
+                  <label className="font-semibold">解答</label>
+                  {answers.slice(0, sizeOfAnswers).map((it, i) => (
+                    <textarea
+                      className="w-full mt-2 p-1 border-2"
+                      placeholder="解答（必須）"
+                      onChange={(e) => {
+                        setAnswers(
+                          [...answers].map((it, index) =>
+                            index === i ? e.target.value : it
+                          )
+                        );
+                      }}
+                      key={i}
+                      value={it}
+                      required
+                    />
+                  ))}
+                </div>
+              )}
+              {type.isShowOthers() && (
+                <div className="mt-3">
+                  <label className="font-semibold">他の選択肢</label>
+                  {others.slice(0, sizeOfOthers).map((it, i) => (
+                    <textarea
+                      className="w-full mt-2 p-1 border-2"
+                      placeholder="他の選択肢（必須）"
+                      onChange={(e) => {
+                        setOthers(
+                          [...others].map((it, index) =>
+                            index === i ? e.target.value : it
+                          )
+                        );
+                      }}
+                      key={i}
+                      value={it}
+                      required
+                    />
+                  ))}
+                </div>
+              )}
+              <div className="mt-3">
+                <label htmlFor="explanation" className="font-semibold">解説</label>
+                <textarea
+                  className="w-full mt-2 p-1 border-2"
+                  placeholder="解説（任意）"
+                  onChange={(e) => setExplanation(e.target.value)}
+                  value={explanation}
+                  id="explanation"
+                />
+              </div>
               <div className="relative mt-5">
-                <div className="absolute w-full border p-2 rounded">
+                <div className="absolute w-full border-2 p-2 rounded">
                   <p>画像ファイルを選択</p>
                 </div>
                 <input
@@ -238,7 +262,9 @@ export default function CreateQuestionDialog(props: Props) {
               <div className="text-center mt-5">
                 <button
                   className={`${
-                    !validate ? "cursor-not-allowed" : "hover:bg-accent hover:text-white"
+                    !validate
+                      ? "cursor-not-allowed"
+                      : "hover:bg-accent hover:text-white"
                   } w-full bg-transparent text-accent font-semibold py-2 px-4 border border-accent rounded`}
                   onClick={() => {
                     if (!validate) {
