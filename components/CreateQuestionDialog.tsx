@@ -6,6 +6,7 @@ import { QuestionType, QUESTION_TYPES } from "../lib/question_type";
 import { AuthContext } from "./authContext";
 import Plus from "./question/Plus";
 import Minus from "./question/Minus";
+import ImageEditor from "./question/ImageEditor";
 
 type Props = {
   isShow: boolean;
@@ -150,7 +151,6 @@ export default function CreateQuestionDialog(props: Props) {
                   placeholder="問題文（必須）"
                   autoFocus
                   onChange={(e) => setQuestion(e.target.value)}
-                  required
                   value={question}
                   id="question"
                 />
@@ -164,7 +164,6 @@ export default function CreateQuestionDialog(props: Props) {
                     className="w-full mt-2 p-1 border-2"
                     placeholder="解答（必須）"
                     onChange={(e) => setAnswer(e.target.value)}
-                    required
                     value={answer}
                     id="answer"
                   />
@@ -209,7 +208,6 @@ export default function CreateQuestionDialog(props: Props) {
                       }}
                       key={i}
                       value={it}
-                      required
                     />
                   ))}
                 </div>
@@ -254,7 +252,6 @@ export default function CreateQuestionDialog(props: Props) {
                       key={i}
                       value={it}
                       disabled={isAuto}
-                      required
                     />
                   ))}
                 </div>
@@ -271,25 +268,7 @@ export default function CreateQuestionDialog(props: Props) {
                   id="explanation"
                 />
               </div>
-              <div className="relative mt-5">
-                <div className="absolute w-full border-2 p-2 rounded">
-                  <p>画像ファイルを選択</p>
-                </div>
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="opacity-0 w-full h-full p-2"
-                  onChange={(e) => {
-                    setImage(
-                      e.target.files.length !== 0 ? e.target.files[0] : null
-                    );
-                  }}
-                />
-              </div>
-              {imageUrl !== "" && (
-                <img src={imageUrl} className="mx-auto m-3 max-w-xs border" />
-              )}
-
+              <ImageEditor setImage={setImage} imageUrl={imageUrl} />
               <div className="mt-5">
                 {type.isShowAuto() && (
                   <div className="p-2">
