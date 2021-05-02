@@ -10,6 +10,7 @@ import ImageEditor from "./question/ImageEditor";
 import ValidatableButton from "./question/ValidatableButton";
 import CheckBox from "./question/CheckBox";
 import QuestionTypeSelector from "./question/QuestionTypeSelector";
+import TextArea from "./question/TextArea";
 
 type Props = {
   isShow: boolean;
@@ -103,11 +104,9 @@ export default function CreateQuestionDialog(props: Props) {
                 <label htmlFor="question" className="font-semibold ">
                   問題文
                 </label>
-                <textarea
-                  className="w-full p-1 border-2 mt-2"
+                <TextArea
                   placeholder="問題文（必須）"
-                  autoFocus
-                  onChange={(e) => setQuestion(e.target.value)}
+                  onChange={(text) => setQuestion(text)}
                   value={question}
                   id="question"
                 />
@@ -117,10 +116,9 @@ export default function CreateQuestionDialog(props: Props) {
                   <label htmlFor="answer" className="font-semibold">
                     解答
                   </label>
-                  <textarea
-                    className="w-full mt-2 p-1 border-2"
+                  <TextArea
                     placeholder="解答（必須）"
-                    onChange={(e) => setAnswer(e.target.value)}
+                    onChange={(text) => setAnswer(text)}
                     value={answer}
                     id="answer"
                   />
@@ -153,13 +151,12 @@ export default function CreateQuestionDialog(props: Props) {
                     />
                   </div>
                   {answers.slice(0, sizeOfAnswers).map((it, i) => (
-                    <textarea
-                      className="w-full mt-2 p-1 border-2"
+                    <TextArea
                       placeholder="解答（必須）"
-                      onChange={(e) => {
+                      onChange={(text) => {
                         setAnswers(
                           [...answers].map((it, index) =>
-                            index === i ? e.target.value : it
+                            index === i ? text : it
                           )
                         );
                       }}
@@ -196,13 +193,12 @@ export default function CreateQuestionDialog(props: Props) {
                     />
                   </div>
                   {others.slice(0, sizeOfOthers).map((it, i) => (
-                    <textarea
-                      className="w-full mt-2 p-1 border-2"
+                    <TextArea
                       placeholder="他の選択肢（必須）"
-                      onChange={(e) => {
+                      onChange={(text) => {
                         setOthers(
                           [...others].map((it, index) =>
-                            index === i ? e.target.value : it
+                            index === i ? text : it
                           )
                         );
                       }}
@@ -217,10 +213,9 @@ export default function CreateQuestionDialog(props: Props) {
                 <label htmlFor="explanation" className="font-semibold">
                   解説
                 </label>
-                <textarea
-                  className="w-full mt-2 p-1 border-2"
+                <TextArea
                   placeholder="解説（任意）"
-                  onChange={(e) => setExplanation(e.target.value)}
+                  onChange={(text) => setExplanation(text)}
                   value={explanation}
                   id="explanation"
                 />
