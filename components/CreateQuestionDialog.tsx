@@ -4,6 +4,8 @@ import { Question } from "../lib/resources/question";
 import { ToastContext } from "./ToastContext";
 import { QuestionType, QUESTION_TYPES } from "../lib/question_type";
 import { AuthContext } from "./authContext";
+import Plus from "./question/Plus";
+import Minus from "./question/Minus";
 
 type Props = {
   isShow: boolean;
@@ -19,11 +21,8 @@ export default function CreateQuestionDialog(props: Props) {
 
   const { currentUser } = useContext(AuthContext);
   const { _, setMessage } = useContext(ToastContext);
-  const [isContinuous, setIsContinuous] = useState<boolean>(true);
   const [isAuto, setIsAuto] = useState<boolean>(false);
   const [isCheckOrder, setIsCheckOrder] = useState<boolean>(false);
-
-  const [order, setOrder] = useState<number>(props.order);
   const [question, setQuestion] = useState<string>("");
   const [answer, setAnswer] = useState<string>("");
   const [answers, setAnswers] = useState<string[]>(Array(ANSWERS_MAX).fill(""));
@@ -31,11 +30,13 @@ export default function CreateQuestionDialog(props: Props) {
   const [others, setOthers] = useState<string[]>(Array(OTHERS_MAX).fill(""));
   const [sizeOfOthers, setSizeOfOthers] = useState<number>(2);
   const [explanation, setExplanation] = useState<string>("");
-  const [imageRef, setImageRef] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
   const [image, setImage] = useState<File>(null);
   const [validate, setValidate] = useState<boolean>(false);
   const [type, setType] = useState<QuestionType>(QUESTION_TYPES.WRITE);
+
+  const [order, setOrder] = useState<number>(props.order);
+  const [isContinuous, setIsContinuous] = useState<boolean>(true);
 
   useEffect(() => {
     setOrder(props.order);
@@ -171,11 +172,10 @@ export default function CreateQuestionDialog(props: Props) {
               )}
               {type.isShowAnswers() && (
                 <div className="mt-3">
-                  <div className="flex flex-row items-center">
+                  <div className="flex flex-row items-center gap-2">
                     <label className="font-semibold">解答</label>
                     <div className="flex-grow" />
-                    <button
-                      className="px-3 text-3xl border-2 mr-2"
+                    <Minus
                       onClick={() => {
                         setSizeOfAnswers(
                           Math.max(
@@ -184,22 +184,8 @@ export default function CreateQuestionDialog(props: Props) {
                           )
                         );
                       }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                    <button
-                      className="px-3 text-3xl border-2"
+                    />
+                    <Plus
                       onClick={() => {
                         setSizeOfAnswers(
                           Math.min(
@@ -208,20 +194,7 @@ export default function CreateQuestionDialog(props: Props) {
                           )
                         );
                       }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
+                    />
                   </div>
                   {answers.slice(0, sizeOfAnswers).map((it, i) => (
                     <textarea
@@ -243,11 +216,10 @@ export default function CreateQuestionDialog(props: Props) {
               )}
               {type.isShowOthers() && (
                 <div className="mt-3">
-                  <div className="flex flex-row items-center">
+                  <div className="flex flex-row items-center gap-2">
                     <label className="font-semibold">他の選択肢</label>
                     <div className="flex-grow" />
-                    <button
-                      className="px-3 text-3xl border-2 mr-2"
+                    <Minus
                       onClick={() => {
                         setSizeOfOthers(
                           Math.max(
@@ -256,44 +228,17 @@ export default function CreateQuestionDialog(props: Props) {
                           )
                         );
                       }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                    <button
-                      className="px-3 text-3xl border-2"
-                      onClick={() => {
+                    />
+                    <Plus
+                      onClick={() =>
                         setSizeOfOthers(
                           Math.min(
                             sizeOfOthers + 1,
                             type.maxSizeOfOthers(sizeOfAnswers, sizeOfOthers)
                           )
-                        );
-                      }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
+                        )
+                      }
+                    />
                   </div>
                   {others.slice(0, sizeOfOthers).map((it, i) => (
                     <textarea
