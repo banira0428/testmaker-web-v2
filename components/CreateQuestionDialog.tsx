@@ -7,6 +7,8 @@ import { AuthContext } from "./authContext";
 import Plus from "./question/Plus";
 import Minus from "./question/Minus";
 import ImageEditor from "./question/ImageEditor";
+import ValidatableButton from "./question/ValidatableButton";
+import CheckBox from "./question/CheckBox";
 
 type Props = {
   isShow: boolean;
@@ -260,61 +262,33 @@ export default function CreateQuestionDialog(props: Props) {
               <ImageEditor setImage={setImage} image={image} />
               <div className="mt-5">
                 {type.isShowAuto() && (
-                  <div className="p-2">
-                    <input
-                      type="checkbox"
-                      id="isAuto"
-                      onChange={(e) => {
-                        setIsAuto(e.target.checked);
-                      }}
-                      checked={isAuto}
-                    />
-                    <label htmlFor="isAuto" className="ml-3">
-                      他の選択肢の自動生成
-                    </label>
-                  </div>
+                  <CheckBox
+                    id="isAuto"
+                    label="他の選択肢の自動生成"
+                    isChecked={isAuto}
+                    onChange={(checked) => setIsAuto(checked)}
+                  />
                 )}
                 {type.isShowCheckOrder() && (
-                  <div className="p-2">
-                    <input
-                      type="checkbox"
-                      id="isCheckOrder"
-                      onChange={(e) => {
-                        setIsCheckOrder(e.target.checked);
-                      }}
-                      checked={isCheckOrder}
-                    />
-                    <label htmlFor="isCheckOrder" className="ml-3">
-                      選択順序も正誤判定に含める
-                    </label>
-                  </div>
-                )}
-                <div className="p-2">
-                  <input
-                    type="checkbox"
-                    id="isContinuous"
-                    onChange={(e) => {
-                      setIsContinuous(e.target.checked);
-                    }}
-                    checked={isContinuous}
+                  <CheckBox
+                    id="isCheckOrder"
+                    label="選択順序も正誤判定に含める"
+                    isChecked={isCheckOrder}
+                    onChange={(checked) => setIsCheckOrder(checked)}
                   />
-                  <label htmlFor="isContinuous" className="ml-3">
-                    問題を続けて追加する（保存後もダイアログを表示したままにする）
-                  </label>
-                </div>
+                )}
+                <CheckBox
+                  id="isContinuous"
+                  label="問題を続けて追加する（保存後もダイアログを表示したままにする）"
+                  isChecked={isContinuous}
+                  onChange={(checked) => setIsContinuous(checked)}
+                />
               </div>
               <div className="text-center mt-5">
-                <button
-                  className={`${
-                    !validate
-                      ? "cursor-not-allowed"
-                      : "hover:bg-accent hover:text-white"
-                  } w-full bg-transparent text-accent font-semibold py-2 px-4 border border-accent rounded`}
+                <ValidatableButton
+                  title="追加して保存"
+                  isValid={validate}
                   onClick={() => {
-                    if (!validate) {
-                      return;
-                    }
-
                     type
                       .createQuestion({
                         testDocumentId: props.documentId,
@@ -339,9 +313,7 @@ export default function CreateQuestionDialog(props: Props) {
                         }
                       });
                   }}
-                >
-                  追加して保存
-                </button>
+                />
               </div>
             </div>
           </div>
