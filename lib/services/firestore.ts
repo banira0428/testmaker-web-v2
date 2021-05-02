@@ -129,7 +129,7 @@ export type CreateQuestionRequest = {
 
 export const createQuestion = async (request: CreateQuestionRequest) => {
   console.log(request.image)
-  const imageurl: string =
+  const imageUrl: string =
     request.image !== null
       ? await postImage(request.image, request.userId)
       : "";
@@ -153,7 +153,7 @@ export const createQuestion = async (request: CreateQuestionRequest) => {
     request.explanation,
     request.order,
     request.type,
-    imageurl
+    imageUrl
   );
   await ref.set(q.getData());
   return q;

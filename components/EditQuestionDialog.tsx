@@ -253,7 +253,7 @@ export default function EditQuestionDialog(props: Props) {
               </div>
               <div className="text-center mt-5">
                 <ValidatableButton
-                  title="追加して保存"
+                  title="変更を保存"
                   isValid={validate}
                   onClick={() => {
                     // editType
