@@ -76,7 +76,13 @@ export default function Questions(props: Props) {
           documentId={props.documentId}
           isShow={isShowEditQuestionDialog}
           setIsShow={setIsShowEditQuestionDialog}
-          onEditQuestion={(question) => {}}
+          onEditQuestion={(question) => {
+            setQuestions(
+              [...questions].map((it) =>
+                question.id === it.id ? question : it
+              )
+            );
+          }}
           question={selectedQuestion}
         />
       )}

@@ -6,7 +6,6 @@ export class Question {
   others: string[];
   auto: boolean;
   checkOrder: boolean;
-  created_at: Date;
   explanation: string;
   order: number;
   type: number;
@@ -20,7 +19,6 @@ export class Question {
     others: string[],
     auto: boolean,
     checkOrder: boolean,
-    created_at: Date,
     explanation: string,
     order: number,
     type: number,
@@ -33,7 +31,6 @@ export class Question {
     this.others = others;
     this.auto = auto;
     this.checkOrder = checkOrder;
-    this.created_at = created_at;
     this.explanation = explanation;
     this.order = order;
     this.type = type;

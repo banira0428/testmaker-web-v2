@@ -102,7 +102,6 @@ export const fetchQuestions = async (documentId: string, limit: number) => {
           it.data().others,
           it.data().auto,
           it.data().checkOrder,
-          it.data().created_at,
           it.data().explanation,
           it.data().order,
           it.data().type,
@@ -128,7 +127,6 @@ export type CreateQuestionRequest = {
 };
 
 export const createQuestion = async (request: CreateQuestionRequest) => {
-  console.log(request.image)
   const imageUrl: string =
     request.image !== null
       ? await postImage(request.image, request.userId)
@@ -149,12 +147,58 @@ export const createQuestion = async (request: CreateQuestionRequest) => {
     request.others,
     request.auto,
     request.checkOrder,
-    new Date(),
     request.explanation,
     request.order,
     request.type,
     imageUrl
   );
+  await ref.set(q.getData());
+  return q;
+};
+
+export type UpdateQuestionRequest = {
+  testDocumentId: string;
+  questionDocumentId: string;
+  userId: string;
+  question: string;
+  answer: string;
+  answers: string[];
+  others: string[];
+  auto: boolean;
+  checkOrder: boolean;
+  explanation: string;
+  order: number;
+  type: number;
+  image: File;
+};
+
+export const updateQuestion = async (request: UpdateQuestionRequest) => {
+  const imageUrl: string =
+    request.image !== null
+      ? await postImage(request.image, request.userId)
+      : "";
+
+  const db = firebase.firestore();
+  const ref = db
+    .collection("tests")
+    .doc(request.testDocumentId)
+    .collection("questions")
+    .doc(request.questionDocumentId);
+
+  const q = new Question(
+    ref.id,
+    request.question,
+    request.answer,
+    request.answers,
+    request.others,
+    request.auto,
+    request.checkOrder,
+    request.explanation,
+    request.order,
+    request.type,
+    imageUrl
+  );
+
   await ref.set(q.getData());
   return q;
 };

@@ -1,5 +1,5 @@
 import { Question } from "./resources/question";
-import { createQuestion } from "./services/firestore";
+import { createQuestion, updateQuestion } from "./services/firestore";
 
 export type QuestionType = {
   name: string;
@@ -14,6 +14,7 @@ export type QuestionType = {
   isShowCheckOrder(): boolean;
   validate(values: QuestionFormValuesForValidate): boolean;
   createQuestion(values: QuestionFormValues): Promise<Question>;
+  updateQuestion(values: QuestionFormValuesForUpdate): Promise<Question>;
 };
 
 export type QuestionFormValuesForValidate = {
@@ -28,6 +29,21 @@ export type QuestionFormValuesForValidate = {
 
 export type QuestionFormValues = {
   testDocumentId: string;
+  userId: string;
+  question: string;
+  answer: string;
+  answers: string[];
+  others: string[];
+  auto: boolean;
+  checkOrder: boolean;
+  explanation: string;
+  order: number;
+  image: File;
+};
+
+export type QuestionFormValuesForUpdate = {
+  testDocumentId: string;
+  questionDocumentId: string;
   userId: string;
   question: string;
   answer: string;
@@ -56,6 +72,24 @@ const QUESTION_WRITE: QuestionType = {
   createQuestion: async (values: QuestionFormValues) => {
     const question = await createQuestion({
       testDocumentId: values.testDocumentId,
+      userId: values.userId,
+      question: values.question,
+      answer: values.answer,
+      answers: [],
+      others: [],
+      auto: false,
+      checkOrder: false,
+      explanation: values.explanation,
+      order: values.order,
+      type: 0,
+      image: values.image,
+    });
+    return question;
+  },
+  updateQuestion: async (values: QuestionFormValuesForUpdate) => {
+    const question = await updateQuestion({
+      testDocumentId: values.testDocumentId,
+      questionDocumentId: values.questionDocumentId,
       userId: values.userId,
       question: values.question,
       answer: values.answer,
@@ -104,6 +138,24 @@ const QUESTION_SELECT: QuestionType = {
     });
     return question;
   },
+  updateQuestion: async (values: QuestionFormValuesForUpdate) => {
+    const question = await updateQuestion({
+      testDocumentId: values.testDocumentId,
+      questionDocumentId: values.questionDocumentId,
+      userId: values.userId,
+      question: values.question,
+      answer: values.answer,
+      answers: [],
+      others: values.others,
+      auto: values.auto,
+      checkOrder: false,
+      explanation: values.explanation,
+      order: values.order,
+      type: 1,
+      image: values.image,
+    });
+    return question;
+  },
 };
 
 const QUESTION_MULTIPLE: QuestionType = {
@@ -123,6 +175,24 @@ const QUESTION_MULTIPLE: QuestionType = {
   createQuestion: async (values: QuestionFormValues) => {
     const question = await createQuestion({
       testDocumentId: values.testDocumentId,
+      userId: values.userId,
+      question: values.question,
+      answer: "",
+      answers: values.answers,
+      others: [],
+      auto: false,
+      checkOrder: values.checkOrder,
+      explanation: values.explanation,
+      order: values.order,
+      type: 2,
+      image: values.image,
+    });
+    return question;
+  },
+  updateQuestion: async (values: QuestionFormValuesForUpdate) => {
+    const question = await updateQuestion({
+      testDocumentId: values.testDocumentId,
+      questionDocumentId: values.questionDocumentId,
       userId: values.userId,
       question: values.question,
       answer: "",
@@ -162,6 +232,24 @@ const QUESTION_MULTIPLE_SELECT: QuestionType = {
   createQuestion: async (values: QuestionFormValues) => {
     const question = await createQuestion({
       testDocumentId: values.testDocumentId,
+      userId: values.userId,
+      question: values.question,
+      answer: "",
+      answers: values.answers,
+      others: values.others,
+      auto: values.auto,
+      checkOrder: values.checkOrder,
+      explanation: values.explanation,
+      order: values.order,
+      type: 3,
+      image: values.image,
+    });
+    return question;
+  },
+  updateQuestion: async (values: QuestionFormValuesForUpdate) => {
+    const question = await updateQuestion({
+      testDocumentId: values.testDocumentId,
+      questionDocumentId: values.questionDocumentId,
       userId: values.userId,
       question: values.question,
       answer: "",

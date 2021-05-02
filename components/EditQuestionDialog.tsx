@@ -30,9 +30,9 @@ export default function EditQuestionDialog(props: Props) {
   const [isCheckOrder, setIsCheckOrder] = useState<boolean>(false);
   const [question, setQuestion] = useState<string>("");
   const [answer, setAnswer] = useState<string>("");
-  const [answers, setAnswers] = useState<string[]>();
+  const [answers, setAnswers] = useState<string[]>(Array(ANSWERS_MAX).fill(""));
   const [sizeOfAnswers, setSizeOfAnswers] = useState<number>(2);
-  const [others, setOthers] = useState<string[]>([]);
+  const [others, setOthers] = useState<string[]>(Array(OTHERS_MAX).fill(""));
   const [sizeOfOthers, setSizeOfOthers] = useState<number>(2);
   const [explanation, setExplanation] = useState<string>("");
   const [image, setImage] = useState<File>(null);
@@ -62,6 +62,16 @@ export default function EditQuestionDialog(props: Props) {
     editType,
     isAuto,
   ]);
+
+  const resetForm = () => {
+    setQuestion("");
+    setAnswer("");
+    setAnswers(Array(ANSWERS_MAX).fill(""));
+    setOthers(Array(OTHERS_MAX).fill(""));
+    setExplanation("");
+    setImage(null);
+    setImageRef("");
+  };
 
   useEffect(() => {
     setOthers(Array(OTHERS_MAX).fill(isAuto ? "自動生成" : ""));
@@ -256,25 +266,27 @@ export default function EditQuestionDialog(props: Props) {
                   title="変更を保存"
                   isValid={validate}
                   onClick={() => {
-                    // editType
-                    //   .updateQuestion({
-                    //     testDocumentId: props.documentId,
-                    //     userId: currentUser.uid,
-                    //     question: question,
-                    //     answer: answer,
-                    //     answers: answers,
-                    //     others: others,
-                    //     auto: isAuto,
-                    //     checkOrder: isCheckOrder,
-                    //     explanation: explanation,
-                    //     order: props.question.order,
-                    //     image: image,
-                    //   })
-                    //   .then((question) => {
-                    //     setMessage("問題を保存しました");
-                    //     //props.onUpdateQuestion(question);
-                    //     props.setIsShow(false);
-                    //   });
+                    editType
+                      .updateQuestion({
+                        testDocumentId: props.documentId,
+                        questionDocumentId: props.question.id,
+                        userId: currentUser.uid,
+                        question: question,
+                        answer: answer,
+                        answers: answers,
+                        others: others,
+                        auto: isAuto,
+                        checkOrder: isCheckOrder,
+                        explanation: explanation,
+                        order: props.question.order,
+                        image: image,
+                      })
+                      .then((question) => {
+                        resetForm();
+                        setMessage("問題を保存しました");
+                        props.onEditQuestion(question);
+                        props.setIsShow(false);
+                      });
                   }}
                 />
               </div>
