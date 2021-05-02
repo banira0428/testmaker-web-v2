@@ -3,6 +3,10 @@ import { createQuestion } from "./services/firestore";
 
 export type QuestionType = {
   name: string;
+  minSizeOfAnswers(sizeOfAnswers: number, sizeOfOthers: number): number;
+  minSizeOfOthers(sizeOfAnswers: number, sizeOfOthers: number): number;
+  maxSizeOfAnswers(sizeOfAnswers: number, sizeOfOthers: number): number;
+  maxSizeOfOthers(sizeOfAnswers: number, sizeOfOthers: number): number;
   isShowSingleAnswer(): boolean;
   isShowAnswers(): boolean;
   isShowOthers(): boolean;
@@ -37,6 +41,10 @@ export type QuestionFormValues = {
 
 const QUESTION_WRITE: QuestionType = {
   name: "記述",
+  minSizeOfAnswers: (sizeOfAnswers: number, sizeOfOthers: number) => 0,
+  minSizeOfOthers: (sizeOfAnswers: number, sizeOfOthers: number) => 0,
+  maxSizeOfAnswers: (sizeOfAnswers: number, sizeOfOthers: number) => 0,
+  maxSizeOfOthers: (sizeOfAnswers: number, sizeOfOthers: number) => 0,
   isShowSingleAnswer: () => true,
   isShowAnswers: () => false,
   isShowOthers: () => false,
@@ -64,6 +72,10 @@ const QUESTION_WRITE: QuestionType = {
 
 const QUESTION_SELECT: QuestionType = {
   name: "選択",
+  minSizeOfAnswers: (sizeOfAnswers: number, sizeOfOthers: number) => 0,
+  minSizeOfOthers: (sizeOfAnswers: number, sizeOfOthers: number) => 1,
+  maxSizeOfAnswers: (sizeOfAnswers: number, sizeOfOthers: number) => 0,
+  maxSizeOfOthers: (sizeOfAnswers: number, sizeOfOthers: number) => 5,
   isShowSingleAnswer: () => true,
   isShowAnswers: () => false,
   isShowOthers: () => true,
@@ -93,6 +105,10 @@ const QUESTION_SELECT: QuestionType = {
 
 const QUESTION_MULTIPLE: QuestionType = {
   name: "完答",
+  minSizeOfAnswers: (sizeOfAnswers: number, sizeOfOthers: number) => 1,
+  minSizeOfOthers: (sizeOfAnswers: number, sizeOfOthers: number) => 0,
+  maxSizeOfAnswers: (sizeOfAnswers: number, sizeOfOthers: number) => 4,
+  maxSizeOfOthers: (sizeOfAnswers: number, sizeOfOthers: number) => 0,
   isShowSingleAnswer: () => false,
   isShowAnswers: () => true,
   isShowOthers: () => false,
@@ -121,6 +137,14 @@ const QUESTION_MULTIPLE: QuestionType = {
 
 const QUESTION_MULTIPLE_SELECT: QuestionType = {
   name: "選択完答",
+  minSizeOfAnswers: (sizeOfAnswers: number, sizeOfOthers: number) =>
+    sizeOfOthers > 0 ? 0 : 1,
+  minSizeOfOthers: (sizeOfAnswers: number, sizeOfOthers: number) =>
+    sizeOfAnswers > 0 ? 0 : 1,
+  maxSizeOfAnswers: (sizeOfAnswers: number, sizeOfOthers: number) =>
+    6 - sizeOfOthers,
+  maxSizeOfOthers: (sizeOfAnswers: number, sizeOfOthers: number) =>
+    6 - sizeOfAnswers,
   isShowSingleAnswer: () => false,
   isShowAnswers: () => true,
   isShowOthers: () => true,

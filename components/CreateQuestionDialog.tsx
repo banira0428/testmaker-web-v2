@@ -47,7 +47,6 @@ export default function CreateQuestionDialog(props: Props) {
   };
 
   useEffect(() => {
-    console.log(type);
     setValidate(
       type.validate({
         question: question,
@@ -154,7 +153,58 @@ export default function CreateQuestionDialog(props: Props) {
               )}
               {type.isShowAnswers() && (
                 <div className="mt-3">
-                  <label className="font-semibold">解答</label>
+                  <div className="flex flex-row items-center">
+                    <label className="font-semibold">解答</label>
+                    <div className="flex-grow" />
+                    <button
+                      className="px-3 text-3xl border-2 mr-2"
+                      onClick={() => {
+                        setSizeOfAnswers(
+                          Math.max(
+                            sizeOfAnswers - 1,
+                            type.minSizeOfAnswers(sizeOfAnswers, sizeOfOthers)
+                          )
+                        );
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      className="px-3 text-3xl border-2"
+                      onClick={() => {
+                        setSizeOfAnswers(
+                          Math.min(
+                            sizeOfAnswers + 1,
+                            type.maxSizeOfAnswers(sizeOfAnswers, sizeOfOthers)
+                          )
+                        );
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                   {answers.slice(0, sizeOfAnswers).map((it, i) => (
                     <textarea
                       className="w-full mt-2 p-1 border-2"
@@ -175,7 +225,58 @@ export default function CreateQuestionDialog(props: Props) {
               )}
               {type.isShowOthers() && (
                 <div className="mt-3">
-                  <label className="font-semibold">他の選択肢</label>
+                  <div className="flex flex-row items-center">
+                    <label className="font-semibold">他の選択肢</label>
+                    <div className="flex-grow" />
+                    <button
+                      className="px-3 text-3xl border-2 mr-2"
+                      onClick={() => {
+                        setSizeOfOthers(
+                          Math.max(
+                            sizeOfOthers - 1,
+                            type.minSizeOfOthers(sizeOfAnswers, sizeOfOthers)
+                          )
+                        );
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      className="px-3 text-3xl border-2"
+                      onClick={() => {
+                        setSizeOfOthers(
+                          Math.min(
+                            sizeOfOthers + 1,
+                            type.maxSizeOfOthers(sizeOfAnswers, sizeOfOthers)
+                          )
+                        );
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                   {others.slice(0, sizeOfOthers).map((it, i) => (
                     <textarea
                       className="w-full mt-2 p-1 border-2"
@@ -195,7 +296,9 @@ export default function CreateQuestionDialog(props: Props) {
                 </div>
               )}
               <div className="mt-3">
-                <label htmlFor="explanation" className="font-semibold">解説</label>
+                <label htmlFor="explanation" className="font-semibold">
+                  解説
+                </label>
                 <textarea
                   className="w-full mt-2 p-1 border-2"
                   placeholder="解説（任意）"
