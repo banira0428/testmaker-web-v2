@@ -47,6 +47,7 @@ export default function CreateQuestionDialog(props: Props) {
   };
 
   useEffect(() => {
+    console.log(type)
     setValidate(
       type.validate({
         question: question,
@@ -58,7 +59,16 @@ export default function CreateQuestionDialog(props: Props) {
         auto: isAuto,
       })
     );
-  }, [question, answer, answers, sizeOfAnswers, sizeOfOthers, type]);
+  }, [
+    question,
+    answer,
+    answers,
+    sizeOfAnswers,
+    others,
+    sizeOfOthers,
+    type,
+    isAuto,
+  ]);
 
   return (
     <Transition in={props.isShow} timeout={300}>
@@ -101,9 +111,7 @@ export default function CreateQuestionDialog(props: Props) {
                       id={`type-${i}`}
                       name="type"
                       className="hidden"
-                      onChange={() => {
-                        setType(it);
-                      }}
+                      onChange={() => setType(it)}
                     />
                     <label
                       htmlFor={`type-${i}`}
@@ -123,15 +131,17 @@ export default function CreateQuestionDialog(props: Props) {
                 required
                 value={question}
               />
-              <textarea
-                className="w-full mt-5 p-3 border"
-                placeholder="解答（必須）"
-                onChange={(e) => setAnswer(e.target.value)}
-                required
-                value={answer}
-              />
+              {type.isShowSingleAnswer() && (
+                <textarea
+                  className="w-full mt-5 p-3 border"
+                  placeholder="解答（必須）"
+                  onChange={(e) => setAnswer(e.target.value)}
+                  required
+                  value={answer}
+                />
+              )}
               {type.isShowAnswers() &&
-                answers.map((it, i) => (
+                answers.slice(0, sizeOfAnswers).map((it, i) => (
                   <textarea
                     className="w-full mt-5 p-3 border"
                     placeholder="解答（必須）"
@@ -148,7 +158,7 @@ export default function CreateQuestionDialog(props: Props) {
                   />
                 ))}
               {type.isShowOthers() &&
-                others.map((_, i) => (
+                others.slice(0, sizeOfOthers).map((it, i) => (
                   <textarea
                     className="w-full mt-5 p-3 border"
                     placeholder="他の選択肢（必須）"
@@ -160,6 +170,7 @@ export default function CreateQuestionDialog(props: Props) {
                       );
                     }}
                     key={i}
+                    value={it}
                     required
                   />
                 ))}
@@ -227,8 +238,8 @@ export default function CreateQuestionDialog(props: Props) {
               <div className="text-center mt-5">
                 <button
                   className={`${
-                    !validate && "cursor-not-allowed"
-                  } w-full bg-transparent hover:bg-accent text-accent font-semibold hover:text-white py-2 px-4 border border-accent hover:border-transparent rounded`}
+                    !validate ? "cursor-not-allowed" : "hover:bg-accent hover:text-white"
+                  } w-full bg-transparent text-accent font-semibold py-2 px-4 border border-accent rounded`}
                   onClick={() => {
                     if (!validate) {
                       return;

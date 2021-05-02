@@ -100,7 +100,7 @@ const QUESTION_MULTIPLE: QuestionType = {
   isShowCheckOrder: () => true,
   validate: (values: QuestionFormValuesForValidate) =>
     values.question !== "" &&
-    Array(values.sizeOfAnswers).every((_, i) => values.answers[i] !== ""),
+    values.answers.slice(0, values.sizeOfAnswers).every((it) => it !== ""),
   createQuestion: async (values: QuestionFormValues) => {
     const question = await createQuestion({
       testDocumentId: values.testDocumentId,
@@ -128,8 +128,8 @@ const QUESTION_MULTIPLE_SELECT: QuestionType = {
   isShowCheckOrder: () => true,
   validate: (values: QuestionFormValuesForValidate) =>
     values.question !== "" &&
-    Array(values.sizeOfAnswers).every((_, i) => values.answers[i] !== "") &&
-    (Array(values.sizeOfOthers).every((_, i) => values.others[i] !== "") ||
+    values.answers.slice(0, values.sizeOfAnswers).every((it) => it !== "") &&
+    (values.others.slice(0, values.sizeOfOthers).every((it) => it !== "") ||
       values.auto),
   createQuestion: async (values: QuestionFormValues) => {
     const question = await createQuestion({
