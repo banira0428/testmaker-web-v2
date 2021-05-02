@@ -9,6 +9,7 @@ import Minus from "./question/Minus";
 import ImageEditor from "./question/ImageEditor";
 import ValidatableButton from "./question/ValidatableButton";
 import CheckBox from "./question/CheckBox";
+import QuestionTypeSelector from "./question/QuestionTypeSelector";
 
 type Props = {
   isShow: boolean;
@@ -85,17 +86,7 @@ export default function CreateQuestionDialog(props: Props) {
       {(status) => {
         return (
           <div
-            className={[
-              "z-10",
-              "w-full",
-              "h-full",
-              "fixed",
-              "bg-gray-700",
-              "p-3",
-              "top-0",
-              "left-0",
-              `fade-${status}`,
-            ].join(" ")}
+            className={`z-10 w-full h-full fixed bg-gray-700 p-3 top-0 left-0 fade-${status}`}
             onClick={() => props.setIsShow(false)}
           >
             <div
@@ -107,32 +98,7 @@ export default function CreateQuestionDialog(props: Props) {
               <h3 className="text-xl md:text-2xl font-bold mr-auto ml-0 sticky">
                 問題の新規作成
               </h3>
-
-              <div className="flex gap-4">
-                {Object.values<QuestionType>(QUESTION_TYPES).map((it, i) => (
-                  <div
-                    key={i}
-                    className={`flex-1 mt-3 text-center border-2 ${
-                      type.name === it.name && "border-primary"
-                    } rounded`}
-                  >
-                    <input
-                      type="radio"
-                      id={`type-${i}`}
-                      name="type"
-                      className="hidden"
-                      onChange={() => setType(it)}
-                    />
-                    <label
-                      htmlFor={`type-${i}`}
-                      className="cursor-pointer block p-2 font-semibold"
-                    >
-                      {it.name}
-                    </label>
-                  </div>
-                ))}
-              </div>
-
+              <QuestionTypeSelector type={type} setType={setType} />
               <div className="mt-3">
                 <label htmlFor="question" className="font-semibold ">
                   問題文
