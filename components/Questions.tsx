@@ -82,7 +82,11 @@ export default function Questions(props: Props) {
                 question.id === it.id ? question : it
               )
             );
-          }}
+          }
+        }
+        onDeleteQuestion={(documentId: string) => {
+          setQuestions(questions.filter((it) =>  it.id !== documentId))
+        }}
           question={selectedQuestion}
         />
       )}

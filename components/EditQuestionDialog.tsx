@@ -11,12 +11,15 @@ import ValidatableButton from "./question/ValidatableButton";
 import CheckBox from "./question/CheckBox";
 import QuestionTypeSelector from "./question/QuestionTypeSelector";
 import TextArea from "./question/TextArea";
+import Button from "./Button";
+import { deleteQuestion } from "../lib/services/firestore";
 
 type Props = {
   isShow: boolean;
   setIsShow(isShow: boolean): void;
   documentId: string;
   onEditQuestion(question: Question): void;
+  onDeleteQuestion(documentId: string): void;
   question: Question;
 };
 
@@ -41,7 +44,6 @@ export default function EditQuestionDialog(props: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [editType, setEditType] = useState<QuestionType>(QUESTION_TYPES.WRITE);
-
 
   useEffect(() => {
     setValidate(
@@ -101,7 +103,9 @@ export default function EditQuestionDialog(props: Props) {
     setIsAuto(props.question.auto);
     setIsCheckOrder(props.question.checkOrder);
     setImageRef(props.question.imageRef);
-    setEditType(Object.values<QuestionType>(QUESTION_TYPES)[props.question.type]);
+    setEditType(
+      Object.values<QuestionType>(QUESTION_TYPES)[props.question.type]
+    );
   }, [props.question]);
 
   return (
@@ -118,9 +122,27 @@ export default function EditQuestionDialog(props: Props) {
                 e.stopPropagation();
               }}
             >
-              <h3 className="text-xl md:text-2xl font-bold mr-auto ml-0 sticky">
-                問題の編集
-              </h3>
+              <div className="flex">
+                <h3 className="text-xl md:text-2xl font-bold mr-auto ml-0 sticky">
+                  問題の編集
+                </h3>
+                <div className="flex-grow" />
+                <Button
+                  title="削除"
+                  theme="danger"
+                  onClick={() => {
+                    if (confirm("この問題を削除しますか？")) {
+                      deleteQuestion(props.documentId, props.question.id).then(
+                        (documentId) => {
+                          props.setIsShow(false);
+                          setMessage("問題を削除しました");
+                          props.onDeleteQuestion(documentId);
+                        }
+                      );
+                    }
+                  }}
+                />
+              </div>
               <QuestionTypeSelector
                 type={editType}
                 onChange={(it) => setEditType(it)}
@@ -159,7 +181,10 @@ export default function EditQuestionDialog(props: Props) {
                         setSizeOfAnswers(
                           Math.max(
                             sizeOfAnswers - 1,
-                            editType.minSizeOfAnswers(sizeOfAnswers, sizeOfOthers)
+                            editType.minSizeOfAnswers(
+                              sizeOfAnswers,
+                              sizeOfOthers
+                            )
                           )
                         );
                       }}
@@ -169,7 +194,10 @@ export default function EditQuestionDialog(props: Props) {
                         setSizeOfAnswers(
                           Math.min(
                             sizeOfAnswers + 1,
-                            editType.maxSizeOfAnswers(sizeOfAnswers, sizeOfOthers)
+                            editType.maxSizeOfAnswers(
+                              sizeOfAnswers,
+                              sizeOfOthers
+                            )
                           )
                         );
                       }}
@@ -201,7 +229,10 @@ export default function EditQuestionDialog(props: Props) {
                         setSizeOfOthers(
                           Math.max(
                             sizeOfOthers - 1,
-                            editType.minSizeOfOthers(sizeOfAnswers, sizeOfOthers)
+                            editType.minSizeOfOthers(
+                              sizeOfAnswers,
+                              sizeOfOthers
+                            )
                           )
                         );
                       }}
@@ -211,7 +242,10 @@ export default function EditQuestionDialog(props: Props) {
                         setSizeOfOthers(
                           Math.min(
                             sizeOfOthers + 1,
-                            editType.maxSizeOfOthers(sizeOfAnswers, sizeOfOthers)
+                            editType.maxSizeOfOthers(
+                              sizeOfAnswers,
+                              sizeOfOthers
+                            )
                           )
                         )
                       }
@@ -245,7 +279,11 @@ export default function EditQuestionDialog(props: Props) {
                   id="explanation"
                 />
               </div>
-              <ImageEditor setImage={setImage} image={image} imageUrl={imageRef} />
+              <ImageEditor
+                setImage={setImage}
+                image={image}
+                imageUrl={imageRef}
+              />
               <div className="mt-5">
                 {editType.isShowAuto() && (
                   <CheckBox
@@ -270,7 +308,7 @@ export default function EditQuestionDialog(props: Props) {
                   isLoading={isLoading}
                   isValid={validate}
                   onClick={() => {
-                    setIsLoading(true)
+                    setIsLoading(true);
                     editType
                       .updateQuestion({
                         testDocumentId: props.documentId,
@@ -287,7 +325,7 @@ export default function EditQuestionDialog(props: Props) {
                         image: image,
                       })
                       .then((question) => {
-                        setIsLoading(false)
+                        setIsLoading(false);
                         resetForm();
                         setMessage("問題を保存しました");
                         props.onEditQuestion(question);

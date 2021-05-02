@@ -202,3 +202,17 @@ export const updateQuestion = async (request: UpdateQuestionRequest) => {
   await ref.set(q.getData());
   return q;
 };
+
+export const deleteQuestion = async (
+  testDocumentId: string,
+  questionDocumentId: string
+) => {
+  const db = firebase.firestore();
+  await db
+    .collection("tests")
+    .doc(testDocumentId)
+    .collection("questions")
+    .doc(questionDocumentId)
+    .delete();
+  return questionDocumentId;
+};
