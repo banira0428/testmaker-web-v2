@@ -3,11 +3,11 @@ const colors = require("tailwindcss/colors");
 module.exports = {
   purge: {
     content: ["./pages/**/*.tsx", "./components/**/*.tsx"],
-    option: {
-      whitelist: [
-        "bg-danger",
-        "bg-primary",
-        "bg-accent",
+    options: {
+      safelist: [
+        "hover:bg-danger",
+        "hover:bg-primary",
+        "hover:bg-accent",
         "text-danger",
         "text-primary",
         "text-accent",
