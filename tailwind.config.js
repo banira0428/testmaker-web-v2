@@ -1,35 +1,50 @@
-const colors = require('tailwindcss/colors')
+const colors = require("tailwindcss/colors");
 
 module.exports = {
-  purge: ['./pages/**/*.tsx', './components/**/*.tsx'],
+  purge: {
+    content: ["./pages/**/*.tsx", "./components/**/*.tsx"],
+    option: {
+      whitelist: [
+        "bg-danger",
+        "bg-primary",
+        "bg-accent",
+        "text-danger",
+        "text-primary",
+        "text-accent",
+        "border-danger",
+        "border-primary",
+        "border-accent",
+      ],
+    },
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#33b5e5"
+          DEFAULT: "#33b5e5",
         },
         accent: {
-          DEFAULT: "#ffa144"
+          DEFAULT: "#ffa144",
         },
         danger: {
-          DEFAULT: "#e57373"
+          DEFAULT: "#e57373",
         },
         white: colors.white,
       },
       lineHeight: {
-        '0': '0',
+        0: "0",
       },
       transitionProperty: {
-        'accordion': 'line-height opacity padding-top',
-      }
+        accordion: "line-height opacity padding-top",
+      },
     },
     fontFamily: {
-      'sans': ['"ヒラギノ角ゴ ProN"', '"Roboto"', 'sans-serif']
-    }
+      sans: ['"ヒラギノ角ゴ ProN"', '"Roboto"', "sans-serif"],
+    },
   },
   variants: {
     extend: {},
   },
   plugins: [],
-}
+};
