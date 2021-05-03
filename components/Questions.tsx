@@ -4,6 +4,7 @@ import { fetchQuestions } from "../lib/services/firestore";
 import Button from "./Button";
 import CreateQuestionDialog from "./CreateQuestionDialog";
 import EditQuestionDialog from "./EditQuestionDialog";
+import ItemQuestion from "./question/ItemQuestion";
 
 type Props = {
   documentId: string;
@@ -55,21 +56,14 @@ export default function Questions(props: Props) {
         </div>
       </div>
       {questions.map((question) => (
-        <div
+        <ItemQuestion
           key={question.id}
-          className="cursor-pointer hover:bg-gray-100 p-3"
-          onClick={() => {
+          question={question}
+          onClick={(question: Question) => {
             setIsShowEditQuestionDialog(true);
             setSelectedQuestion(question);
           }}
-        >
-          <p className="overflow-ellipsis overflow-hidden max-h-12 leading-6">
-            {question.question}
-          </p>
-          <p className="overflow-ellipsis overflow-hidden max-h-12 leading-6 mt-3">
-            {question.answer}
-          </p>
-        </div>
+        />
       ))}
       {!isShowCreateQuestionDialog && (
         <EditQuestionDialog
@@ -82,11 +76,10 @@ export default function Questions(props: Props) {
                 question.id === it.id ? question : it
               )
             );
-          }
-        }
-        onDeleteQuestion={(documentId: string) => {
-          setQuestions(questions.filter((it) =>  it.id !== documentId))
-        }}
+          }}
+          onDeleteQuestion={(documentId: string) => {
+            setQuestions(questions.filter((it) => it.id !== documentId));
+          }}
           question={selectedQuestion}
         />
       )}
