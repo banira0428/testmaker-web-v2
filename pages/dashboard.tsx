@@ -15,6 +15,7 @@ import { createDynamicLinks } from "../lib/services/dynamicLinks";
 import { ToastContext } from "../components/ToastContext";
 import CreateTestDialog from "../components/CreateTestDialog";
 import Questions from "../components/Questions";
+import QrCodeDialog from "../components/QrCodeDialog";
 
 export type TestMenuItem = {
   title: string;
@@ -33,6 +34,8 @@ export default function DashBoard() {
   const [isShowCreateTestDialog, setIsShowCreateTestDialog] = useState<boolean>(
     false
   );
+  const [isShowQrCodeDialog, setIsShowQrCodeDialog] = useState<boolean>(false);
+  const [url, setUrl] = useState<string>("");
 
   const buildItemModels = () => {
     if (currentUser == null || currentUser == undefined) return;
@@ -47,18 +50,11 @@ export default function DashBoard() {
 
   const testMenuItems: TestMenuItem[] = [
     {
-      title: "編集",
-      action: () => {
-        setMessage("テストメッセージ");
-      },
-      theme: "primary",
-    },
-    {
-      title: "共有",
+      title: "アプリで解答する",
       action: (test: Test) => {
         createDynamicLinks(test.documentId).then((link) => {
-          navigator.clipboard.writeText(link);
-          setMessage("共有用のリンクをクリップボードにコピーしました");
+          setUrl(link)
+          setIsShowQrCodeDialog(true)
         });
       },
       theme: "primary",
@@ -171,6 +167,11 @@ export default function DashBoard() {
           setMessage("問題集を追加しました");
           setTests([test].concat(tests));
         }}
+      />
+      <QrCodeDialog
+        isShow={isShowQrCodeDialog}
+        setIsShow={setIsShowQrCodeDialog}
+        url={url}
       />
     </div>
   );
