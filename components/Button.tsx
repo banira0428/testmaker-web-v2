@@ -8,8 +8,10 @@ type Props = {
 export default function Button(props: Props) {
   return (
     <button
-      className={`focus:outline-none bg-transparent hover:bg-${props.theme} text-${props.theme} font-semibold hover:text-white py-2 px-4 border border-${props.theme} hover:border-transparent rounded ${props.className}`}
-      onClick={() => props.onClick()}
+      className={`focus:outline-none hover:bg-${props.theme} text-${props.theme} font-semibold hover:text-white py-2 px-4 border border-${props.theme} rounded ${props.className}`}
+      onClick={() => 
+        props.onClick()
+      }
     >
       {props.title}
     </button>

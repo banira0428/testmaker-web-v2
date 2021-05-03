@@ -30,7 +30,7 @@ export default function DashBoard() {
   const [tests, setTests] = useState<Test[]>([]);
   const [selectedTest, setSelectedTest] = useState<Test>(undefined);
   const [cursor, setCursor] = useState<QueryDocumentSnapshot>();
-  const [isLastPage, setIsLastpage] = useState<boolean>(false);
+  const [isLastPage, setIsLastPage] = useState<boolean>(false);
   const [isShowCreateTestDialog, setIsShowCreateTestDialog] = useState<boolean>(
     false
   );
@@ -43,7 +43,7 @@ export default function DashBoard() {
       setTests(tests.concat(result.tests));
       setCursor(result.cursor);
       if (cursor && cursor.id == result.cursor.id) {
-        setIsLastpage(true);
+        setIsLastPage(true);
       }
     });
   };
