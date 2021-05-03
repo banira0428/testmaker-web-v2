@@ -12,6 +12,9 @@ module.exports = {
         accent: {
           DEFAULT: "#ffa144"
         },
+        danger: {
+          DEFAULT: "#e57373"
+        },
         white: colors.white,
       },
       lineHeight: {
