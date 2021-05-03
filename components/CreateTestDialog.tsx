@@ -4,6 +4,7 @@ import { createTest } from "../lib/services/firestore";
 import { AuthContext } from "../components/authContext";
 import Button from "./Button";
 import Transition from "react-transition-group/cjs/Transition";
+import { ToastContext } from "./ToastContext";
 
 type Props = {
   isShow: boolean;
@@ -13,6 +14,8 @@ type Props = {
 
 export default function CreateTestDialog(props: Props) {
   const { currentUser } = useContext(AuthContext);
+  const { message, setMessage } = useContext(ToastContext);
+
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const [title, setTitle] = useState<string>("");
 
@@ -21,16 +24,7 @@ export default function CreateTestDialog(props: Props) {
       {(status) => {
         return (
           <div
-            className={[
-              "z-10",
-              "w-full",
-              "h-full",
-              "fixed",
-              "bg-gray-700",
-              "p-3",
-              "top-0",
-              `fade-${status}`,
-            ].join(" ")}
+          className={`z-10 w-full h-full fixed bg-gray-700 p-3 top-0 left-0 fade-${status}`}
             onClick={() => props.setIsShow(false)}
           >
             <div
@@ -66,6 +60,7 @@ export default function CreateTestDialog(props: Props) {
                   title={"追加して保存"}
                   onClick={() => {
                     createTest(title, isPublic, currentUser).then((test) => {
+                      setMessage("問題集を追加しました");
                       props.onCreateTest(test);
                       props.setIsShow(false);
                     });
