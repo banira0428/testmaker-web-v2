@@ -4,18 +4,17 @@ import CreateTestDialog from "./CreateTestDialog";
 import { Test } from "../lib/resources/test";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./authContext";
-import {
-  fetchPagedTests,
-  PagedTests,
-} from "../lib/services/firestore";
+import { fetchPagedTests, PagedTests } from "../lib/services/firestore";
 import { QueryDocumentSnapshot } from "@firebase/firestore-types";
 import { SelectedTestContext } from "./contexts/TestContext";
-import { TestsContext } from './contexts/TestsContext';
+import { TestsContext } from "./contexts/TestsContext";
+import Loading from "./Loading";
 
 export default function TestList() {
   const { currentUser } = useContext(AuthContext);
   const { selectedTest, setSelectedTest } = useContext(SelectedTestContext);
-  const {tests, setTests} = useContext(TestsContext);
+  const { tests, setTests } = useContext(TestsContext);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [cursor, setCursor] = useState<QueryDocumentSnapshot>();
   const [isLastPage, setIsLastPage] = useState<boolean>(false);
@@ -26,7 +25,9 @@ export default function TestList() {
 
   const buildItemModels = () => {
     if (currentUser == null || currentUser == undefined) return;
+    setIsLoading(true);
     fetchPagedTests(currentUser.uid, cursor).then((result: PagedTests) => {
+      setIsLoading(false);
       setTests(tests.concat(result.tests));
       setCursor(result.cursor);
       if (cursor && cursor.id == result.cursor.id) {
@@ -56,16 +57,18 @@ export default function TestList() {
           />
         </div>
       </div>
-      {tests && tests.map((test: Test) => (
-        <div key={test.documentId}>
-          <ItemTest
-            test={test}
-            onClick={() => {
-              setSelectedTest(test);
-            }}
-          />
-        </div>
-      ))}
+      {tests &&
+        tests.map((test: Test) => (
+          <div key={test.documentId}>
+            <ItemTest
+              test={test}
+              onClick={() => {
+                setSelectedTest(test);
+              }}
+            />
+          </div>
+        ))}
+      <Loading isLoading={isLoading} />
       <div className="w-full text-center mt-5">
         {tests && tests.length > 0 && !isLastPage && (
           <Button

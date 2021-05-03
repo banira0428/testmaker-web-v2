@@ -4,6 +4,7 @@ import { fetchQuestions } from "../lib/services/firestore";
 import Button from "./Button";
 import CreateQuestionDialog from "./CreateQuestionDialog";
 import EditQuestionDialog from "./EditQuestionDialog";
+import Loading from "./Loading";
 import ItemQuestion from "./question/ItemQuestion";
 
 type Props = {
@@ -13,6 +14,8 @@ type Props = {
 export default function Questions(props: Props) {
   const QUESTIONS_MAX = 500;
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [
     isShowCreateQuestionDialog,
     setIsShowCreateQuestionDialog,
@@ -26,8 +29,11 @@ export default function Questions(props: Props) {
   const [selectedQuestion, setSelectedQuestion] = useState<Question>(null);
 
   useEffect(() => {
+    setQuestions([]);
+    setIsLoading(true);
     fetchQuestions(props.documentId, QUESTIONS_MAX).then((result) => {
       setQuestions(result.questions);
+      setIsLoading(false);
     });
   }, [props.documentId]);
 
@@ -54,6 +60,7 @@ export default function Questions(props: Props) {
           />
         </div>
       </div>
+      <Loading isLoading={isLoading} />
       {questions.map((question) => (
         <ItemQuestion
           key={question.id}
