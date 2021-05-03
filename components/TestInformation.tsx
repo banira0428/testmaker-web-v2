@@ -1,7 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Test } from "../lib/resources/test";
+import { useContext, useState } from "react";
 import { createDynamicLinks } from "../lib/services/dynamicLinks";
-import { TestMenuItem } from "../pages/dashboard";
 import Button from "./Button";
 import { SelectedTestContext } from "./contexts/TestContext";
 import Questions from "./Questions";
@@ -12,19 +10,6 @@ export default function TestInformation() {
 
   const [isShowQrCodeDialog, setIsShowQrCodeDialog] = useState<boolean>(false);
   const [url, setUrl] = useState<string>("");
-
-  const testMenuItems: TestMenuItem[] = [
-    {
-      title: "アプリで解答する",
-      action: (test: Test) => {
-        createDynamicLinks(test.documentId).then((link) => {
-          setUrl(link);
-          setIsShowQrCodeDialog(true);
-        });
-      },
-      theme: "primary",
-    },
-  ];
 
   return (
     <div>
@@ -38,17 +23,22 @@ export default function TestInformation() {
             <p>{`公開設定：　${
               selectedTest.public ? "全体公開" : "限定公開"
             }`}</p>
-            <div className="flex gap-4">
-              {testMenuItems.map((it) => (
-                <div className="mt-4" key={it.title}>
-                  <Button
-                    title={it.title}
-                    onClick={() => it.action(selectedTest)}
-                    theme={it.theme}
-                  />
-                </div>
-              ))}
-            </div>
+            <Button
+              title={"問題集のダウンロード"}
+              onClick={() =>
+                createDynamicLinks(selectedTest.documentId).then((link) => {
+                  setUrl(link);
+                  setIsShowQrCodeDialog(true);
+                })
+              }
+              className="mt-5"
+              theme={"primary"}
+            />
+            <QrCodeDialog
+              isShow={isShowQrCodeDialog}
+              setIsShow={setIsShowQrCodeDialog}
+              url={url}
+            />
           </div>
           <div className="mt-5">
             <Questions
@@ -58,11 +48,6 @@ export default function TestInformation() {
           </div>
         </div>
       )}
-      <QrCodeDialog
-        isShow={isShowQrCodeDialog}
-        setIsShow={setIsShowQrCodeDialog}
-        url={url}
-      />
     </div>
   );
 }

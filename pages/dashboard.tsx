@@ -1,15 +1,8 @@
 import Layout from "../components/Layout";
 import Head from "next/dist/next-server/lib/head";
-import { Test } from "../lib/resources/test";
 import TestList from "../components/TextList";
 import { SelectedTestProvider } from "../components/contexts/TestContext";
 import TestInformation from "../components/TestInformation";
-
-export type TestMenuItem = {
-  title: string;
-  theme: "primary" | "accent" | "danger";
-  action(test: Test): void;
-};
 
 export default function DashBoard() {
   return (
