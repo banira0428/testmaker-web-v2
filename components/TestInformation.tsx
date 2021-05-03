@@ -6,7 +6,7 @@ import Questions from "./Questions";
 import QrCodeDialog from "../components/QrCodeDialog";
 import { deleteTest } from "../lib/services/firestore";
 import { ToastContext } from "./contexts/ToastContext";
-import { TestsContext } from './contexts/TestsContext';
+import { TestsContext } from "./contexts/TestsContext";
 
 export default function TestInformation() {
   const { selectedTest, setSelectedTest } = useContext(SelectedTestContext);
@@ -15,6 +15,9 @@ export default function TestInformation() {
 
   const [isShowQrCodeDialog, setIsShowQrCodeDialog] = useState<boolean>(false);
   const [url, setUrl] = useState<string>("");
+  const [isLoadingCreateLink, setIsLoadingCreateLink] = useState<boolean>(
+    false
+  );
 
   return (
     <div>
@@ -31,19 +34,23 @@ export default function TestInformation() {
             <div className="flex gap-4">
               <Button
                 title={"アプリで解答"}
-                onClick={() =>
+                onClick={() => {
+                  setIsLoadingCreateLink(true);
                   createDynamicLinks(selectedTest.documentId).then((link) => {
+                    setIsLoadingCreateLink(false);
                     setUrl(link);
                     setIsShowQrCodeDialog(true);
-                  })
-                }
+                  });
+                }}
                 className="mt-5"
                 theme={"primary"}
+                isLoading={isLoadingCreateLink}
               />
               <Button
                 title={"削除"}
                 onClick={() => {
-                  if (!confirm(`「${selectedTest.name}」を削除しますか？`)) return;
+                  if (!confirm(`「${selectedTest.name}」を削除しますか？`))
+                    return;
 
                   deleteTest(selectedTest.documentId).then((documentId) => {
                     setSelectedTest(null);
