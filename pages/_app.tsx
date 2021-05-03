@@ -2,6 +2,7 @@ import "./styles.css";
 import Head from "next/head";
 import { AuthProvider } from "../components/authContext";
 import { ToastProvider } from "../components/contexts/ToastContext";
+import { SelectedTestProvider } from "../components/contexts/TestContext";
 
 export default function _app({ Component, pageProps }) {
   return (
@@ -11,7 +12,9 @@ export default function _app({ Component, pageProps }) {
       </Head>
       <AuthProvider>
         <ToastProvider>
-          <Component {...pageProps} />
+          <SelectedTestProvider>
+            <Component {...pageProps} />
+          </SelectedTestProvider>
         </ToastProvider>
       </AuthProvider>
     </>

@@ -34,7 +34,7 @@ export default function Questions(props: Props) {
   return (
     <div>
       <div className="flex justify-items-center">
-        <h4 className="text-xl md:text-2xl font-bold  mr-auto ml-0 mt-5 mb-3">
+        <h4 className="text-2xl md:text-3xl font-bold  mr-auto ml-0 mt-5 mb-3">
           問題一覧
         </h4>
         <div className="flex-glow-1" />

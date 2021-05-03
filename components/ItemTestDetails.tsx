@@ -3,9 +3,10 @@ import { Test } from "../lib/resources/test";
 type Props = {
   test: Test;
   onClick(): void;
+  onClickDelete(): void;
 };
 
-export default function ItemTest(props: Props) {
+export default function ItemTestDetails(props: Props) {
   const COLOR_MAX = 8;
 
   return (
@@ -31,6 +32,15 @@ export default function ItemTest(props: Props) {
             {props.test.public ? "全体公開" : "限定公開"}
           </p>
         </div>
+        <button
+          className="scale-0"
+          onClick={(e) => {
+            e.stopPropagation();
+            props.onClickDelete();
+          }}
+        >
+          削除する
+        </button>
       </div>
     </a>
   );

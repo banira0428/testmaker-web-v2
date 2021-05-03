@@ -1,10 +1,14 @@
 import Layout from "../components/Layout";
 import Head from "next/dist/next-server/lib/head";
 import TestList from "../components/TestList";
-import { SelectedTestProvider } from "../components/contexts/TestContext";
 import TestInformation from "../components/TestInformation";
+import React, { useContext } from "react";
+import { SelectedTestContext } from "../components/contexts/TestContext";
+import { TestsProvider } from "../components/contexts/TestsContext";
 
 export default function DashBoard() {
+  const { selectedTest, _ } = useContext(SelectedTestContext);
+
   return (
     <div>
       <Head>
@@ -12,15 +16,17 @@ export default function DashBoard() {
       </Head>
       <Layout>
         <div className="mx-auto max-w-7xl p-3">
-          <div className="grid grid-cols-2 gap-4 divide-x mb-6">
-            <SelectedTestProvider>
-              <div className="col-span-1">
+          <div className="grid grid-cols-3 gap-4 divide-x mb-6">
+            <TestsProvider>
+              <div className={`${selectedTest ? "col-span-1" : "col-span-3"}`}>
                 <TestList />
               </div>
-              <div className="col-span-1 pl-5">
+              <div
+                className={`${selectedTest ? "col-span-2" : "col-span-0"} pl-5`}
+              >
                 <TestInformation />
               </div>
-            </SelectedTestProvider>
+            </TestsProvider>
           </div>
         </div>
       </Layout>

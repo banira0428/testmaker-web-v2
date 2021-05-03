@@ -7,18 +7,16 @@ import { AuthContext } from "./authContext";
 import {
   fetchPagedTests,
   PagedTests,
-  deleteTest,
 } from "../lib/services/firestore";
 import { QueryDocumentSnapshot } from "@firebase/firestore-types";
 import { SelectedTestContext } from "./contexts/TestContext";
-import { ToastContext } from './contexts/ToastContext';
+import { TestsContext } from './contexts/TestsContext';
 
 export default function TestList() {
   const { currentUser } = useContext(AuthContext);
-  const { __, setMessage } = useContext(ToastContext);
-  const { _, setSelectedTest } = useContext(SelectedTestContext);
+  const { selectedTest, setSelectedTest } = useContext(SelectedTestContext);
+  const {tests, setTests} = useContext(TestsContext);
 
-  const [tests, setTests] = useState<Test[]>([]);
   const [cursor, setCursor] = useState<QueryDocumentSnapshot>();
   const [isLastPage, setIsLastPage] = useState<boolean>(false);
 
@@ -44,7 +42,7 @@ export default function TestList() {
   return (
     <div>
       <div className="flex justify-items-center">
-        <h3 className="text-3xl md:text-4xl font-bold  mr-auto ml-0 mt-5 mb-3">
+        <h3 className="text-2xl md:text-3xl font-bold  mr-auto ml-0 mt-5 mb-3">
           問題集一覧
         </h3>
         <div className="flex-glow-1" />
@@ -58,27 +56,18 @@ export default function TestList() {
           />
         </div>
       </div>
-      {tests.map((test: Test) => (
+      {tests && tests.map((test: Test) => (
         <div key={test.documentId}>
           <ItemTest
             test={test}
             onClick={() => {
               setSelectedTest(test);
             }}
-            onClickDelete={() => {
-              if (!confirm(`「${test.name}」を削除しますか？`)) return;
-
-              deleteTest(test.documentId).then((documentId) => {
-                setSelectedTest(null);
-                setTests(tests.filter((it) => it.documentId != documentId));
-                setMessage("問題集を削除しました");
-              });
-            }}
           />
         </div>
       ))}
       <div className="w-full text-center mt-5">
-        {tests.length > 0 && !isLastPage && (
+        {tests && tests.length > 0 && !isLastPage && (
           <Button
             title={"もっと見る"}
             onClick={() => {
