@@ -1,5 +1,5 @@
-import { User } from "@firebase/auth-types"
-import firebase from "./init"
+import { User } from "@firebase/auth-types";
+import firebase from "./init";
 interface MenuItem {
   title: string;
   link: string;
@@ -8,6 +8,12 @@ interface MenuItem {
 }
 
 export const menuItems: MenuItem[] = [
+  {
+    title: "問題集の管理",
+    link: "/dashboard",
+    isShow: (user: User) => user != null,
+    action: () => {},
+  },
   {
     title: "トップページ",
     link: "/",
@@ -49,9 +55,9 @@ export const menuItems: MenuItem[] = [
     link: "/",
     isShow: (user: User) => user != null,
     action: () => {
-      if (window.confirm('ログアウトしますか？')){
-        firebase.auth().signOut()
-        window.location.reload()
+      if (window.confirm("ログアウトしますか？")) {
+        firebase.auth().signOut();
+        window.location.reload();
       }
     },
   },
