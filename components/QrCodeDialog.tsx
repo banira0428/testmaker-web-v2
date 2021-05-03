@@ -2,7 +2,7 @@ import QRCode from "qrcode.react";
 import { useContext } from "react";
 import Transition from "react-transition-group/cjs/Transition";
 import Button from "./Button";
-import { ToastContext } from "./ToastContext";
+import { ToastContext } from "./contexts/ToastContext";
 
 type Props = {
   isShow: boolean;

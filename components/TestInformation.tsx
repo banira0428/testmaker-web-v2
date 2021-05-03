@@ -43,7 +43,6 @@ export default function TestInformation() {
           <div className="mt-5">
             <Questions
               documentId={selectedTest.documentId}
-              onClick={() => {}}
             />
           </div>
         </div>

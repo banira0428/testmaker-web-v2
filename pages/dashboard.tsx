@@ -1,6 +1,6 @@
 import Layout from "../components/Layout";
 import Head from "next/dist/next-server/lib/head";
-import TestList from "../components/TextList";
+import TestList from "../components/TestList";
 import { SelectedTestProvider } from "../components/contexts/TestContext";
 import TestInformation from "../components/TestInformation";
 

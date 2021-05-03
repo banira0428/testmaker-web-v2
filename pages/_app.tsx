@@ -1,7 +1,7 @@
 import "./styles.css";
 import Head from "next/head";
 import { AuthProvider } from "../components/authContext";
-import { ToastProvider } from "../components/ToastContext";
+import { ToastProvider } from "../components/contexts/ToastContext";
 
 export default function _app({ Component, pageProps }) {
   return (

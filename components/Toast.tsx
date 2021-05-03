@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Transition from "react-transition-group/cjs/Transition";
-import { ToastContext } from "./ToastContext";
+import { ToastContext } from "./contexts/ToastContext";
 
 export default function Toast() {
   const { message, setMessage } = useContext(ToastContext);

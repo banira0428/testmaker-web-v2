@@ -2,9 +2,9 @@ import { useState, useContext } from "react";
 import { Test } from "../lib/resources/test";
 import { createTest } from "../lib/services/firestore";
 import { AuthContext } from "../components/authContext";
-import Button from "./Button";
+import ValidatableButton from "./question/ValidatableButton";
 import Transition from "react-transition-group/cjs/Transition";
-import { ToastContext } from "./ToastContext";
+import { ToastContext } from "./contexts/ToastContext";
 
 type Props = {
   isShow: boolean;
@@ -18,13 +18,14 @@ export default function CreateTestDialog(props: Props) {
 
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const [title, setTitle] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
     <Transition in={props.isShow} timeout={300}>
       {(status) => {
         return (
           <div
-          className={`z-10 w-full h-full fixed bg-gray-700 p-3 top-0 left-0 fade-${status}`}
+            className={`z-10 w-full h-full fixed bg-gray-700 p-3 top-0 left-0 fade-${status}`}
             onClick={() => props.setIsShow(false)}
           >
             <div
@@ -56,16 +57,19 @@ export default function CreateTestDialog(props: Props) {
                 </label>
               </div>
               <div className="text-center mt-5">
-                <Button
-                  title={"追加して保存"}
+                <ValidatableButton
+                  title="追加して保存"
+                  isLoading={isLoading}
+                  isValid={title !== ""}
                   onClick={() => {
+                    setIsLoading(true);
                     createTest(title, isPublic, currentUser).then((test) => {
+                      setIsLoading(false);
                       setMessage("問題集を追加しました");
                       props.onCreateTest(test);
                       props.setIsShow(false);
                     });
                   }}
-                  theme={"accent"}
                 />
               </div>
             </div>

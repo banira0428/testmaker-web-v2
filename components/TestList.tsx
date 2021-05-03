@@ -1,16 +1,22 @@
 import Button from "./Button";
 import ItemTest from "./ItemTest";
-import CreateTestDialog from "../components/CreateTestDialog";
+import CreateTestDialog from "./CreateTestDialog";
 import { Test } from "../lib/resources/test";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./authContext";
-import { fetchPagedTests, PagedTests } from "../lib/services/firestore";
+import {
+  fetchPagedTests,
+  PagedTests,
+  deleteTest,
+} from "../lib/services/firestore";
 import { QueryDocumentSnapshot } from "@firebase/firestore-types";
 import { SelectedTestContext } from "./contexts/TestContext";
+import { ToastContext } from './contexts/ToastContext';
 
 export default function TestList() {
   const { currentUser } = useContext(AuthContext);
-  const { _, setSelectedTest} = useContext(SelectedTestContext)
+  const { __, setMessage } = useContext(ToastContext);
+  const { _, setSelectedTest } = useContext(SelectedTestContext);
 
   const [tests, setTests] = useState<Test[]>([]);
   const [cursor, setCursor] = useState<QueryDocumentSnapshot>();
@@ -58,6 +64,15 @@ export default function TestList() {
             test={test}
             onClick={() => {
               setSelectedTest(test);
+            }}
+            onClickDelete={() => {
+              if (!confirm(`「${test.name}」を削除しますか？`)) return;
+
+              deleteTest(test.documentId).then((documentId) => {
+                setSelectedTest(null);
+                setTests(tests.filter((it) => it.documentId != documentId));
+                setMessage("問題集を削除しました");
+              });
             }}
           />
         </div>

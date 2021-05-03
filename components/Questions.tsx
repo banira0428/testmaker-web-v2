@@ -8,7 +8,6 @@ import ItemQuestion from "./question/ItemQuestion";
 
 type Props = {
   documentId: string;
-  onClick(question: Question): void;
 };
 
 export default function Questions(props: Props) {

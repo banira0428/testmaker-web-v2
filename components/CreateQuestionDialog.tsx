@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import Transition from "react-transition-group/cjs/Transition";
 import { Question } from "../lib/resources/question";
-import { ToastContext } from "./ToastContext";
+import { ToastContext } from "./contexts/ToastContext";
 import { QuestionType, QUESTION_TYPES } from "../lib/question_type";
 import { AuthContext } from "./authContext";
 import Plus from "./question/Plus";
