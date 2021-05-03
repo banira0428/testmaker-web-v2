@@ -27,7 +27,7 @@ export default function QrCodeDialog(props: Props) {
             }}
           >
             <h3 className="text-xl md:text-2xl font-bold mr-auto ml-0 sticky">
-              問題集のダウンロード
+              アプリで解く
             </h3>
             <div className="text-center w-full mt-5">
               <QRCode
@@ -45,7 +45,7 @@ export default function QrCodeDialog(props: Props) {
                 }}
                 className="mt-5"
               />
-              <p className="my-5 text-xl">手元のスマートフォンから、上記のQRコードを読み取ってください</p>
+              <p className="mt-5 text-xl mx-6">手元のスマートフォンから、上記のQRコードを読み取ってください（暗記メーカーが起動します）</p>
             </div>
           </div>
         </div>
