@@ -113,7 +113,7 @@ export default function EditQuestionDialog(props: Props) {
       {(status) => {
         return (
           <div
-            className={`z-10 w-full h-full fixed bg-gray-700 p-3 top-0 left-0 fade-${status}`}
+            className={`z-20 w-full h-full fixed bg-gray-700 p-3 top-0 left-0 fade-${status}`}
             onClick={() => props.setIsShow(false)}
           >
             <div
