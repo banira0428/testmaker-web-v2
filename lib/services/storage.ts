@@ -8,8 +8,6 @@ export const postImage = async (data: File, userId: string) => {
     .ref()
     .child(`${userId}/${new Date().getTime()}`)
     .put(data, { contentType: "image/jpeg" });
-  console.log(snapshot);
   const imageRef = await snapshot.ref.getDownloadURL();
-  console.log(imageRef);
   return imageRef;
 };

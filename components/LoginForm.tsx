@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import firebase from "../lib/init";
 import React from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import Heading from "./Heading";
@@ -18,7 +18,7 @@ export default function LoginForm() {
     <div className="mx-auto max-w-xl p-3">
       <Heading title={"Login"} subTitle={"ログイン"} />
       <p className="mb-6">
-        ブラウザ上でも問題集を管理したい場合は、ログインをお願いします。
+        ブラウザ上で問題集を管理したい場合は、ログインをお願いします。
       </p>
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
     </div>
