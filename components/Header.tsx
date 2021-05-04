@@ -62,7 +62,7 @@ export default function Header() {
             return (
               <div
                 className={[
-                  "z-10",
+                  "z-20",
                   "w-full",
                   "h-full",
                   "fixed",
