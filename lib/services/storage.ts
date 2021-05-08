@@ -4,10 +4,20 @@ export const postImage = async (data: File, userId: string) => {
   if (data === null) throw "image is null";
 
   const storage = firebase.storage();
-  const snapshot = await storage
+  const imageRef = `${userId}/${new Date().getTime()}`
+  await storage
     .ref()
-    .child(`${userId}/${new Date().getTime()}`)
+    .child(imageRef)
     .put(data, { contentType: "image/jpeg" });
-  const imageRef = await snapshot.ref.getDownloadURL();
   return imageRef;
 };
+
+export const getDownloadUrl = async (imageRef: string) => {
+  const storage = firebase.storage();
+  const imageUrl = await storage
+    .ref()
+    .child(imageRef)
+    .getDownloadURL();
+
+  return imageUrl
+}

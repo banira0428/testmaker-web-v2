@@ -282,7 +282,7 @@ export default function EditQuestionDialog(props: Props) {
               <ImageEditor
                 setImage={setImage}
                 image={image}
-                imageUrl={imageRef}
+                imageRef={imageRef}
               />
               <div className="mt-5">
                 {editType.isShowAuto() && (

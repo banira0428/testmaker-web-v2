@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
+import { getDownloadUrl } from '../../lib/services/storage';
 
 type Props = {
   image: File;
   setImage(file: File): void;
-  imageUrl?: string;
+  imageRef?: string;
 };
 
 export default function ImageEditor(props: Props) {
   const [data, setData] = useState<string>("");
-
+  const [imageUrl, setImageUrl] = useState<string>("");
+ 
   useEffect(() => {
     if (props.image == null) {
       setData("");
@@ -18,6 +20,18 @@ export default function ImageEditor(props: Props) {
     reader.onload = () => setData(reader.result as string);
     reader.readAsDataURL(props.image);
   }, [props.image]);
+
+  useEffect(() => {
+    if(props.imageRef != null && props.imageRef !== ""){
+      getDownloadUrl(props.imageRef).then((url) => {
+        setImageUrl(url)
+      }).catch(() => {
+        setImageUrl("")
+      })
+    }else{
+      setImageUrl("")
+    }
+  },[props.imageRef])
 
   return (
     <div>
@@ -39,8 +53,8 @@ export default function ImageEditor(props: Props) {
       {data !== "" && (
         <img src={data} className="mx-auto m-3 max-w-xs border" />
       )}
-      {data === "" && props.imageUrl != "" && (
-        <img src={props.imageUrl} className="mx-auto m-3 max-w-xs border" />
+      {data === "" && imageUrl != "" && (
+        <img src={imageUrl} className="mx-auto m-3 max-w-xs border" />
       )}
     </div>
   );
