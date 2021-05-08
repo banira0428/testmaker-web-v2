@@ -54,6 +54,7 @@ export type QuestionFormValuesForUpdate = {
   explanation: string;
   order: number;
   image: File;
+  imageRef: string;
 };
 
 const QUESTION_WRITE: QuestionType = {
@@ -101,6 +102,7 @@ const QUESTION_WRITE: QuestionType = {
       order: values.order,
       type: 0,
       image: values.image,
+      imageRef: values.imageRef
     });
     return question;
   },
@@ -153,6 +155,7 @@ const QUESTION_SELECT: QuestionType = {
       order: values.order,
       type: 1,
       image: values.image,
+      imageRef: values.imageRef
     });
     return question;
   },
@@ -204,6 +207,7 @@ const QUESTION_MULTIPLE: QuestionType = {
       order: values.order,
       type: 2,
       image: values.image,
+      imageRef: values.imageRef
     });
     return question;
   },
@@ -261,6 +265,7 @@ const QUESTION_MULTIPLE_SELECT: QuestionType = {
       order: values.order,
       type: 3,
       image: values.image,
+      imageRef: values.imageRef
     });
     return question;
   },

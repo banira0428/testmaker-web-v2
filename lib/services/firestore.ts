@@ -170,13 +170,14 @@ export type UpdateQuestionRequest = {
   order: number;
   type: number;
   image: File;
+  imageRef: string;
 };
 
 export const updateQuestion = async (request: UpdateQuestionRequest) => {
-  const imageUrl: string =
+  const imageRef: string =
     request.image !== null
       ? await postImage(request.image, request.userId)
-      : "";
+      : request.imageRef;
 
   const db = firebase.firestore();
   const ref = db
@@ -196,7 +197,7 @@ export const updateQuestion = async (request: UpdateQuestionRequest) => {
     request.explanation,
     request.order,
     request.type,
-    imageUrl
+    imageRef
   );
 
   await ref.set(q.getData());

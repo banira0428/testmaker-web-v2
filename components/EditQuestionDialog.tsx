@@ -323,6 +323,7 @@ export default function EditQuestionDialog(props: Props) {
                         explanation: explanation,
                         order: props.question.order,
                         image: image,
+                        imageRef: props.question.imageRef
                       })
                       .then((question) => {
                         setIsLoading(false);
