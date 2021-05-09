@@ -316,14 +316,14 @@ export default function EditQuestionDialog(props: Props) {
                         userId: currentUser.uid,
                         question: question,
                         answer: answer,
-                        answers: answers,
-                        others: others,
+                        answers: answers.slice(0, sizeOfAnswers),
+                        others: others.slice(0, sizeOfOthers),
                         auto: isAuto,
                         checkOrder: isCheckOrder,
                         explanation: explanation,
                         order: props.question.order,
                         image: image,
-                        imageRef: props.question.imageRef
+                        imageRef: props.question.imageRef,
                       })
                       .then((question) => {
                         setIsLoading(false);
