@@ -43,7 +43,9 @@ export default function EditCSV() {
 
           <h3 className="text-3xl md:text-3xl font-bold mr-auto ml-0 mt-6">7. 「暗記メーカー」へのインポート</h3>
           <p className="mt-6">暗記メーカーを起動し、サイドメニューの「ファイルのインポート」から、先ほど移動させたファイルを選択することで、問題集としてインポートすることができます</p>
-          <img src="/img/Inkededit_csv7-1_LI.jpg"/>
+          <div className="text-center">
+          <img className="mt-6 w-2/3 max-w-md mx-auto" src="/img/Inkededit_csv7-1_LI.jpg"/></div>
+         
 
 
 
