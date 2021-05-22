@@ -24,7 +24,7 @@ export default function DashBoard() {
       <Layout>
         <div className="text-center p-2 text-white bg-blue-300">
           <p>
-            お知らせ：既存の問題を更新する際に、選択肢の数が正しく保持されない不具合を修正しました。（2021/05/08）
+            お知らせ：既存の問題を編集する際に、問題形式が正しく引き継がれない場合がある不具合を修正しました。（2021/05/22）
           </p>
         </div>
         <div className="mx-auto max-w-7xl p-3">

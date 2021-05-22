@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import Transition from "react-transition-group/cjs/Transition";
 import { Question } from "../lib/resources/question";
 import { ToastContext } from "./contexts/ToastContext";
-import { QuestionType, QUESTION_TYPES } from "../lib/question_type";
+import { QuestionType, QUESTION_TYPES } from '../lib/question_type';
 import { AuthContext } from "./authContext";
 import Plus from "./question/Plus";
 import Minus from "./question/Minus";
@@ -106,7 +106,7 @@ export default function EditQuestionDialog(props: Props) {
     setEditType(
       Object.values<QuestionType>(QUESTION_TYPES)[props.question.type]
     );
-  }, [props.question]);
+  }, [props.question,props.isShow]);
 
   return (
     <Transition in={props.isShow} timeout={300}>
