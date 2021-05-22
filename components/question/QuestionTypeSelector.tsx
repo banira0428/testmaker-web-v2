@@ -23,6 +23,7 @@ export default function QuestionTypeSelector(props: Props) {
             onChange={() => {
               props.onChange(it)
             }}
+            checked={props.type.name === it.name}
           />
           <label
             htmlFor={`type-${i}`}
