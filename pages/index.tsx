@@ -57,11 +57,14 @@ export default function Home() {
 
                 <Content title={'問題集を手軽に共有'}
                          content={'問題集をアップロードすることで、リンク一つで問題集を手軽に共有することができます。'}
-                         img={'/img/undraw_share_link_qtxe.svg'}/>
+                         img={'/img/undraw_share_link_qtxe.svg'}
+                         link={'/howto/share_tests'}
+                         />
 
                 <Content title={'PCからまとめて編集'}
                          content={'エクセルなどの表計算ソフトを用いることで、問題集をまとめて編集することができます。'}
-                         img={'/img/undraw_Spreadsheet_re_cn18.svg'}/>
+                         img={'/img/undraw_Spreadsheet_re_cn18.svg'}
+                         link={'/howto/edit_csv'} />
               </div>
 
             </div>
