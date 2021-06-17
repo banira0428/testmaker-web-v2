@@ -8,6 +8,7 @@ export class Test {
   created_at: Date;
   color: number;
   size: number;
+  comment: string;
 
   constructor(
     documentId: string,
@@ -18,7 +19,8 @@ export class Test {
     isPublic: boolean,
     created_at: Date,
     color: number,
-    size: number
+    size: number,
+    comment: string
   ) {
     this.documentId = documentId;
     this.name = name;
@@ -29,6 +31,7 @@ export class Test {
     this.created_at = created_at;
     this.color = color;
     this.size = size;
+    this.comment = comment;
   }
 
   getData(): object {
