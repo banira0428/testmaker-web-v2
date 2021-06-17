@@ -8,7 +8,7 @@ export class Test {
   created_at: Date;
   color: number;
   size: number;
-  comment: string;
+  overview: string;
 
   constructor(
     documentId: string,
@@ -20,7 +20,7 @@ export class Test {
     created_at: Date,
     color: number,
     size: number,
-    comment: string
+    overview: string
   ) {
     this.documentId = documentId;
     this.name = name;
@@ -31,7 +31,7 @@ export class Test {
     this.created_at = created_at;
     this.color = color;
     this.size = size;
-    this.comment = comment;
+    this.overview = overview;
   }
 
   getData(): object {
