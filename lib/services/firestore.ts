@@ -46,7 +46,8 @@ export const fetchPagedTests = async (
           it.data().public,
           it.data().created_at.toDate(),
           it.data().color,
-          0
+          0,
+          ''
         )
     ),
     cursor: docs.length >= 1 ? docs[docs.length - 1] : startAfter,
@@ -70,7 +71,8 @@ export const createTest = async (
     isPublic,
     new Date(),
     0,
-    0
+    0,
+    ''
   );
   await ref.set(test.getData());
   return test;
