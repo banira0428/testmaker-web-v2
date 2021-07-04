@@ -2,6 +2,7 @@ import Layout from "../components/Layout";
 import Heading from "../components/Heading";
 import Head from "next/head";
 import Accordion from "../components/Accordion";
+import Link from "next/link";
 
 export default function Guide() {
   return (
@@ -47,7 +48,13 @@ export default function Guide() {
               }
             >
               <p>
-                この機能は、アプリ内で作成した問題集を、コンマ区切りのCSVテキストに変換する機能です。問題集の画像情報が失われてしまう、という欠点はありますが、エクセルやスプレッドシートを用いて効率的に問題集を編集することが可能になります。
+                この機能は、アプリ内で作成した問題集を、コンマ区切りのCSVテキストに変換する機能です。問題集の画像情報が失われてしまう、という欠点はありますが、エクセルやスプレッドシートを用いて効率的に問題集を編集することが可能になります。詳しい編集方法に関しては、
+                  <Link href="/howto/edit_csv">
+                    <a className="text-primary">
+                      こちら
+                    </a>
+                  </Link>
+                  のページをご確認ください。
               </p>
             </Accordion>
 
@@ -62,12 +69,13 @@ export default function Guide() {
             <Accordion title={"CSVファイルのインポートは可能ですか?"}>
               <div>
                 <p>
-                  はい、可能です。CSV形式で問題を編集したい場合は、以下のテンプレートファイルの書式に従ってください。ファイルの作成後は、アプリ内サイドメニューの「ファイルのインポート」より、インポートすることが可能です
-                </p>
-                <p className="mt-3 text-primary">
-                  <a href="/TestMaker_template.csv" download>
-                    TestMaker_template.csv
-                  </a>
+                  はい、可能です。詳しい編集方法に関しては、
+                  <Link href="/howto/edit_csv">
+                    <a className="text-primary">
+                      こちら
+                    </a>
+                  </Link>
+                  のページをご確認ください。
                 </p>
               </div>
             </Accordion>

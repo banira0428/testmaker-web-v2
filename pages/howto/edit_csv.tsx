@@ -13,7 +13,7 @@ export default function EditCSV() {
           <Heading title="HowTo" subTitle="使い方 / 問題集をまとめて編集" />
           <p className="mt-6">このページでは、表計算ツールを用いて問題集をまとめて編集する方法について解説します。なお、このページの操作手順は、PCから行うことを想定しています。</p>
 
-          <h3 className="text-3xl md:text-3xl font-bold mr-auto ml-0 mt-6">1. テンプレートのコピー</h3>
+          <h3 className="text-3xl md:text-3xl font-bold mr-auto ml-0 mt-6">1. テンプレートへのアクセス</h3>
           <p className="mt-3"><a className="text-primary" href="https://docs.google.com/spreadsheets/d/1FjuuQKduDykY6S88NqJbAGJGjzLOF-jQlXlG_334_3k/edit?usp=sharing" download>こちら</a>のページにアクセスし、入力例となる表が閲覧できることを確認してください</p>
           <img src="/img/edit_csv1-1.jpg" />
 
@@ -45,8 +45,7 @@ export default function EditCSV() {
           <p className="mt-6">暗記メーカーを起動し、サイドメニューの「ファイルのインポート」から、先ほど移動させたファイルを選択することで、問題集としてインポートすることができます</p>
           <div className="text-center">
           <img className="mt-6 w-2/3 max-w-md mx-auto" src="/img/Inkededit_csv7-1_LI.jpg"/></div>
-         
-
+        
 
 
         </div>

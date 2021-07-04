@@ -14,7 +14,7 @@ export default class Accordion extends Component<any, AccordionState> {
 
   render() {
     return (
-      <div className="m-3">
+      <div className="m-3 p-1">
         <a className="cursor-pointer" onClick={() => {
           this.setState({
             isOpen: !this.state.isOpen

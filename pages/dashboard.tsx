@@ -22,11 +22,11 @@ export default function DashBoard() {
         <title>暗記メーカー | ダッシュボード</title>
       </Head>
       <Layout>
-        <div className="text-center p-2 text-white bg-blue-300">
+        {/* <div className="text-center p-2 text-white bg-blue-300">
           <p>
             お知らせ：既存の問題を編集する際に、問題形式が正しく引き継がれない場合がある不具合を修正しました。（2021/05/22）
           </p>
-        </div>
+        </div> */}
         <div className="mx-auto max-w-7xl p-3">
           {currentUser ? (
             <div className="grid grid-cols-3 gap-4 divide-x mb-6">
