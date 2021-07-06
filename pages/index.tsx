@@ -53,7 +53,9 @@ export default function Home() {
 
                 <Content title={'多彩な問題形式'}
                          content={'単純な一問一答問題だけでなく、選択問題や完答問題など、学習したい科目に最適な形式の問題を作成することができます。'}
-                         img={'/img/undraw_quiz_nlyh.svg'}/>
+                         img={'/img/undraw_quiz_nlyh.svg'}
+                         link={'/howto/variable_questions'}
+                         />
 
                 <Content title={'問題集を手軽に共有'}
                          content={'問題集をアップロードすることで、リンク一つで問題集を手軽に共有することができます。'}
