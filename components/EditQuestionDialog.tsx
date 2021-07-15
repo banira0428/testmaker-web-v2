@@ -88,7 +88,7 @@ export default function EditQuestionDialog(props: Props) {
     setQuestion(props.question.question);
     setAnswer(props.question.answer);
     setExplanation(props.question.explanation);
-    setSizeOfAnswers(props.question.question.length);
+    setSizeOfAnswers(props.question.answers.length);
     setAnswers(
       props.question.answers.concat(
         Array(ANSWERS_MAX - props.question.answers.length).fill("")
