@@ -92,7 +92,7 @@ export default function Questions(props: Props) {
       {!isShowEditQuestionDialog && (
         <CreateQuestionDialog
           order={
-            questions.length > 1 ? questions[questions.length - 1].order : -1
+            questions.length > 0 ? questions[questions.length - 1].order + 1 : 0
           }
           documentId={props.documentId}
           isShow={isShowCreateQuestionDialog}
